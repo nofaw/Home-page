@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="NOFAW - Nền tảng chia sẻ kiến thức và xu hướng thị trường ngoại hối, kinh nghiệm giao dịch Forex">
-    <meta name="keywords" content="kinh doanh, chiến lược, xu hướng, phát triển, startup">
+    <meta name="keywords" content="kinh doanh, chiến lược, xu hướng, đầu tư, giá vàng, exness, forex">
     <title>NOFAW - Blog Chia Sẻ Kinh Nghiệm Đầu Tư</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* Reset & Variables */
         * {
@@ -131,6 +132,11 @@
             .section-title h2 {
                 font-size: 1.5rem;
             }
+        }
+
+
+        p {
+            font-size: 20px;
         }
     </style>
 </head>
@@ -400,14 +406,21 @@
 .search-container:hover {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Color cho tiêu đề H2 */
+.section-title h2 {
+    color: #F04770;
+}
+
+
 </style>
 
 <!-- Thêm phần HTML này vào main-content -->
 <section class="section featured-section">
     <div class="container">
         <div class="section-title">
-            <h2>Bài Viết Nổi Bật</h2>
-            <p>Khám phá những kiến thức và xu hướng mới nhất trong thế giới kinh doanh</p>
+            <h2>SỰ KIỆN KINH TẾ</h2>
+            <p>Những sự kiện quan trọng có sức ảnh hưởng đến giá cổ phiếu, kim loại, năng lượng và nhiều tài sản khác. </p>
         </div>
 
         <div class="carousel-container" id="carouselContainer">
@@ -415,7 +428,7 @@
             <!-- Card 1 -->
 
 <div class="carousel-card">
-<img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" alt="Mô tả hình ảnh bài viết">
+<img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Mô tả hình ảnh bài viết">
     <div class="card-content">
         <span class="card-category">Chiến lược🔥</span>
         <h3 class="card-title">Trang web đang được xây dựng 😝</h3>
@@ -432,7 +445,7 @@
             <!-- Card 2 -->
 
 <div class="carousel-card">
-<img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" alt="Mô tả hình ảnh bài viết">
+<img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Mô tả hình ảnh bài viết">
     <div class="card-content">
         <span class="card-category">Mục tiêu🎯</span>
         <h3 class="card-title">Phát triển cộng đồng vững mạnh 🥰</h3>
@@ -450,7 +463,7 @@
             <!-- Card 3 -->
 
 <div class="carousel-card">
-<img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" alt="Mô tả hình ảnh bài viết">
+<img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Mô tả hình ảnh bài viết">
 
     <div class="card-content">
         <span class="card-category">Đích đến✅</span>
@@ -491,9 +504,12 @@
 <!-- Market Trends Section -->
 <section class="section trends-section">
     <div class="container">
-        <div class="section-title">
-            <h2>Xu Hướng Thị Trường</h2>
-            <p>Cập nhật những xu hướng mới nhất trong thị trường</p>
+<div class="section-title">
+    <h2 style="color: #258A29;">Xu Hướng Thị Trường</h2>
+</div>
+<div style="display: flex; justify-content: center;">
+    <p>Cập nhật giá vàng thị trường Việt Nam</p>
+</div>
         </div>
         <div class="grid">
             <!-- Thêm các card cho phần xu hướng -->
@@ -501,6 +517,7 @@
     </div>
 </section>
 
+    <div id="gia-vang-viet-nam" show-chart="true" show-prices="sjc,pnj,doji,phuquy,btmc,mihong" show-xauusd="true" show-exchange="true"></div>
 
 <!-- Thêm style cho footer vào trong thẻ style ở head -->
 <style>
@@ -782,6 +799,13 @@ searchInput.addEventListener('keydown', function (event) {
         searchButton.click();
     }
 });
-</script>
+
+
+
+        const script = document.createElement('script');
+        script.src = 'https://cls.giavangvietnam.com/js/widget.js?t=' + Date.now();
+        script.async = true;
+        document.body.appendChild(script);
+    </script>
 </body>
 </html>
