@@ -56,15 +56,16 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .logo-text-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: auto;
-            text-align: center;
-            z-index: 1001;
-        }
+   .logo-text-container {
+    position: absolute;
+    top: 50%;
+    right: 3%; /* Cách cạnh phải 2% */
+    transform: translateY(-50%); /* Chỉ cần dịch chuyển theo trục dọc */
+    width: auto;
+    text-align: center;
+    z-index: 1001;
+}
+
 
         .logo-text {
             color: var(--primary-color);
@@ -83,7 +84,7 @@
         }
 
         .menu-icon {
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             cursor: pointer;
             z-index: 1001;
         }
@@ -135,6 +136,12 @@
 <body>
     <header>
         <div class="menu-icon">☰</div>
+
+<div class="search-container">
+    <input type="text" placeholder="Tìm kiếm..." class="search-input">
+    <button class="search-button"><i class="fas fa-search"></i></button>
+</div>
+
         <div class="logo-text-container">
             <div class="logo-text">NOFAW</div>
         </div>
@@ -340,6 +347,58 @@
             padding: 0 1rem;
         }
     }
+
+
+/* Search Bar Styles */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--light-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 0 10px;
+    height: 31px;
+    transition: var(--transition);
+    margin-right: auto; /* Căn sang bên trái */
+    margin-left: 20px; /* Tạo khoảng cách với lề trái */
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 0.9rem;
+    padding: 5px;
+    color: var(--dark-color);
+    background: transparent;
+}
+
+.search-button {
+    background: var(--primary-color);
+    border: none;
+    color: var(--light-color);
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.search-button i {
+    font-size: 1rem;
+}
+
+.search-button:hover {
+    background: var(--secondary-color);
+}
+
+.search-container:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 </style>
 
 <!-- Thêm phần HTML này vào main-content -->
@@ -358,8 +417,8 @@
     <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg">
 
     <div class="card-content">
-        <span class="card-category">Chiến lược</span>
-        <h3 class="card-title">Chiến lược phát Chiến lược phát triển doanh nghiệp 2024 triển doanh nghiệpChiến lược phát triển doanh nghiệp 2024 2024</h3>
+        <span class="card-category">Chiến lược🔥</span>
+        <h3 class="card-title">Trang web đang được xây dựng 😝</h3>
         <div class="card-meta">
             <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
             <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
@@ -376,8 +435,8 @@
     <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484223/IMG_0046_duafv2.jpg">
 
     <div class="card-content">
-        <span class="card-category">Chiến lược</span>
-        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
+        <span class="card-category">Mục tiêu🎯</span>
+        <h3 class="card-title">Phát triển cộng đồng vững mạnh 🥰</h3>
 
         <div class="card-meta">
             <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
@@ -395,27 +454,8 @@
     <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484227/IMG_0054_atosbg.jpg">
 
     <div class="card-content">
-        <span class="card-category">Chiến lược</span>
-        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
-
-        <div class="card-meta">
-            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
-
-                Đọc thêm <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</div>
-
-            <!-- Card 4 -->
-
-<div class="carousel-card">
-    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg">
-
-    <div class="card-content">
-        <span class="card-category">Chiến lược</span>
-        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
+        <span class="card-category">Đích đến✅</span>
+        <h3 class="card-title">Cùng nhau làm giàu💵</h3>
 
         <div class="card-meta">
             <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
@@ -428,22 +468,6 @@
 </div>
 
 
-            <!-- Card 5 -->
-
-<div class="carousel-card">
-    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg">
-
-    <div class="card-content">
-        <span class="card-category">Chiến lược</span>
-        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
-
-        <div class="card-meta">
-            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more"> Đọc thêm <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</div>
             <!-- End Card -->
 
 
@@ -542,7 +566,7 @@
 </main>
 
 <footer>
-    <p>© 2024 NOFAW. Bảo lưu mọi quyền.</p>
+    <p>© 2024 NOFAW. All rights reserved.</p>
     <div class="social-icons">
         <a href="https://facebook.com/nofaw" target="_blank" title="Facebook">
             <i class="fab fa-facebook-f"></i>
@@ -710,6 +734,36 @@
         updateCards();
         startAutoSlide();
     });
+
+
+
+    // Lấy các phần tử cần tìm kiếm và các thẻ HTML
+    const searchButton = document.querySelector('.search-button');
+    const searchInput = document.querySelector('#searchInput');
+
+    searchButton.addEventListener('click', function () {
+        const query = searchInput.value.toLowerCase(); // Lấy từ khoá tìm kiếm
+        const contentElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6'); // Các thẻ muốn tìm kiếm
+
+        // Duyệt qua tất cả các thẻ và kiểm tra nếu nội dung thẻ chứa từ khóa tìm kiếm
+        contentElements.forEach(function (element) {
+            if (element.textContent.toLowerCase().includes(query)) {
+                // Nếu tìm thấy, làm nổi bật phần tử
+                element.style.backgroundColor = 'yellow'; // Đổi màu nền để làm nổi bật
+            } else {
+                // Nếu không tìm thấy, bỏ qua làm nổi bật
+                element.style.backgroundColor = ''; // Bỏ màu nền nếu không tìm thấy
+            }
+        });
+    });
+
+    // Để hỗ trợ tìm kiếm khi người dùng nhấn Enter
+    searchInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            searchButton.click();
+        }
+    });
+
 </script>
 </body>
 </html>
