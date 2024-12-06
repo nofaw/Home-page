@@ -2,9 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="description" content="NOFAW - Blog kinh doanh, chia sẻ kiến thức và xu hướng mới nhất">
-    <title>NOFAW - Blog Kinh Doanh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="NOFAW - Nền tảng chia sẻ kiến thức và xu hướng thị trường ngoại hối, kinh nghiệm giao dịch Forex">
+    <meta name="keywords" content="kinh doanh, chiến lược, xu hướng, phát triển, startup">
+    <title>NOFAW - Blog Chia Sẻ Kinh Nghiệm Đầu Tư</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -414,8 +415,7 @@
             <!-- Card 1 -->
 
 <div class="carousel-card">
-    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg">
-
+<img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" alt="Mô tả hình ảnh bài viết">
     <div class="card-content">
         <span class="card-category">Chiến lược🔥</span>
         <h3 class="card-title">Trang web đang được xây dựng 😝</h3>
@@ -432,8 +432,7 @@
             <!-- Card 2 -->
 
 <div class="carousel-card">
-    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484223/IMG_0046_duafv2.jpg">
-
+<img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" alt="Mô tả hình ảnh bài viết">
     <div class="card-content">
         <span class="card-category">Mục tiêu🎯</span>
         <h3 class="card-title">Phát triển cộng đồng vững mạnh 🥰</h3>
@@ -451,7 +450,7 @@
             <!-- Card 3 -->
 
 <div class="carousel-card">
-    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484227/IMG_0054_atosbg.jpg">
+<img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" alt="Mô tả hình ảnh bài viết">
 
     <div class="card-content">
         <span class="card-category">Đích đến✅</span>
@@ -574,11 +573,11 @@
         <a href="https://twitter.com/nofaw" target="_blank" title="Twitter">
             <i class="fab fa-twitter"></i>
         </a>
-        <a href="https://linkedin.com/company/nofaw" target="_blank" title="LinkedIn">
-            <i class="fab fa-linkedin-in"></i>
+        <a href="https://tiktok.com/nofaw" target="_blank" title="Tiktok">
+            <i class="fab fa-tiktok"></i>
         </a>
-        <a href="https://instagram.com/nofaw" target="_blank" title="Instagram">
-            <i class="fab fa-instagram"></i>
+        <a href="https://telegram.org/nofaw" target="_blank" title="Telegram">
+            <i class="fab fa-telegram"></i>
         </a>
     </div>
 </footer>
@@ -738,32 +737,51 @@
 
 
     // Lấy các phần tử cần tìm kiếm và các thẻ HTML
-    const searchButton = document.querySelector('.search-button');
-    const searchInput = document.querySelector('#searchInput');
+const searchButton = document.querySelector('.search-button');
+const searchInput = document.querySelector('.search-input'); // Sửa selector cho đúng
 
-    searchButton.addEventListener('click', function () {
-        const query = searchInput.value.toLowerCase(); // Lấy từ khoá tìm kiếm
-        const contentElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6'); // Các thẻ muốn tìm kiếm
-
-        // Duyệt qua tất cả các thẻ và kiểm tra nếu nội dung thẻ chứa từ khóa tìm kiếm
-        contentElements.forEach(function (element) {
-            if (element.textContent.toLowerCase().includes(query)) {
-                // Nếu tìm thấy, làm nổi bật phần tử
-                element.style.backgroundColor = 'yellow'; // Đổi màu nền để làm nổi bật
-            } else {
-                // Nếu không tìm thấy, bỏ qua làm nổi bật
-                element.style.backgroundColor = ''; // Bỏ màu nền nếu không tìm thấy
-            }
-        });
+searchButton.addEventListener('click', function () {
+    const query = searchInput.value.toLowerCase().trim();
+    const contentElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
+    let matchCount = 0;
+    
+    // Reset highlighting từ lần tìm kiếm trước
+    contentElements.forEach(element => {
+        element.style.backgroundColor = '';
     });
 
-    // Để hỗ trợ tìm kiếm khi người dùng nhấn Enter
-    searchInput.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            searchButton.click();
+    // Nếu query rỗng, không thực hiện tìm kiếm
+    if (!query) {
+        alert('Vui lòng nhập từ khóa tìm kiếm');
+        return;
+    }
+
+    // Thực hiện tìm kiếm
+    let firstMatch = null;
+    contentElements.forEach(function (element) {
+        if (element.textContent.toLowerCase().includes(query)) {
+            element.style.backgroundColor = 'yellow';
+            matchCount++;
+            if (!firstMatch) firstMatch = element;
         }
     });
 
+    // Xử lý kết quả tìm kiếm
+    if (matchCount > 0) {
+        alert(`Tìm thấy ${matchCount} kết quả`);
+        // Scroll đến kết quả đầu tiên
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+        alert('Không tìm thấy kết quả nào');
+    }
+});
+
+// Tìm kiếm khi nhấn Enter
+searchInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        searchButton.click();
+    }
+});
 </script>
 </body>
 </html>
