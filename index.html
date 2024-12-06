@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="NOFAW - Blog kinh doanh, chia sẻ kiến thức và xu hướng mới nhất">
+    <title>NOFAW - Blog Kinh Doanh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        :root {
+            --primary-color: #34C759;
+            --secondary-color: #2AB050;
+            --accent-color: #28A745;
+            --dark-color: #333;
+            --light-color: #ffffff;
+            --gray-color: #666;
+            --light-gray: #f5f5f5;
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        html, body {
+            background-color: var(--light-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+            overflow-y: auto;
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.5rem;
+            height: 50px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-text-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            text-align: center;
+            z-index: 1001;
+        }
+
+        .logo-text {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            line-height: 1.2;
+            display: inline-block;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: var(--light-color);
+            border: 2px solid var(--light-color);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .menu-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Section & Container Styles */
+        .main-content {
+            flex: 1;
+        }
+
+        .section {
+            padding: 4rem 1rem;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .section-title p {
+            color: var(--gray-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 2rem 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu-icon">☰</div>
+        <div class="logo-text-container">
+            <div class="logo-text">NOFAW</div>
+        </div>
+        <div style="width: 24px;"></div>
+    </header>
+
+    <main class="main-content">
+        <!-- Content will be in Part 2 -->
+
+
+<!-- Thêm phần style vào trong thẻ style ở head -->
+<style>
+    /* Carousel Styles */
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        touch-action: pan-y;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .carousel-card {
+        position: absolute;
+        width: 350px;
+        height: 500px;
+        background: var(--light-color);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+        cursor: grab;
+    }
+
+    .carousel-card.active {
+        z-index: 3;
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+
+    .carousel-card.prev {
+        z-index: 2;
+        transform: translateX(-90%) scale(0.85);
+        opacity: 0.7;
+    }
+
+    .carousel-card.next {
+        z-index: 2;
+        transform: translateX(90%) scale(0.85);
+        opacity: 0.7;
+    }
+
+    .carousel-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        pointer-events: none;
+        transition: transform 0.3s ease;
+    }
+
+    .carousel-card:hover img {
+        transform: scale(1.05);
+    }
+
+    /* Card Content Styles */
+    .card-content {
+        padding: 25px;
+    }
+
+    .card-category {
+        color: #3BA7E5;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .card-title {
+        font-size: 1rem;
+        margin-bottom: 15px;
+        color: var(--dark-color);
+        line-height: 1.2;
+    }
+
+
+
+    .card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #888;
+        font-size: 0.9rem;
+    }
+
+    .read-more {
+        color: var(--primary-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: var(--transition);
+    }
+
+    .read-more:hover {
+        color: var(--secondary-color);
+    }
+
+    .read-more i {
+        transition: transform 0.3s;
+    }
+
+    .read-more:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Carousel Indicators */
+    .carousel-indicators {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
+        gap: 8px;
+        z-index: 4;
+    }
+
+    .indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(52, 199, 89, 0.5);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .indicator.active {
+        width: 24px;
+        border-radius: 4px;
+        background: var(--primary-color);
+    }
+
+    /* Grid Layout */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    /* Standard Card Styles */
+    .card {
+        background: var(--light-color);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-thumbnail {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-thumbnail {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+        .carousel-container {
+            height: 550px;
+        }
+
+        .carousel-card {
+            width: 300px;
+            height: 450px;
+        }
+
+        .carousel-card.prev {
+            transform: translateX(-70%) scale(0.85);
+        }
+
+        .carousel-card.next {
+            transform: translateX(70%) scale(0.85);
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+    }
+</style>
+
+<!-- Thêm phần HTML này vào main-content -->
+<section class="section featured-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Bài Viết Nổi Bật</h2>
+            <p>Khám phá những kiến thức và xu hướng mới nhất trong thế giới kinh doanh</p>
+        </div>
+
+        <div class="carousel-container" id="carouselContainer">
+
+            <!-- Card 1 -->
+
+<div class="carousel-card">
+    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg">
+
+    <div class="card-content">
+        <span class="card-category">Chiến lược</span>
+        <h3 class="card-title">Chiến lược phát Chiến lược phát triển doanh nghiệp 2024 triển doanh nghiệpChiến lược phát triển doanh nghiệp 2024 2024</h3>
+        <div class="card-meta">
+            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
+
+                Đọc thêm <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+            <!-- Card 2 -->
+
+<div class="carousel-card">
+    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484223/IMG_0046_duafv2.jpg">
+
+    <div class="card-content">
+        <span class="card-category">Chiến lược</span>
+        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
+
+        <div class="card-meta">
+            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
+
+                Đọc thêm <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+            <!-- Card 3 -->
+
+<div class="carousel-card">
+    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484227/IMG_0054_atosbg.jpg">
+
+    <div class="card-content">
+        <span class="card-category">Chiến lược</span>
+        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
+
+        <div class="card-meta">
+            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
+
+                Đọc thêm <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+            <!-- Card 4 -->
+
+<div class="carousel-card">
+    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg">
+
+    <div class="card-content">
+        <span class="card-category">Chiến lược</span>
+        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
+
+        <div class="card-meta">
+            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
+
+                Đọc thêm <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Card 5 -->
+
+<div class="carousel-card">
+    <img src="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg">
+
+    <div class="card-content">
+        <span class="card-category">Chiến lược</span>
+        <h3 class="card-title">Chiến lược phát triển doanh nghiệp 2024</h3>
+
+        <div class="card-meta">
+            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more"> Đọc thêm <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+            <!-- End Card -->
+
+
+        </div>
+        <div class="carousel-indicators" id="carouselIndicators"></div>
+    </div>
+</section>
+
+<!-- Strategy Section -->
+<section class="section strategy-section" style="background-color: var(--light-color);">
+    <div class="container">
+        <div class="section-title">
+            <h2>Chiến Lược Kinh Doanh</h2>
+            <p>Học hỏi từ những chiến lược kinh doanh hiệu quả</p>
+        </div>
+        <div class="grid">
+            <!-- Thêm các card cho phần chiến lược -->
+        </div>
+    </div>
+</section>
+
+<!-- Market Trends Section -->
+<section class="section trends-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Xu Hướng Thị Trường</h2>
+            <p>Cập nhật những xu hướng mới nhất trong thị trường</p>
+        </div>
+        <div class="grid">
+            <!-- Thêm các card cho phần xu hướng -->
+        </div>
+    </div>
+</section>
+
+
+<!-- Thêm style cho footer vào trong thẻ style ở head -->
+<style>
+    /* Footer Styles */
+    footer {
+        background-color: var(--dark-color);
+        color: var(--light-color);
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+        margin-top: auto;
+    }
+
+    footer p {
+        margin-bottom: 0.5rem;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 0.8rem;
+    }
+
+    .social-icons a {
+        color: var(--light-color);
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: var(--transition);
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .social-icons a:hover {
+        background: var(--primary-color);
+        transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+        footer {
+            padding: 0.8rem;
+        }
+        
+        .social-icons {
+            margin-top: 0.5rem;
+        }
+        
+        .social-icons a {
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<!-- Thêm footer trước khi đóng thẻ body -->
+</main>
+
+<footer>
+    <p>© 2024 NOFAW. Bảo lưu mọi quyền.</p>
+    <div class="social-icons">
+        <a href="https://facebook.com/nofaw" target="_blank" title="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://twitter.com/nofaw" target="_blank" title="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="https://linkedin.com/company/nofaw" target="_blank" title="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://instagram.com/nofaw" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+</footer>
+
+<!-- Thêm script trước đóng thẻ body -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = Array.from(document.querySelectorAll('.carousel-card'));
+        const container = document.getElementById('carouselContainer');
+        const indicators = document.getElementById('carouselIndicators');
+        let currentIndex = 0;
+        let startX = 0;
+        let startY = 0;
+        let isDragging = false;
+        let isScrolling = false;
+
+        // Create indicators
+        cards.forEach((_, index) => {
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator';
+            indicator.addEventListener('click', () => goToCard(index));
+            indicators.appendChild(indicator);
+        });
+
+        const indicatorDots = Array.from(document.querySelectorAll('.indicator'));
+
+        function updateCards() {
+            cards.forEach((card, index) => {
+                card.classList.remove('active', 'prev', 'next');
+                indicatorDots[index].classList.remove('active');
+                
+                if (index === currentIndex) {
+                    card.classList.add('active');
+                    indicatorDots[index].classList.add('active');
+                } else if (index === getPrevIndex()) {
+                    card.classList.add('prev');
+                } else if (index === getNextIndex()) {
+                    card.classList.add('next');
+                }
+            });
+        }
+
+        function getPrevIndex() {
+            return (currentIndex - 1 + cards.length) % cards.length;
+        }
+
+        function getNextIndex() {
+            return (currentIndex + 1) % cards.length;
+        }
+
+        function nextCard() {
+            currentIndex = getNextIndex();
+            updateCards();
+        }
+
+        function prevCard() {
+            currentIndex = getPrevIndex();
+            updateCards();
+        }
+
+        function goToCard(index) {
+            if (index === currentIndex) return;
+            currentIndex = index;
+            updateCards();
+        }
+
+        // Touch events
+        container.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isScrolling = false;
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e) => {
+            if (!startX || isScrolling) return;
+
+            const diffX = e.touches[0].clientX - startX;
+            const diffY = e.touches[0].clientY - startY;
+
+            if (!isScrolling) {
+                isScrolling = Math.abs(diffY) > Math.abs(diffX);
+                if (!isScrolling) {
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
+
+        container.addEventListener('touchend', (e) => {
+            if (isScrolling) return;
+
+            const diffX = e.changedTouches[0].clientX - startX;
+            if (Math.abs(diffX) > 50) {
+                if (diffX > 0) {
+                    prevCard();
+                } else {
+                    nextCard();
+                }
+            }
+            startX = 0;
+            startY = 0;
+        });
+
+        // Mouse events
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            container.style.cursor = 'grabbing';
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const diffX = e.clientX - startX;
+            
+            if (Math.abs(diffX) > 100) {
+                if (diffX > 0) {
+                    prevCard();
+                } else {
+                    nextCard();
+                }
+                isDragging = false;
+                container.style.cursor = 'grab';
+            }
+        });
+
+        container.addEventListener('mouseup', () => {
+            isDragging = false;
+            container.style.cursor = 'grab';
+        });
+
+        container.addEventListener('mouseleave', () => {
+            isDragging = false;
+            container.style.cursor = 'grab';
+        });
+
+        // Auto slide
+        let autoSlideInterval;
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextCard, 2500);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // Pause on hover/touch
+        container.addEventListener('mouseenter', stopAutoSlide);
+        container.addEventListener('mouseleave', startAutoSlide);
+        container.addEventListener('touchstart', stopAutoSlide);
+        container.addEventListener('touchend', startAutoSlide);
+
+        // Initialize
+        updateCards();
+        startAutoSlide();
+    });
+</script>
+</body>
+</html>
