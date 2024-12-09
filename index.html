@@ -6,19 +6,25 @@
     <meta name="description" content="NOFAW - Nền tảng chia sẻ kiến thức và xu hướng thị trường ngoại hối, kinh nghiệm giao dịch Forex">
     <meta name="keywords" content="kinh doanh, chiến lược, xu hướng, đầu tư, giá vàng, exness, forex">
     <title>NOFAW - Blog Chia Sẻ Kinh Nghiệm Đầu Tư</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Favicon cơ bản -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/apple-touch-icon_sa4iwc.png">
+    
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771935/android-chrome-192x192_madhgp.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/android-chrome-512x512_vxgb00.png">
+    
+    <!-- For các thiết bị khác -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-32x32_qmth0k.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-16x16_fzo41t.png">
+
     <style>
         /* Reset & Variables */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Times New Roman', Times, serif;
-        }
-
         :root {
             --primary-color: #34C759;
             --secondary-color: #2AB050;
@@ -30,19 +36,38 @@
             --transition: all 0.3s ease;
         }
 
-        /* Base Styles */
-        html, body {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        /* Body Styles */
+        html,
+        body {
             background-color: var(--light-gray);
             line-height: 1.6;
-            overflow-x: hidden;
-            overflow-y: auto;
             height: 100%;
+            width: 100%;
+            overflow-x: hidden; /* Ngăn cuộn ngang */
+            position: relative; /* Thêm position relative */
         }
 
         body {
             display: flex;
             flex-direction: column;
+            max-width: 100vw; /* Giới hạn chiều rộng tối đa */
         }
+
+        /* Container styles */
+.container {
+    max-width: 100%; /* Thay vì 1200px */
+    margin: 0; /* Bỏ margin auto */
+    padding: 0; /* Bỏ padding */
+    width: 100%;
+}
+
 
         /* Header Styles */
         header {
@@ -59,16 +84,9 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-   .logo-text-container {
-    position: absolute;
-    top: 50%;
-    right: 3%; /* Cách cạnh phải 2% */
-    transform: translateY(-50%); /* Chỉ cần dịch chuyển theo trục dọc */
-    width: auto;
-    text-align: center;
-    z-index: 1001;
-}
-
+        .logo-text-container {
+            text-align: center;
+        }
 
         .logo-text {
             color: var(--primary-color);
@@ -84,12 +102,65 @@
             border: 2px solid var(--light-color);
             border-radius: 6px;
             transition: var(--transition);
+            text-decoration: none;
+            /* Bỏ gạch chân */
+            cursor: pointer;
         }
+
+        .logo-text:hover {
+            opacity: 0.8;
+            /* Hiệu ứng khi hover */
+        }
+
+    /* Styles mới cho logo */
+    .logo-container {
+        background: var(--light-color);
+        padding: 2px 8px;
+        border-radius: 6px;
+        transition: var(--transition);
+    }
+
+    .logo-container:hover {
+        opacity: 0.8;
+    }
+
+    .logo-container a {
+        text-decoration: none;
+        display: block;
+    }
+
+    .logo-svg {
+        height: 35px;
+        width: auto;
+        display: block;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .logo-svg {
+            height: 30px;
+        }
+        
+        .search-input {
+            width: 120px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .search-input {
+            width: 100px;
+        }
+        
+        .logo-svg {
+            height: 25px;
+        }
+    }
 
         .menu-icon {
             font-size: 2.5rem;
             cursor: pointer;
             z-index: 1001;
+            margin-left: 10px;
         }
 
         /* Section & Container Styles */
@@ -98,8 +169,7 @@
         }
 
         .section {
-            padding: 4rem 1rem;
-            width: 100%;
+            padding: 2rem 1rem;
         }
 
         .container {
@@ -110,13 +180,13 @@
 
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .section-title h2 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--dark-color);
+            color: #073A4B;
         }
 
         .section-title p {
@@ -125,1248 +195,1209 @@
             margin: 0 auto;
         }
 
+        /* Search Bar Styles */
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--light-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 0 10px;
+            height: 31px;
+            transition: var(--transition);
+            margin-right: auto;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 0.9rem;
+            padding: 5px;
+            color: var(--dark-color);
+            background: transparent;
+        }
+
+        .search-button {
+            background: var(--primary-color);
+            border: none;
+            color: var(--light-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .search-button i {
+            font-size: 1rem;
+        }
+
+        .search-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .search-container:hover {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation Menu Styles */
+        .nav-menu {
+            position: fixed;
+            top: 50px;
+            /* Để menu nằm dưới header */
+            left: -300px;
+            /* Ẩn menu ban đầu */
+            width: 300px;
+            height: calc(100vh - 50px);
+            background-color: #333;
+            transition: 0.3s;
+            z-index: 999;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .nav-menu.active {
+            left: 0;
+        }
+
+        .nav-overlay {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 50px);
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 998;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu li {
+            padding: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .nav-menu a:hover {
+            background-color: var(--primary-color);
+            padding-left: 30px;
+        }
+
+        .nav-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Submenu styles */
+        .submenu {
+            background-color: rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .submenu.active {
+            display: block;
+        }
+
+        .nav-menu li.has-submenu>a::after {
+            content: '\f107';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            margin-left: auto;
+            transition: 0.3s;
+        }
+
+        .nav-menu li.has-submenu.active>a::after {
+            transform: rotate(180deg);
+        }
+
+        .submenu a {
+            padding-left: 50px;
+        }
+
+        .submenu a:hover {
+            padding-left: 55px;
+        }
+
+        /* User info section */
+        .user-info {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .user-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .user-info h3 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+
+        .user-info p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Featured Section - Carousel Styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: pan-y;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .carousel-card {
+            position: absolute;
+            width: 350px;
+            height: 500px;
+            background: var(--light-color);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+            cursor: grab;
+        }
+
+        .carousel-card.active {
+            z-index: 3;
+            transform: translateX(0) scale(1);
+            opacity: 1;
+        }
+
+        .carousel-card.prev {
+            z-index: 2;
+            transform: translateX(-90%) scale(0.85);
+            opacity: 0.7;
+        }
+
+        .carousel-card.next {
+            z-index: 2;
+            transform: translateX(90%) scale(0.85);
+            opacity: 0.7;
+        }
+
+        .carousel-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .carousel-card .card-content {
+            padding: 25px;
+        }
+
+        .carousel-card .card-category {
+            color: #3BA7E5;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .carousel-card .card-title {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            line-height: 1.2;
+        }
+
+        .carousel-card .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .carousel-card .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .carousel-card .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        .carousel-card .read-more i {
+            transition: transform 0.3s;
+        }
+
+        .carousel-card .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Carousel Indicators */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 8px;
+            z-index: 4;
+        }
+
+        .indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(52, 199, 89, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .indicator.active {
+            width: 24px;
+            border-radius: 4px;
+            background: var(--primary-color);
+        }
+
+        /* Strategy Section - Royal Carousel Styles */
+        .royal-carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            touch-action: pan-y;
+            user-select: none;
+            -webkit-user-select: none;
+            margin: 2rem auto;
+            background: transparent;
+        }
+
+        .royal-card {
+            position: absolute;
+            width: 350px;
+            height: 550px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            place-content: center;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 20px;
+            transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transform-origin: center center;
+            opacity: 0;
+            pointer-events: none;
+            will-change: transform;
+            backface-visibility: hidden;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+
+        .royal-card.active {
+            transform: translateX(0) scale(1);
+            opacity: 1;
+            z-index: 3;
+            pointer-events: auto;
+        }
+
+        .royal-card.prev {
+            transform: translateX(-120%) scale(0.85);
+            opacity: 0.7;
+            z-index: 2;
+            pointer-events: auto;
+        }
+
+        .royal-card.next {
+            transform: translateX(120%) scale(0.85);
+            opacity: 0.7;
+            z-index: 2;
+            pointer-events: auto;
+        }
+
+        .royal-card img {
+            width: calc(100% - 10px);
+            height: 70%;
+            object-fit: cover;
+            border-radius: 12px;
+            position: relative;
+            z-index: 3;
+            margin-top: 5px;
+        }
+
+        .royal-card .card-content {
+            position: relative;
+            z-index: 3;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .royal-card .card-title {
+            font-size: 1.5rem;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .royal-card .card-text {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .discover-btn {
+            display: inline-block;
+            padding: 8px 24px;
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #000;
+            border: 2px solid rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .discover-btn:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .royal-carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .royal-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .royal-indicator.active {
+            width: 24px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* News Section Styles */
+        .news-container {
+    width: 100%;
+    max-width: 100%; /* Bỏ max-width nếu muốn full width */
+    margin: 0;
+    padding: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .section {
+        padding: 1rem 0;
+    }
+    
+    .container {
+        padding: 0;
+    }
+}
+
+        .news-item {
+            display: flex;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .news-item:hover {
+            background-color: #f8f8f8;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-image {
+            width: 150px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .news-title {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .social-icons a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Media Queries */
         @media (max-width: 768px) {
             .section {
-                padding: 2rem 1rem;
+                padding: 1rem;
             }
 
             .section-title h2 {
-                font-size: 1.5rem;
+                font-size: 1.2rem;
+            }
+
+            .carousel-container {
+                height: 550px;
+            }
+
+            .carousel-card {
+                width: 300px;
+                height: 450px;
+            }
+
+            .carousel-card.prev {
+                transform: translateX(-70%) scale(0.85);
+            }
+
+            .carousel-card.next {
+                transform: translateX(70%) scale(0.85);
+            }
+
+            .royal-carousel-container {
+                height: 550px;
+            }
+
+            .royal-card {
+                width: 300px;
+                height: 500px;
+            }
+
+            .royal-card.prev {
+                transform: translateX(-100%) scale(0.85);
+            }
+
+            .royal-card.next {
+                transform: translateX(100%) scale(0.85);
+            }
+
+            .news-image {
+                width: 120px;
+                height: 80px;
+            }
+
+            .news-title {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                width: 260px;
             }
         }
 
-
-        p {
-            font-size: 20px;
+        @media (max-width: 480px) {
+            .news-image {
+                width: 100px;
+                height: 67px;
+            }
         }
-
-
-
-/* Section 2 */
-
-/* Royal Carousel Styles */
-.royal-carousel-container {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-    height: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    touch-action: pan-y pinch-zoom; /* Thay đổi từ none thành pan-y pinch-zoom */
-    user-select: none;
-    -webkit-user-select: none;
-    margin: 2rem auto;
-    background: transparent;
-}
-
-.royal-card {
-    position: absolute;
-    width: 350px;
-    height: 550px;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    place-content: center;
-    place-items: center;
-    overflow: hidden;
-    border-radius: 20px;
-    transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
-    transform-origin: center center;
-    opacity: 0;
-    pointer-events: none;
-    will-change: transform;
-    backface-visibility: hidden;
-    cursor: pointer;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    z-index: 1;
-}
-
-.royal-card.active {
-    transform: translateX(0) scale(1);
-    opacity: 1;
-    z-index: 3;
-    pointer-events: auto;
-}
-
-.royal-card.prev {
-    transform: translateX(-120%) scale(0.85);
-    opacity: 0.7;
-    z-index: 2;
-    pointer-events: auto;
-}
-
-.royal-card.next {
-    transform: translateX(120%) scale(0.85);
-    opacity: 0.7;
-    z-index: 2;
-    pointer-events: auto;
-}
-
-.royal-card img {
-    width: calc(100% - 10px);
-    height: 70%;
-    object-fit: cover;
-    border-radius: 12px;
-    position: relative;
-    z-index: 3;
-    margin-top: 5px;
-}
-
-.royal-card .card-content {
-    position: relative;
-    z-index: 3;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-}
-
-.royal-card .card-title {
-    font-size: 1.5rem;
-    color: #000;
-    margin-bottom: 10px;
-}
-
-.royal-card .card-text {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.discover-btn {
-    display: inline-block;
-    padding: 8px 24px;
-    background-color: rgba(0, 0, 0, 0.1);
-    color: #000;
-    border: 2px solid rgba(0, 0, 0, 0.8);
-    border-radius: 20px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    margin-top: 15px;
-}
-
-.discover-btn:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-    transform: scale(1.05);
-}
-
-.royal-carousel-indicators {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    gap: 8px;
-    z-index: 10;
-}
-
-.royal-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.royal-indicator.active {
-    width: 24px;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.8);
-}
-
-@media (max-width: 768px) {
-    .royal-carousel-container {
-        height: 550px;
-    }
-    
-    .royal-card {
-        width: 300px;
-        height: 500px;
-    }
-
-    .royal-card.prev {
-        transform: translateX(-100%) scale(0.85);
-    }
-
-    .royal-card.next {
-        transform: translateX(100%) scale(0.85);
-    }
-}
-
     </style>
 </head>
 <body>
     <header>
         <div class="menu-icon">☰</div>
-
-<div class="search-container">
-    <input type="text" placeholder="Tìm kiếm..." class="search-input">
-    <button class="search-button"><i class="fas fa-search"></i></button>
-</div>
-
-        <div class="logo-text-container">
-            <div class="logo-text">NOFAW</div>
+        <div class="search-container">
+            <input type="text" placeholder="Tìm kiếm..." class="search-input">
+            <button class="search-button"><i class="fas fa-search"></i></button>
         </div>
-        <div style="width: 24px;"></div>
+    <div class="logo-container">
+        <a href="https://nofaw.com">
+            <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+                <text x="20" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">N</text>
+                <text x="65" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">O</text>
+                <text x="115" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">F</text>
+                <text x="155" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">A</text>
+                <text x="205" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">W</text>
+            </svg>
+        </a>
+    </div>
     </header>
 
     <main class="main-content">
-        <!-- Content will be in Part 2 -->
+        <!-- Featured Section -->
+        <section class="section featured-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2><i class="fas fa-star"></i> KIẾN THỨC ĐẦU TƯ</h2>
+                    <p>Tổng hợp kiến thức về đầu tư, giao dịch ngoại hối, vàng, cổ phiếu quốc tế.</p>
+                </div>
 
+                <div class="carousel-container" id="carouselContainer">
+                    <!-- Card 1 -->
+                    <div class="carousel-card">
+                        <img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Chiến lược đầu tư">
+                        <div class="card-content">
+                            <span class="card-category">Chiến lược🔥</span>
+                            <h3 class="card-title">Trang web đang được xây dựng 😝</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+                                <a href="#" class="read-more">
+                                    Đọc thêm <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-<!-- Thêm phần style vào trong thẻ style ở head -->
-<style>
-    /* Carousel Styles */
-    .carousel-container {
-        position: relative;
-        width: 100%;
-        height: 600px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        touch-action: pan-y;
-        user-select: none;
-        -webkit-user-select: none;
-    }
+                    <!-- Card 2 -->
+                    <div class="carousel-card">
+                        <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Mục tiêu phát triển">
+                        <div class="card-content">
+                            <span class="card-category">Mục tiêu🎯</span>
+                            <h3 class="card-title">Phát triển cộng đồng vững mạnh 🥰</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+                                <a href="#" class="read-more">
+                                    Đọc thêm <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-    .carousel-card {
-        position: absolute;
-        width: 350px;
-        height: 500px;
-        background: var(--light-color);
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
-        cursor: grab;
-    }
+                    <!-- Card 3 -->
+                    <div class="carousel-card">
+                        <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Đích đến">
+                        <div class="card-content">
+                            <span class="card-category">Đích đến✅</span>
+                            <h3 class="card-title">Cùng nhau làm giàu💵</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
+                                <a href="#" class="read-more">
+                                    Đọc thêm <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+        </section>
 
-    .carousel-card.active {
-        z-index: 3;
-        transform: translateX(0) scale(1);
-        opacity: 1;
-    }
+        <!-- Strategy Section -->
+        <section class="section strategy-section" style="background-color: var(--light-color);">
+            <div class="container">
+                <div class="section-title">
+                    <h2><i class="fas fa-calendar"></i> SỰ KIỆN KINH TẾ</h2>
+                    <p>Cùng xem những sự kiện quan trọng ảnh hưởng lớn đến giá cổ phiếu, kim loại, năng lượng và nhiều loại tài sản khác như thế nào.</p>
+                </div>
 
-    .carousel-card.prev {
-        z-index: 2;
-        transform: translateX(-90%) scale(0.85);
-        opacity: 0.7;
-    }
+                <div class="royal-carousel-container" id="royalCarouselContainer">
+                    <!-- Royal Card 1 -->
+                    <div class="royal-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733576809/IMG_0084_ydumrl.jpg" alt="Nonfarm Payrolls (NFP)">
+                        <div class="card-content">
+                            <h3 class="card-title">Nonfarm Payrolls (NFP)</h3>
+                            <p class="card-text">Thứ Sáu đầu tiên mỗi tháng.</p>
+                            <a href="#" class="discover-btn">Xem thêm</a>
+                        </div>
+                    </div>
 
-    .carousel-card.next {
-        z-index: 2;
-        transform: translateX(90%) scale(0.85);
-        opacity: 0.7;
-    }
+                    <!-- Royal Card 2 -->
+                    <div class="royal-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733577284/IMG_0085_urpq2h.jpg" alt="CPI">
+                        <div class="card-content">
+                            <h3 class="card-title">CPI</h3>
+                            <p class="card-text">Chỉ số giá tiêu dùng</p>
+                            <a href="#" class="discover-btn">Xem thêm</a>
+                        </div>
+                    </div>
 
-    .carousel-card img {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        pointer-events: none;
-        transition: transform 0.3s ease;
-    }
+                    <!-- Royal Card 3 -->
+                    <div class="royal-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733582026/IMG_0090_an4ee1.jpg" alt="GDP">
+                        <div class="card-content">
+                            <h3 class="card-title">GPD</h3>
+                            <p class="card-text">Tổng sản phẩm quốc nội</p>
+                            <a href="#" class="discover-btn">Xem thêm</a>
+                        </div>
+                    </div>
 
-    .carousel-card:hover img {
-        transform: scale(1.05);
-    }
+                    <!-- Royal Card 4 -->
+                    <div class="royal-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581445/IMG_0087_pu1cgz.jpg" alt="FOMC Meetings">
+                        <div class="card-content">
+                            <h3 class="card-title">FOMC Meetings</h3>
+                            <p class="card-text">Chính sách lãi suất và tiền tệ.</p>
+                            <a href="#" class="discover-btn">Xem thêm</a>
+                        </div>
+                    </div>
 
-    /* Card Content Styles */
-    .card-content {
-        padding: 25px;
-    }
+                    <!-- Royal Card 5 -->
+                    <div class="royal-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581588/IMG_0088_wk81qd.png" alt="ISM Manufacturing PMI">
+                        <div class="card-content">
+                            <h3 class="card-title">ISM Manufacturing PMI</h3>
+                            <p class="card-text">Chỉ số sản xuất ISM</p>
+                            <a href="#" class="discover-btn">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="royal-carousel-indicators" id="royalCarouselIndicators"></div>
+            </div>
+        </section>
 
-    .card-category {
-        color: #3BA7E5;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-bottom: 10px;
-        display: block;
-    }
+        <!-- NEWS Section -->
+        <section class="section news-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2> TIN TỨC TÀI CHÍNH <i class="fas fa-envelope"></i></h2>
+                </div>
+                <div class="news-container">
+                    <a href="#" class="news-item">
+                        <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Tin tức 1" class="news-image">
+                        <h3 class="news-title">Nhiều nhà đầu tư mất trắng sau khi Bitcoin điều chỉnh mạnh về giá 92000$</h3>
+                    </a>
+                    <a href="#" class="news-item">
+                        <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Tin tức 2" class="news-image">
+                        <h3 class="news-title">Chính sách thuế quan 2.0 của Donal Trump liệu có ổn?</h3>
+                    </a>
+                    <a href="#" class="news-item">
+                        <img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Tin tức 3" class="news-image">
+                        <h3 class="news-title">Thị trường vàng quốc tế vẫn giữ sideway dài hạn trong tuần</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    .card-title {
-        font-size: 1rem;
-        margin-bottom: 15px;
-        color: var(--dark-color);
-        line-height: 1.2;
-    }
+        <!-- Market Trends Section -->
+        <section class="section trends-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2><i class="fas fa-chart-bar"></i> Xu Hướng Thị Trường</h2>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <p>Cập nhật giá vàng thị trường Việt Nam</p>
+                </div>
+                <div id="gia-vang-viet-nam" show-chart="true" show-prices="sjc,pnj,doji,phuquy,btmc,mihong" show-xauusd="true" show-exchange="true"></div>
+            </div>
+        </section>
+    </main>
 
-
-
-    .card-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #888;
-        font-size: 0.9rem;
-    }
-
-    .read-more {
-        color: var(--primary-color);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        transition: var(--transition);
-    }
-
-    .read-more:hover {
-        color: var(--secondary-color);
-    }
-
-    .read-more i {
-        transition: transform 0.3s;
-    }
-
-    .read-more:hover i {
-        transform: translateX(5px);
-    }
-
-    /* Carousel Indicators */
-    .carousel-indicators {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: none;
-        gap: 8px;
-        z-index: 4;
-    }
-
-    .indicator {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(52, 199, 89, 0.5);
-        cursor: pointer;
-        transition: var(--transition);
-    }
-
-    .indicator.active {
-        width: 24px;
-        border-radius: 4px;
-        background: var(--primary-color);
-    }
-
-    /* Grid Layout */
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        max-width: var(--max-width);
-        margin: 0 auto;
-    }
-
-    /* Standard Card Styles */
-    .card {
-        background: var(--light-color);
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        transition: var(--transition);
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .card-thumbnail {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .card:hover .card-thumbnail {
-        transform: scale(1.05);
-    }
-
-    @media (max-width: 768px) {
-        .carousel-container {
-            height: 550px;
-        }
-
-        .carousel-card {
-            width: 300px;
-            height: 450px;
-        }
-
-        .carousel-card.prev {
-            transform: translateX(-70%) scale(0.85);
-        }
-
-        .carousel-card.next {
-            transform: translateX(70%) scale(0.85);
-        }
-
-        .grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            padding: 0 1rem;
-        }
-    }
-
-
-/* Search Bar Styles */
-.search-container {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: var(--light-color);
-    border: 1px solid var(--primary-color);
-    border-radius: 20px;
-    padding: 0 10px;
-    height: 31px;
-    transition: var(--transition);
-    margin-right: auto; /* Căn sang bên trái */
-    margin-left: 20px; /* Tạo khoảng cách với lề trái */
-}
-
-.search-input {
-    border: none;
-    outline: none;
-    flex: 1;
-    font-size: 0.9rem;
-    padding: 5px;
-    color: var(--dark-color);
-    background: transparent;
-}
-
-.search-button {
-    background: var(--primary-color);
-    border: none;
-    color: var(--light-color);
-    padding: 5px 10px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-}
-
-.search-button i {
-    font-size: 1rem;
-}
-
-.search-button:hover {
-    background: var(--secondary-color);
-}
-
-.search-container:hover {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Color cho tiêu đề H2 */
-.section-title h2 {
-    color: #073A4B;
-}
-
-
-</style>
-
-<!-- Thêm phần HTML này vào main-content -->
-<section class="section featured-section">
-    <div class="container">
-        <div class="section-title">
-<h2><i class="fas fa-star"></i> KIẾN THỨC ĐẦU TƯ</h2>
-            <p>Tổng hợp kiến thức về đầu tư, giao dịch ngoại hối, vàng, cổ phiếu quốc tế. </p>
+    <!-- Navigation Menu -->
+    <div class="nav-overlay"></div>
+    <nav class="nav-menu">
+        <div class="user-info">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733566394/IMG_0083_gcivuv.jpg" alt="User Avatar">
+            <h3>NOFAW</h3>
+            <p>Navigate Options, Flourish and Win!</p>
         </div>
 
-        <div class="carousel-container" id="carouselContainer">
+        <ul>
+            <li>
+                <a href="https://nofaw.com">
+                    <i class="fas fa-home"></i>
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a href="https://nofaw.com">
+                    <i class="fas fa-info-circle"></i>
+                    Về chúng tôi
+                </a>
+            </li>
+            <li class="has-submenu">
+                <a href="#">
+                    <i class="fas fa-chart-line"></i>
+                    Dịch vụ
+                </a>
+                <ul class="submenu">
+                    <li><a href="https://nofaw.com">Phân tích thị trường</a></li>
+                    <li><a href="https://nofaw.com">Tín hiệu giao dịch</a></li>
+                    <li><a href="https://nofaw.com">Đào tạo</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="https://nofaw.com">
+                    <i class="fas fa-newspaper"></i>
+                    Tin tức
+                </a>
+            </li>
+            <li>
+                <a href="https://nofaw.com">
+                    <i class="fas fa-envelope"></i>
+                    Liên hệ
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-            <!-- Card 1 -->
-
-<div class="carousel-card">
-<img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Mô tả hình ảnh bài viết">
-    <div class="card-content">
-        <span class="card-category">Chiến lược🔥</span>
-        <h3 class="card-title">Trang web đang được xây dựng 😝</h3>
-        <div class="card-meta">
-            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
-
-                Đọc thêm <i class="fas fa-arrow-right"></i>
+    <footer>
+        <p>© 2024 NOFAW. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://facebook.com/nofaw" target="_blank" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/nofaw" target="_blank" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://tiktok.com/nofaw" target="_blank" title="Tiktok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://telegram.org/nofaw" target="_blank" title="Telegram">
+                <i class="fab fa-telegram"></i>
             </a>
         </div>
-    </div>
-</div>
+    </footer>
 
-            <!-- Card 2 -->
-
-<div class="carousel-card">
-<img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Mô tả hình ảnh bài viết">
-    <div class="card-content">
-        <span class="card-category">Mục tiêu🎯</span>
-        <h3 class="card-title">Phát triển cộng đồng vững mạnh 🥰</h3>
-
-        <div class="card-meta">
-            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
-
-                Đọc thêm <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</div>
-
-            <!-- Card 3 -->
-
-<div class="carousel-card">
-<img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Mô tả hình ảnh bài viết">
-
-    <div class="card-content">
-        <span class="card-category">Đích đến✅</span>
-        <h3 class="card-title">Cùng nhau làm giàu💵</h3>
-
-        <div class="card-meta">
-            <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-            <a href="https://res.cloudinary.com/dpmutlzn6/image/upload/v1733484238/IMG_0056_o012ql.jpg" class="read-more">
-
-                Đọc thêm <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
-    </div>
-</div>
-
-
-            <!-- End Card -->
-
-
-        </div>
-        <div class="carousel-indicators" id="carouselIndicators"></div>
-    </div>
-</section>
-
-<!-- Strategy Section -->
-<section class="section strategy-section" style="background-color: var(--light-color);">
-    <div class="container">
-        <div class="section-title">
-            <h2><i class="fas fa-calendar"></i> SỰ KIỆN KINH TẾ</h2>
-            <p>Cùng xem những sự kiện quan trọng ảnh hưởng lớn đến giá cổ phiếu, kim loại, năng lượng và nhiều loại tài sản khác như thế nào.</p>
-        </div>
-        
-<div class="royal-carousel-container" id="royalCarouselContainer">
-    
-     <!-- Royal Card 1 -->
-    <div class="royal-card">
-        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733576809/IMG_0084_ydumrl.jpg" alt="Card 1">
-        <div class="card-content">
-            <h3 class="card-title">Nonfarm Payrolls (NFP)</h3>
-            <p class="card-text">Thứ Sáu đầu tiên mỗi tháng.</p>
-            <a href="https://car.mecwish.com" class="discover-btn">Xem thêm</a>
-        </div>
-    </div>
-
-    <!-- Royal Card 2 -->
-    <div class="royal-card">
-        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733577284/IMG_0085_urpq2h.jpg" alt="Card 2">
-        <div class="card-content">
-            <h3 class="card-title">CPI</h3>
-            <p class="card-text">Chỉ số giá tiêu dùng</p>
-            <a href="https://car.mecwish.com" class="discover-btn">Xem thêm</a>
-        </div>
-    </div>
-
-    <!-- Royal Card 3 -->
-    <div class="royal-card">
-        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733582026/IMG_0090_an4ee1.jpg" alt="Card 3">
-        <div class="card-content">
-            <h3 class="card-title">GPD</h3>
-            <p class="card-text">Tổng sản phẩm quốc nội</p>
-            <a href="https://car.mecwish.com" class="discover-btn">Xem thêm</a>
-        </div>
-    </div>
-
-    <!-- Royal Card 4 -->
-    <div class="royal-card">
-        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581445/IMG_0087_pu1cgz.jpg" alt="Card 4">
-        <div class="card-content">
-            <h3 class="card-title">FOMC Meetings</h3>
-            <p class="card-text">Chính sách lãi suất và tiền tệ.</p>
-            <a href="https://car.mecwish.com" class="discover-btn">Xem thêm</a>
-        </div>
-    </div>
-
-    <!-- Royal Card 5 -->
-    <div class="royal-card">
-        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581588/IMG_0088_wk81qd.png" alt="Card 5">
-        <div class="card-content">
-            <h3 class="card-title">ISM Manufacturing PMI</h3>
-            <p class="card-text">Chỉ số sản xuất ISM</p>
-            <a href="https://car.mecwish.com" class="discover-btn">Xem thêm</a>
-        </div>
-    </div>
-</div>
-<div class="royal-carousel-indicators" id="royalCarouselIndicators"></div>
-    </div>
-</section>
-
-<!-- Market Trends Section -->
-<section class="section trends-section">
-    <div class="container">
-<div class="section-title">
-    <h2><i class="fas fa-chart-bar"></i> Xu Hướng Thị Trường</h2>
-</div>
-<div style="display: flex; justify-content: center;">
-    <p>Cập nhật giá vàng thị trường Việt Nam</p>
-</div>
-        </div>
-        <div class="grid">
-            <!-- Thêm các card cho phần xu hướng -->
-        </div>
-    </div>
-</section>
-
-    <div id="gia-vang-viet-nam" show-chart="true" show-prices="sjc,pnj,doji,phuquy,btmc,mihong" show-xauusd="true" show-exchange="true"></div>
-
-<!-- Thêm style cho footer vào trong thẻ style ở head -->
-<style>
-    /* Footer Styles */
-    footer {
-        background-color: var(--dark-color);
-        color: var(--light-color);
-        padding: 1rem;
-        text-align: center;
-        width: 100%;
-        margin-top: auto;
-    }
-
-    footer p {
-        margin-bottom: 0.5rem;
-    }
-
-    .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-top: 0.8rem;
-    }
-
-    .social-icons a {
-        color: var(--light-color);
-        text-decoration: none;
-        font-size: 1.2rem;
-        transition: var(--transition);
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .social-icons a:hover {
-        background: var(--primary-color);
-        transform: translateY(-3px);
-    }
-
-    @media (max-width: 768px) {
-        footer {
-            padding: 0.8rem;
-        }
-        
-        .social-icons {
-            margin-top: 0.5rem;
-        }
-        
-        .social-icons a {
-            width: 30px;
-            height: 30px;
-            font-size: 1rem;
-        }
-    }
-
-
-/* Navigation Menu Styles */
-.nav-menu {
-    position: fixed;
-    top: 50px; /* Để menu nằm dưới header */
-    left: -300px; /* Ẩn menu ban đầu */
-    width: 300px;
-    height: calc(100vh - 50px);
-    background-color: #333;
-    transition: 0.3s;
-    z-index: 999;
-    overflow-y: auto;
-    padding: 20px 0;
-}
-
-.nav-menu.active {
-    left: 0;
-}
-
-.nav-overlay {
-    position: fixed;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    z-index: 998;
-}
-
-.nav-overlay.active {
-    display: block;
-}
-
-.nav-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-menu li {
-    padding: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nav-menu a {
-    display: flex;
-    align-items: center;
-    padding: 15px 25px;
-    color: #fff;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 16px;
-}
-
-.nav-menu a:hover {
-    background-color: var(--primary-color);
-    padding-left: 30px;
-}
-
-.nav-menu i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
-}
-
-/* Submenu styles */
-.submenu {
-    background-color: rgba(0, 0, 0, 0.2);
-    display: none;
-}
-
-.submenu.active {
-    display: block;
-}
-
-.nav-menu li.has-submenu > a::after {
-    content: '\f107';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    margin-left: auto;
-    transition: 0.3s;
-}
-
-.nav-menu li.has-submenu.active > a::after {
-    transform: rotate(180deg);
-}
-
-.submenu a {
-    padding-left: 50px;
-}
-
-.submenu a:hover {
-    padding-left: 55px;
-}
-
-/* User info section */
-.user-info {
-    padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.user-info img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-.user-info h3 {
-    margin: 0;
-    font-size: 18px;
-    color: var(--primary-color);
-}
-
-.user-info p {
-    margin: 5px 0 0;
-    font-size: 14px;
-    opacity: 0.7;
-}
-
-@media (max-width: 768px) {
-    .nav-menu {
-        width: 260px;
-    }
-}
-
-</style>
-
-<div class="nav-overlay"></div>
-<nav class="nav-menu">
-    <!-- User Info Section -->
-    <div class="user-info">
-        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733566394/IMG_0083_gcivuv.jpg" alt="User Avatar">
-        <h3>NOFAW</h3>
-        <p>Navigate Options, Flourish and Win!</p>
-    </div>
-    
-    <!-- Navigation Links -->
-    <ul>
-        <li>
-            <a href="https://nofaw.com">
-                <i class="fas fa-home"></i>
-                Trang chủ
-            </a>
-        </li>
-        <li>
-            <a href="https://nofaw.com">
-                <i class="fas fa-info-circle"></i>
-                Về chúng tôi
-            </a>
-        </li>
-        <li class="has-submenu">
-            <a href="#">
-                <i class="fas fa-chart-line"></i>
-                Dịch vụ
-            </a>
-            <ul class="submenu">
-                <li><a href="https://nofaw.com">Phân tích thị trường</a></li>
-                <li><a href="https://nofaw.com">Tín hiệu giao dịch</a></li>
-                <li><a href="https://nofaw.com">Đào tạo</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="https://nofaw.com">
-                <i class="fas fa-newspaper"></i>
-                Tin tức
-            </a>
-        </li>
-        <li>
-            <a href="https://nofaw.com">
-                <i class="fas fa-envelope"></i>
-                Liên hệ
-            </a>
-        </li>
-    </ul>
-</nav>
-
-
-
-<!-- Thêm footer trước khi đóng thẻ body -->
-</main>
-
-<footer>
-    <p>© 2024 NOFAW. All rights reserved.</p>
-    <div class="social-icons">
-        <a href="https://facebook.com/nofaw" target="_blank" title="Facebook">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://twitter.com/nofaw" target="_blank" title="Twitter">
-            <i class="fab fa-twitter"></i>
-        </a>
-        <a href="https://tiktok.com/nofaw" target="_blank" title="Tiktok">
-            <i class="fab fa-tiktok"></i>
-        </a>
-        <a href="https://telegram.org/nofaw" target="_blank" title="Telegram">
-            <i class="fab fa-telegram"></i>
-        </a>
-    </div>
-</footer>
-
-<!-- Thêm script trước đóng thẻ body -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const cards = Array.from(document.querySelectorAll('.carousel-card'));
-        const container = document.getElementById('carouselContainer');
-        const indicators = document.getElementById('carouselIndicators');
-        let currentIndex = 0;
-        let startX = 0;
-        let startY = 0;
-        let isDragging = false;
-        let isScrolling = false;
+        document.addEventListener('DOMContentLoaded', function () {
+            // Featured Carousel Logic
+            const carouselCards = Array.from(document.querySelectorAll('.carousel-card'));
+            const carouselContainer = document.getElementById('carouselContainer');
+            const carouselIndicatorsContainer = document.getElementById('carouselIndicators');
+            let currentCarouselIndex = 0;
+            let carouselStartX = 0;
+            let carouselIsDragging = false;
 
-        // Create indicators
-        cards.forEach((_, index) => {
-            const indicator = document.createElement('div');
-            indicator.className = 'indicator';
-            indicator.addEventListener('click', () => goToCard(index));
-            indicators.appendChild(indicator);
-        });
+            // Create indicators for Featured Carousel
+            carouselCards.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.classList.add('indicator');
+                indicator.addEventListener('click', () => goToCarouselCard(index));
+                carouselIndicatorsContainer.appendChild(indicator);
+            });
 
-        const indicatorDots = Array.from(document.querySelectorAll('.indicator'));
+            const carouselIndicatorDots = Array.from(document.querySelectorAll('.indicator'));
 
-        function updateCards() {
-            cards.forEach((card, index) => {
-                card.classList.remove('active', 'prev', 'next');
-                indicatorDots[index].classList.remove('active');
-                
-                if (index === currentIndex) {
-                    card.classList.add('active');
-                    indicatorDots[index].classList.add('active');
-                } else if (index === getPrevIndex()) {
-                    card.classList.add('prev');
-                } else if (index === getNextIndex()) {
-                    card.classList.add('next');
+            function updateCarouselCards() {
+                carouselCards.forEach((card, index) => {
+                    card.classList.remove('active', 'prev', 'next');
+                    carouselIndicatorDots[index].classList.remove('active');
+
+                    if (index === currentCarouselIndex) {
+                        card.classList.add('active');
+                        carouselIndicatorDots[index].classList.add('active');
+                    } else if (index === getPrevCarouselIndex()) {
+                        card.classList.add('prev');
+                    } else if (index === getNextCarouselIndex()) {
+                        card.classList.add('next');
+                    }
+                });
+            }
+
+            function getPrevCarouselIndex() {
+                return (currentCarouselIndex - 1 + carouselCards.length) % carouselCards.length;
+            }
+
+            function getNextCarouselIndex() {
+                return (currentCarouselIndex + 1) % carouselCards.length;
+            }
+
+            function nextCarouselCard() {
+                currentCarouselIndex = getNextCarouselIndex();
+                updateCarouselCards();
+            }
+
+            function prevCarouselCard() {
+                currentCarouselIndex = getPrevCarouselIndex();
+                updateCarouselCards();
+            }
+
+            function goToCarouselCard(index) {
+                if (index === currentCarouselIndex) return;
+                currentCarouselIndex = index;
+                updateCarouselCards();
+            }
+
+            // Touch events for Featured Carousel
+            carouselContainer.addEventListener('touchstart', (e) => {
+                carouselStartX = e.touches[0].clientX;
+                carouselIsDragging = false;
+            }, { passive: true });
+
+            carouselContainer.addEventListener('touchmove', (e) => {
+                if (!carouselStartX) return;
+                const diffX = e.touches[0].clientX - carouselStartX;
+                if (Math.abs(diffX) > 10) {
+                    e.preventDefault();
+                    carouselIsDragging = true;
+                }
+            }, { passive: false });
+
+            carouselContainer.addEventListener('touchend', (e) => {
+                if (!carouselIsDragging) return;
+                const diffX = e.changedTouches[0].clientX - carouselStartX;
+                if (Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        prevCarouselCard();
+                    } else {
+                        nextCarouselCard();
+                    }
+                }
+                carouselStartX = 0;
+            });
+
+            // Mouse events for Featured Carousel
+            carouselContainer.addEventListener('mousedown', (e) => {
+                carouselIsDragging = true;
+                carouselStartX = e.clientX;
+                carouselContainer.style.cursor = 'grabbing';
+            });
+
+            carouselContainer.addEventListener('mousemove', (e) => {
+                if (!carouselIsDragging) return;
+                const diffX = e.clientX - carouselStartX;
+
+                if (Math.abs(diffX) > 100) {
+                    if (diffX > 0) {
+                        prevCarouselCard();
+                    } else {
+                        nextCarouselCard();
+                    }
+                    carouselIsDragging = false;
+                    carouselContainer.style.cursor = 'grab';
                 }
             });
-        }
 
-        function getPrevIndex() {
-            return (currentIndex - 1 + cards.length) % cards.length;
-        }
+            carouselContainer.addEventListener('mouseup', () => {
+                carouselIsDragging = false;
+                carouselContainer.style.cursor = 'grab';
+            });
 
-        function getNextIndex() {
-            return (currentIndex + 1) % cards.length;
-        }
+            carouselContainer.addEventListener('mouseleave', () => {
+                carouselIsDragging = false;
+                carouselContainer.style.cursor = 'grab';
+            });
 
-        function nextCard() {
-            currentIndex = getNextIndex();
-            updateCards();
-        }
+            // Auto slide for Featured Carousel
+            let carouselAutoSlideInterval = setInterval(nextCarouselCard, 3000);
 
-        function prevCard() {
-            currentIndex = getPrevIndex();
-            updateCards();
-        }
+            carouselContainer.addEventListener('mouseenter', () => {
+                clearInterval(carouselAutoSlideInterval);
+            });
 
-        function goToCard(index) {
-            if (index === currentIndex) return;
-            currentIndex = index;
-            updateCards();
-        }
+            carouselContainer.addEventListener('mouseleave', () => {
+                carouselAutoSlideInterval = setInterval(nextCarouselCard, 3000);
+            });
 
-        // Touch events
-        container.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-            isScrolling = false;
-        }, { passive: true });
+            // Initialize Featured Carousel
+            updateCarouselCards();
 
-        container.addEventListener('touchmove', (e) => {
-            if (!startX || isScrolling) return;
+            // Royal Carousel Logic (Strategy Section)
+            const royalCards = Array.from(document.querySelectorAll('.royal-card'));
+            const royalContainer = document.getElementById('royalCarouselContainer');
+            const royalIndicatorsContainer = document.getElementById('royalCarouselIndicators');
+            let royalCurrentIndex = 0;
+            let royalStartX = 0;
+            let royalIsDragging = false;
 
-            const diffX = e.touches[0].clientX - startX;
-            const diffY = e.touches[0].clientY - startY;
+            // Create indicators for Royal Carousel
+            royalCards.forEach((_, index) => {
+                const royalIndicator = document.createElement('div');
+                royalIndicator.classList.add('royal-indicator');
+                royalIndicator.addEventListener('click', () => goToRoyalCard(index));
+                royalIndicatorsContainer.appendChild(royalIndicator);
+            });
 
-            if (!isScrolling) {
-                isScrolling = Math.abs(diffY) > Math.abs(diffX);
-                if (!isScrolling) {
+            const royalIndicatorDots = Array.from(document.querySelectorAll('.royal-indicator'));
+
+            function updateRoyalCards() {
+                royalCards.forEach((card, index) => {
+                    card.classList.remove('active', 'prev', 'next');
+                    royalIndicatorDots[index].classList.remove('active');
+
+                    if (index === royalCurrentIndex) {
+                        card.classList.add('active');
+                        royalIndicatorDots[index].classList.add('active');
+                    } else if (index === getRoyalPrevIndex()) {
+                        card.classList.add('prev');
+                    } else if (index === getRoyalNextIndex()) {
+                        card.classList.add('next');
+                    }
+                });
+            }
+
+            function getRoyalPrevIndex() {
+                return (royalCurrentIndex - 1 + royalCards.length) % royalCards.length;
+            }
+
+            function getRoyalNextIndex() {
+                return (royalCurrentIndex + 1) % royalCards.length;
+            }
+
+            function nextRoyalCard() {
+                royalCurrentIndex = getRoyalNextIndex();
+                updateRoyalCards();
+            }
+
+            function prevRoyalCard() {
+                royalCurrentIndex = getRoyalPrevIndex();
+                updateRoyalCards();
+            }
+
+            function goToRoyalCard(index) {
+                if (index === royalCurrentIndex) return;
+                royalCurrentIndex = index;
+                updateRoyalCards();
+            }
+
+            // Touch events for Royal Carousel
+            royalContainer.addEventListener('touchstart', (e) => {
+                royalStartX = e.touches[0].clientX;
+                royalIsDragging = false;
+            }, { passive: true });
+
+            royalContainer.addEventListener('touchmove', (e) => {
+                if (!royalStartX) return;
+                const diffX = e.touches[0].clientX - royalStartX;
+                if (Math.abs(diffX) > 10) {
                     e.preventDefault();
+                    royalIsDragging = true;
                 }
-            }
-        }, { passive: false });
+            }, { passive: false });
 
-        container.addEventListener('touchend', (e) => {
-            if (isScrolling) return;
+            royalContainer.addEventListener('touchend', (e) => {
+                if (!royalIsDragging) return;
+                const diffX = e.changedTouches[0].clientX - royalStartX;
+                if (Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        prevRoyalCard();
+                    } else {
+                        nextRoyalCard();
+                    }
+                }
+                royalStartX = 0;
+            });
 
-            const diffX = e.changedTouches[0].clientX - startX;
-            if (Math.abs(diffX) > 50) {
-                if (diffX > 0) {
-                    prevCard();
+            // Mouse events for Royal Carousel
+            royalContainer.addEventListener('mousedown', (e) => {
+                royalIsDragging = true;
+                royalStartX = e.clientX;
+                royalContainer.style.cursor = 'grabbing';
+            });
+
+            royalContainer.addEventListener('mousemove', (e) => {
+                if (!royalIsDragging) return;
+                const diffX = e.clientX - royalStartX;
+
+                if (Math.abs(diffX) > 100) {
+                    if (diffX > 0) {
+                        prevRoyalCard();
+                    } else {
+                        nextRoyalCard();
+                    }
+                    royalIsDragging = false;
+                    royalContainer.style.cursor = 'grab';
+                }
+            });
+
+            royalContainer.addEventListener('mouseup', () => {
+                royalIsDragging = false;
+                royalContainer.style.cursor = 'grab';
+            });
+
+            royalContainer.addEventListener('mouseleave', () => {
+                royalIsDragging = false;
+                royalContainer.style.cursor = 'grab';
+            });
+
+            // Auto slide for Royal Carousel
+            let royalAutoSlideInterval = setInterval(nextRoyalCard, 3000);
+
+            royalContainer.addEventListener('mouseenter', () => {
+                clearInterval(royalAutoSlideInterval);
+            });
+
+            royalContainer.addEventListener('mouseleave', () => {
+                royalAutoSlideInterval = setInterval(nextRoyalCard, 3000);
+            });
+
+            // Initialize Royal Carousel
+            updateRoyalCards();
+
+            // Search Functionality
+            const searchButton = document.querySelector('.search-button');
+            const searchInput = document.querySelector('.search-input');
+
+            function performSearch() {
+                const query = searchInput.value.toLowerCase().trim();
+                const contentElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, .card-title, .card-text');
+                let matchCount = 0;
+
+                contentElements.forEach(element => {
+                    element.style.backgroundColor = '';
+                    element.innerHTML = element.textContent;
+                });
+
+                if (!query) {
+                    alert('Vui lòng nhập từ khóa tìm kiếm');
+                    return;
+                }
+
+                let firstMatch = null;
+                contentElements.forEach(element => {
+                    const text = element.textContent.toLowerCase();
+                    const regex = new RegExp(query, 'gi');
+                    if (text.includes(query)) {
+                        matchCount++;
+                        if (!firstMatch) firstMatch = element;
+                        element.innerHTML = element.textContent.replace(regex, (match) => `<span style="background-color: yellow;">${match}</span>`);
+                    }
+                });
+
+                if (matchCount > 0) {
+                    alert(`Tìm thấy ${matchCount} kết quả`);
+                    firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
-                    nextCard();
+                    alert('Không tìm thấy kết quả nào');
                 }
             }
-            startX = 0;
-            startY = 0;
-        });
 
-        // Mouse events
-        container.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            container.style.cursor = 'grabbing';
-        });
+            searchButton.addEventListener('click', performSearch);
 
-        container.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            const diffX = e.clientX - startX;
-            
-            if (Math.abs(diffX) > 100) {
-                if (diffX > 0) {
-                    prevCard();
-                } else {
-                    nextCard();
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    performSearch();
                 }
-                isDragging = false;
-                container.style.cursor = 'grab';
+            });
+
+            // Gold Price Widget
+            const script = document.createElement('script');
+            script.src = 'https://cls.giavangvietnam.com/js/widget.js?t=' + Date.now();
+            script.async = true;
+            document.body.appendChild(script);
+
+            // Toggle Menu
+            const menuIcon = document.querySelector('.menu-icon');
+            const navMenu = document.querySelector('.nav-menu');
+            const overlay = document.querySelector('.nav-overlay');
+
+            function toggleMenu() {
+                navMenu.classList.toggle('active');
+                overlay.classList.toggle('active');
+                menuIcon.textContent = navMenu.classList.contains('active') ? '×' : '☰';
             }
+
+            menuIcon.addEventListener('click', toggleMenu);
+            overlay.addEventListener('click', toggleMenu);
+
+            // Submenu Functionality
+            const submenuItems = document.querySelectorAll('.has-submenu');
+
+            submenuItems.forEach(item => {
+                item.addEventListener('click', function (e) {
+                    const submenu = this.querySelector('.submenu');
+                    if (submenu) {
+                        e.preventDefault();
+                        this.classList.toggle('active');
+                        submenu.classList.toggle('active');
+                    }
+                });
+            });
+
+            // Close menu when clicking outside or pressing Escape key
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !menuIcon.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuIcon.textContent = '☰';
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    navMenu.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuIcon.textContent = '☰';
+                }
+            });
         });
-
-        container.addEventListener('mouseup', () => {
-            isDragging = false;
-            container.style.cursor = 'grab';
-        });
-
-        container.addEventListener('mouseleave', () => {
-            isDragging = false;
-            container.style.cursor = 'grab';
-        });
-
-        // Auto slide
-        let autoSlideInterval;
-
-        function startAutoSlide() {
-            autoSlideInterval = setInterval(nextCard, 3000);
-        }
-
-        function stopAutoSlide() {
-            clearInterval(autoSlideInterval);
-        }
-
-        // Pause on hover/touch
-        container.addEventListener('mouseenter', stopAutoSlide);
-        container.addEventListener('mouseleave', startAutoSlide);
-        container.addEventListener('touchstart', stopAutoSlide);
-        container.addEventListener('touchend', startAutoSlide);
-
-        // Initialize
-        updateCards();
-        startAutoSlide();
-    });
-
-
-
-    // Lấy các phần tử cần tìm kiếm và các thẻ HTML
-const searchButton = document.querySelector('.search-button');
-const searchInput = document.querySelector('.search-input'); // Sửa selector cho đúng
-
-searchButton.addEventListener('click', function () {
-    const query = searchInput.value.toLowerCase().trim();
-    const contentElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
-    let matchCount = 0;
-    
-    // Reset highlighting từ lần tìm kiếm trước
-    contentElements.forEach(element => {
-        element.style.backgroundColor = '';
-    });
-
-    // Nếu query rỗng, không thực hiện tìm kiếm
-    if (!query) {
-        alert('Vui lòng nhập từ khóa tìm kiếm');
-        return;
-    }
-
-    // Thực hiện tìm kiếm
-    let firstMatch = null;
-    contentElements.forEach(function (element) {
-        if (element.textContent.toLowerCase().includes(query)) {
-            element.style.backgroundColor = 'yellow';
-            matchCount++;
-            if (!firstMatch) firstMatch = element;
-        }
-    });
-
-    // Xử lý kết quả tìm kiếm
-    if (matchCount > 0) {
-        alert(`Tìm thấy ${matchCount} kết quả`);
-        // Scroll đến kết quả đầu tiên
-        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-        alert('Không tìm thấy kết quả nào');
-    }
-});
-
-// Tìm kiếm khi nhấn Enter
-searchInput.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-        searchButton.click();
-    }
-});
-
-
-
-        const script = document.createElement('script');
-        script.src = 'https://cls.giavangvietnam.com/js/widget.js?t=' + Date.now();
-        script.async = true;
-        document.body.appendChild(script);
-
-
-
-
-
-
-
-// Toggle Menu
-const menuIcon = document.querySelector('.menu-icon');
-const navMenu = document.querySelector('.nav-menu');
-const overlay = document.querySelector('.nav-overlay');
-
-menuIcon.addEventListener('click', toggleMenu);
-overlay.addEventListener('click', toggleMenu);
-
-function toggleMenu() {
-    navMenu.classList.toggle('active');
-    overlay.classList.toggle('active');
-    menuIcon.textContent = navMenu.classList.contains('active') ? '×' : '☰';
-}
-
-// Submenu functionality
-const submenuItems = document.querySelectorAll('.has-submenu');
-
-submenuItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-        const submenu = this.querySelector('.submenu');
-        if (submenu) {
-            e.preventDefault();
-            this.classList.toggle('active');
-            submenu.classList.toggle('active');
-        }
-    });
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', function(e) {
-    if (!navMenu.contains(e.target) && !menuIcon.contains(e.target)) {
-        navMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        menuIcon.textContent = '☰';
-    }
-});
-
-// Close menu when pressing Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        navMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        menuIcon.textContent = '☰';
-    }
-});
-
-
-
-
-// Royal Carousel JavaScript (thay thế phần royal carousel javascript cũ)
-document.addEventListener('DOMContentLoaded', function() {
-    const royalCards = Array.from(document.querySelectorAll('.royal-card'));
-    const royalContainer = document.getElementById('royalCarouselContainer');
-    const royalIndicators = document.getElementById('royalCarouselIndicators');
-    let royalCurrentIndex = 0;
-    let royalStartX = 0;
-    let royalStartY = 0;
-    let royalIsDragging = false;
-    let royalIsScrolling = false;
-
-
-// Touch events cho Royal Carousel
-royalContainer.addEventListener('touchstart', (e) => {
-    royalStartX = e.touches[0].clientX;
-    royalStartY = e.touches[0].clientY;
-    royalIsScrolling = false;
-}, { passive: true });
-
-royalContainer.addEventListener('touchmove', (e) => {
-    if (!royalStartX || royalIsScrolling) return;
-    
-    const diffX = e.touches[0].clientX - royalStartX;
-    const diffY = e.touches[0].clientY - royalStartY;
-
-    if (!royalIsScrolling) {
-        royalIsScrolling = Math.abs(diffY) > Math.abs(diffX);
-        if (!royalIsScrolling) {
-            e.preventDefault();
-        }
-    }
-}, { passive: false });
-
-royalContainer.addEventListener('touchend', (e) => {
-    if (royalIsScrolling) return;
-    
-    const diffX = e.changedTouches[0].clientX - royalStartX;
-    if (Math.abs(diffX) > 50) {
-        if (diffX > 0) {
-            prevRoyalCard();
-        } else {
-            nextRoyalCard();
-        }
-    }
-    royalStartX = 0;
-    royalStartY = 0;
-});
-
-
-
-
-    // Create indicators
-    royalCards.forEach((_, index) => {
-        const indicator = document.createElement('div');
-        indicator.className = 'royal-indicator';
-        indicator.addEventListener('click', () => goToRoyalCard(index));
-        royalIndicators.appendChild(indicator);
-    });
-
-    const royalIndicatorDots = Array.from(document.querySelectorAll('.royal-indicator'));
-
-    function updateRoyalCards() {
-        royalCards.forEach((card, index) => {
-            card.classList.remove('active', 'prev', 'next');
-            royalIndicatorDots[index].classList.remove('active');
-            
-            if (index === royalCurrentIndex) {
-                card.classList.add('active');
-                royalIndicatorDots[index].classList.add('active');
-            } else if (index === getRoyalPrevIndex()) {
-                card.classList.add('prev');
-            } else if (index === getRoyalNextIndex()) {
-                card.classList.add('next');
-            }
-        });
-    }
-
-    function getRoyalPrevIndex() {
-        return (royalCurrentIndex - 1 + royalCards.length) % royalCards.length;
-    }
-
-    function getRoyalNextIndex() {
-        return (royalCurrentIndex + 1) % royalCards.length;
-    }
-
-    function nextRoyalCard() {
-        royalCurrentIndex = getRoyalNextIndex();
-        updateRoyalCards();
-    }
-
-    function prevRoyalCard() {
-        royalCurrentIndex = getRoyalPrevIndex();
-        updateRoyalCards();
-    }
-
-    function goToRoyalCard(index) {
-        if (index === royalCurrentIndex) return;
-        royalCurrentIndex = index;
-        updateRoyalCards();
-    }
-
-    // Initialize
-    updateRoyalCards();
-    
-    // Auto slide
-    let royalAutoSlideInterval = setInterval(nextRoyalCard, 3000);
-
-    royalContainer.addEventListener('mouseenter', () => {
-        clearInterval(royalAutoSlideInterval);
-    });
-
-    royalContainer.addEventListener('mouseleave', () => {
-        royalAutoSlideInterval = setInterval(nextRoyalCard, 3000);
-    });
-});
     </script>
 </body>
 </html>
