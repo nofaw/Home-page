@@ -9,6 +9,21 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Favicon cơ bản -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/apple-touch-icon_sa4iwc.png">
+    
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771935/android-chrome-192x192_madhgp.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/android-chrome-512x512_vxgb00.png">
+    
+    <!-- For các thiết bị khác -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-32x32_qmth0k.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-16x16_fzo41t.png">
+
     
     <style>
         /* Reset & Variables */
@@ -34,7 +49,7 @@
             background-color: var(--light-gray);
             line-height: 1.6;
             overflow-x: hidden;
-            height: 100%;
+            min-height: 100vh;
         }
 
         body {
@@ -93,7 +108,49 @@
     opacity: 0.8; /* Hiệu ứng khi hover */
 }
  
+    /* Styles mới cho logo */
+    .logo-container {
+        background: var(--light-color);
+        padding: 2px 8px;
+        border-radius: 6px;
+        transition: var(--transition);
+    }
 
+    .logo-container:hover {
+        opacity: 0.8;
+    }
+
+    .logo-container a {
+        text-decoration: none;
+        display: block;
+    }
+
+    .logo-svg {
+        height: 35px;
+        width: auto;
+        display: block;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .logo-svg {
+            height: 30px;
+        }
+        
+        .search-input {
+            width: 120px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .search-input {
+            width: 100px;
+        }
+        
+        .logo-svg {
+            height: 25px;
+        }
+    }
 
         .menu-icon {
             font-size: 2.5rem;
@@ -113,7 +170,7 @@
             height: 31px;
             transition: var(--transition);
             margin-right: auto;
-            margin-left: 20px;
+            margin-left: 30px;
         }
 
         .search-input {
@@ -151,9 +208,10 @@
         /* Article Styles */
         .article {
             background: var(--light-color);
-            padding: 2rem;
+            padding: 1rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px 10px;
         }
 
         .article h1 {
@@ -475,10 +533,17 @@ figcaption {
             <input type="text" placeholder="Tìm kiếm..." class="search-input">
             <button class="search-button"><i class="fas fa-search"></i></button>
         </div>
-        <div class="logo-text-container">
-<div class="logo-text-container">
-    <a href="https://nofaw.com" class="logo-text">NOFAW</a>
-</div>
+    <div class="logo-container">
+        <a href="https://nofaw.com">
+            <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+                <text x="20" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">N</text>
+                <text x="65" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">O</text>
+                <text x="115" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">F</text>
+                <text x="155" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">A</text>
+                <text x="205" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">W</text>
+            </svg>
+        </a>
+    </div>
         </div>
     </header>
 
@@ -503,7 +568,7 @@ figcaption {
             </a>
         </li>
         <li>
-            <a href="https://nofaw.com">
+            <a href="https://nofaw.com/about-us">
                 <i class="fas fa-info-circle"></i>
                 Về chúng tôi
             </a>
@@ -520,7 +585,7 @@ figcaption {
             </ul>
         </li>
         <li>
-            <a href="https://nofaw.com">
+            <a href="https://nofaw.com/news">
                 <i class="fas fa-newspaper"></i>
                 Tin tức
             </a>
@@ -542,26 +607,66 @@ figcaption {
         <article class="article">
 <h1>Cục Dự trữ Liên bang Hoa Kỳ (FED)</h1>
             <div class="article-meta">
-                <span><i class="far fa-calendar"></i> Ngày đăng: 07/12/2024</span>
-                <span><i class="far fa-user"></i> Tác giả: Maverick</span>
+                <span><i class="far fa-calendar"></i> Ngày đăng: 10/12/2024</span>
+                <span><i class="far fa-user"></i> Tác giả: Nofaw Trading</span>
             </div>
             <div class="article-content">
-                <!-- Nội dung bài viết sẽ được thêm vào đây -->
-                <p>Cơ quan điều hành kinh tế hàng đầu thế giới
+                
 
-    <figure class="image-container">
-        <img src="1.jpg" alt="Hình ảnh minh họa" class="article-image">
-        <figcaption>Chú thích hình ảnh: Đây là một hình ảnh minh họa.</figcaption>
+
+
+<!-- Nội dung bài viết -->
+                <p><p>Cục Dự trữ Liên bang Hoa Kỳ (FED): Tổ chức Tài chính Quyền lực Nhất Thế giới</p>
+ 
+   <figure class="image-container">
+        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581588/IMG_0088_wk81qd.jpg" alt="Hình ảnh minh họa" class="article-image">
+        <figcaption>Federal Reserve System (FED): Cơ quan điều hành kinh tế hàng đầu thế giới.</figcaption>
     </figure>
 
-FED vẫn là trung tâm của hệ thống tài chính quốc tế, nơi mọi quyết định có thể định hình tương lai kinh tế của cả thế giới.
-
-    <figure class="image-container">
-        <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Hình ảnh minh họa" class="article-image">
-        <figcaption>Chú thích hình ảnh: Đây là một hình ảnh minh họa.</figcaption>
+<p>Cục Dự trữ Liên bang Hoa Kỳ, thường được gọi là FED (Federal Reserve System), là ngân hàng trung ương của Hoa Kỳ, chịu trách nhiệm quản lý chính sách tiền tệ của nền kinh tế lớn nhất thế giới. Được thành lập vào năm 1913, FED không chỉ đóng vai trò quan trọng đối với nền kinh tế Mỹ mà còn có ảnh hưởng mạnh mẽ đến thị trường tài chính toàn cầu.</p>
+<h3>Lịch sử hình thành của FED</h3>
+<p>Trước khi FED được thành lập, Hoa Kỳ trải qua nhiều cuộc khủng hoảng tài chính do hệ thống ngân hàng thiếu ổn định. Đặc biệt, cuộc khủng hoảng tài chính năm 1907 đã khiến Quốc hội Mỹ nhận ra sự cần thiết phải có một tổ chức trung ương để điều tiết ngân hàng và kiểm soát cung tiền.</p>
+   <figure class="image-container">
+        <img src="https://image.vietstock.vn/2024/12/09/fed-9-12.png" alt="Hình ảnh minh họa" class="article-image">
+        <figcaption>FED được thành lập vào năm 1913.</figcaption>
     </figure>
+<p>Năm 1913, Tổng thống Woodrow Wilson ký Đạo luật Dự trữ Liên bang, đánh dấu sự ra đời của FED. Đây là một tổ chức được thiết kế để cân bằng lợi ích của các ngân hàng tư nhân và chính phủ, đồng thời bảo vệ nền kinh tế khỏi những biến động lớn.</p>
+<h3>Cấu trúc tổ chức của FED</h3>
+<p>FED là một hệ thống phức tạp với ba thành phần chính:<br>	1.	Hội đồng Thống đốc (Board of Governors): <br>Gồm 7 thành viên được Tổng thống Mỹ bổ nhiệm và Thượng viện phê chuẩn, chịu trách nhiệm giám sát và thiết lập chính sách tiền tệ.<br>	2.	12 Ngân hàng Dự trữ Liên bang Khu vực:<br>Mỗi ngân hàng phục vụ một khu vực cụ thể của Hoa Kỳ, chịu trách nhiệm thực hiện các chính sách do Hội đồng Thống đốc đề ra và hỗ trợ hoạt động ngân hàng địa phương.<br>	3.	Ủy ban Thị trường Mở Liên bang (FOMC):<br>Đây là cơ quan quan trọng nhất của FED, bao gồm 7 thành viên Hội đồng Thống đốc và 5 trong số 12 Chủ tịch Ngân hàng Dự trữ Liên bang Khu vực. FOMC quản lý các hoạt động thị trường mở như mua hoặc bán trái phiếu chính phủ để kiểm soát cung tiền.</p>
+   <figure class="image-container">
+        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733576809/IMG_0084_ydumrl.jpg" alt="Hình ảnh minh họa" class="article-image">
+        <figcaption>Chủ tịch Cục Dự trữ Liên bang Mỹ (FED).<br> Jerome Powell</figcaption>
+    </figure>
+<h3>Chức năng chính của FED</h3>
+<p>FED có bốn chức năng quan trọng nhất:</p>
+<p>1. Quản lý chính sách tiền tệ</p>
+<p>FED sử dụng các công cụ như lãi suất, tỷ lệ dự trữ bắt buộc, và các giao dịch trên thị trường mở để kiểm soát lạm phát, thất nghiệp, và ổn định giá cả. Mục tiêu chính là duy trì một nền kinh tế bền vững và ổn định.</p>
+<p>2. Giám sát và điều tiết ngân hàng</p>
+<p>FED đảm bảo rằng các ngân hàng thương mại hoạt động một cách an toàn, lành mạnh, và tuân thủ quy định để bảo vệ người gửi tiền và ngăn chặn các rủi ro hệ thống.</p>
+<p>3. Ổn định hệ thống tài chính</p>
+<p>Trong các cuộc khủng hoảng tài chính, FED đóng vai trò “người cho vay cuối cùng”, cung cấp thanh khoản để duy trì hoạt động của thị trường tài chính.</p>
+<p>4. Cung cấp dịch vụ tài chính</p>
+<p>FED xử lý các giao dịch thanh toán cho chính phủ Hoa Kỳ, phát hành tiền tệ, và quản lý dự trữ ngoại hối.</p>
+<h3>Tầm ảnh hưởng của FED</h3>
+<p>FED có quyền lực đặc biệt trong việc định hình nền kinh tế Mỹ và thế giới. Mỗi khi FED thay đổi lãi suất hoặc đưa ra thông báo về chính sách tiền tệ, thị trường tài chính toàn cầu đều phản ứng mạnh mẽ.</p>
+<p>Ví dụ về tác động:</p>
+<p>•	Khi FED tăng lãi suất:<br>Đồng USD tăng giá, làm giảm dòng vốn vào các thị trường mới nổi, gây áp lực lên các nền kinh tế đang phát triển.<br>	•	Khi FED nới lỏng chính sách:<br>Thanh khoản tăng, thúc đẩy đầu tư, nhưng cũng có nguy cơ làm tăng lạm phát toàn cầu.</p>
+<p>Các cuộc khủng hoảng và vai trò của FED</p>
+<p>FED đã đóng vai trò quan trọng trong việc xử lý nhiều cuộc khủng hoảng kinh tế:<br>	•	Đại suy thoái năm 1930:<br>FED bị chỉ trích vì không bơm đủ thanh khoản vào hệ thống, góp phần làm trầm trọng thêm suy thoái.<br>	•	Khủng hoảng tài chính 2008:<br>FED cắt giảm lãi suất gần bằng 0 và thực hiện chương trình nới lỏng định lượng (QE), cứu hệ thống ngân hàng khỏi sụp đổ.<br>	•	COVID-19 năm 2020:<br>FED nhanh chóng bơm tiền vào nền kinh tế, giảm lãi suất xuống mức thấp kỷ lục, và triển khai các chương trình hỗ trợ tài chính để đối phó với đại dịch.</p>
+   <figure class="image-container">
+        <img src="https://karldarin.com/wp-content/uploads/2023/10/fed-tang-lai-suat-2.jpg" alt="Hình ảnh minh họa" class="article-image">
+        <figcaption>FED có tầm ảnh hưởng cực kỳ lớn đối với hệ thống tài chính thế giới.</figcaption>
+    </figure>
+<h3>Những chỉ trích về FED</h3>
+<p>Mặc dù đóng vai trò quan trọng, FED cũng nhận nhiều chỉ trích. Một số quan điểm cho rằng:<br>	•	Thiếu minh bạch:<br>Các quyết định của FED thường phức tạp và không được giải thích rõ ràng cho công chúng.<br>	•	Ảnh hưởng đến bất bình đẳng:<br>Chính sách lãi suất thấp của FED bị cho là làm lợi cho các nhà đầu tư giàu có, trong khi người lao động chịu ảnh hưởng từ lạm phát.<br>	•	Sự phụ thuộc toàn cầu:<br>Các quốc gia khác có thể bị tổn thương bởi các quyết định của FED, dù không có quyền can thiệp.</p>
+<h3>Tương lai của FED</h3>
+<p>Trong bối cảnh công nghệ phát triển, FED đang nghiên cứu về tiền kỹ thuật số của ngân hàng trung ương (CBDC) nhằm cải thiện hiệu quả thanh toán và cạnh tranh với các loại tiền điện tử.</p>
+<p>Ngoài ra, FED cũng đối mặt với áp lực từ các vấn đề mới như biến đổi khí hậu, bất bình đẳng kinh tế, và rủi ro từ trí tuệ nhân tạo đối với thị trường lao động.</p>
+<h3>Kết luận</h3>
+<p>FED là một tổ chức phức tạp nhưng không thể thiếu đối với sự ổn định kinh tế toàn cầu. Dù còn nhiều tranh cãi, vai trò của FED trong việc điều tiết nền kinh tế, kiểm soát lạm phát, và bảo vệ hệ thống tài chính là không thể phủ nhận.</p>
+<p>Hiểu về FED là cách để chúng ta nắm bắt những chuyển động lớn trong nền kinh tế, từ đó đưa ra các quyết định tài chính sáng suốt hơn.</p>
 
-Cục Dự trữ Liên bang Hoa Kỳ (FED): Cơ quan điều hành kinh tế hàng đầu thế giới
+
 </p>
             </div>
         </article>
@@ -570,21 +675,21 @@ Cục Dự trữ Liên bang Hoa Kỳ (FED): Cơ quan điều hành kinh tế hà
 
 
 <!-- NEWS -->
-<h2 style="padding-left: 10px;"> TIN TỨC TÀI CHÍNH <i class="fas fa-envelope"></i> </h2>
+<h2 style="padding-left: 10px;"> NỘI DUNG LIÊN QUAN <i class="fas fa-envelope"></i> </h2>
 </div>
 
     <div class="news-container">
         <a href="#" class="news-item">
             <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Tin tức 1" class="news-image">
-            <h2 class="news-title">Nhiều nhà đầu tư mất trắng sau khi Bitcoin điều chỉnh mạnh về giá 92000$</h2>
+            <h2 class="news-title">KIẾN THỨC ĐẦU TƯ: Tổng hợp toàn bộ kiến thức về thị trường ngoại hối</h2>
         </a>
         <a href="#" class="news-item">
             <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Tin tức 2" class="news-image">
-            <h2 class="news-title">Chính sách thuế quan 2.0 của Donal Trump liệu có ổn?</h2>
+            <h2 class="news-title">SỰ KIỆN KINH TẾ: Tìm hiểu về cách vận hành của thị trường</h2>
         </a>
         <a href="#" class="news-item">
             <img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Tin tức 3" class="news-image">
-            <h2 class="news-title">Thị trường vàng quốc tế vẫn giữ sideway dài hạn trong tuần</h2>
+            <h2 class="news-title">TIN TỨC TÀI CHÍNH: Tổng hợp những thông tin về thị trường tài chính</h2>
         </a>
     </div>
 
@@ -592,20 +697,21 @@ Cục Dự trữ Liên bang Hoa Kỳ (FED): Cơ quan điều hành kinh tế hà
     <footer>
         <p>© 2024 NOFAW. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://facebook.com/nofaw" target="_blank" title="Facebook">
+            <a href="https://facebook.com/nofawstore" target="_blank" title="Facebook">
                 <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="https://twitter.com/nofaw" target="_blank" title="Twitter">
+            <a href="https://twitter.com/nofawtrading" target="_blank" title="Twitter">
                 <i class="fab fa-twitter"></i>
             </a>
-            <a href="https://tiktok.com/nofaw" target="_blank" title="Tiktok">
+            <a href="https://tiktok.com/nofawtrading" target="_blank" title="Tiktok">
                 <i class="fab fa-tiktok"></i>
             </a>
-            <a href="https://telegram.org/nofaw" target="_blank" title="Telegram">
+            <a href="https://t.me/nofawtrading" target="_blank" title="Telegram">
                 <i class="fab fa-telegram"></i>
             </a>
         </div>
     </footer>
+
 
     <script>
 
