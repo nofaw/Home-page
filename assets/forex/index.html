@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="NOFAW - Nền tảng chia sẻ kiến thức và xu hướng thị trường ngoại hối, kinh nghiệm giao dịch Forex">
+    <meta name="keywords" content="kinh doanh, chiến lược, xu hướng, đầu tư, giá vàng, exness, forex">
+    <title>NOFAW - Blog Chia Sẻ Kinh Nghiệm Đầu Tư</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Favicon cơ bản -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <!-- For iOS devices -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/apple-touch-icon_sa4iwc.png">
+    
+    <!-- For Android devices -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771935/android-chrome-192x192_madhgp.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/android-chrome-512x512_vxgb00.png">
+    
+    <!-- For các thiết bị khác -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-32x32_qmth0k.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-16x16_fzo41t.png">
+
+    
+    <style>
+        /* Reset & Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        :root {
+            --primary-color: #34C759;
+            --dark-color: #333;
+            --light-color: #ffffff;
+            --gray-color: #666;
+            --light-gray: #f5f5f5;
+            --transition: all 0.3s ease;
+
+        }
+
+        /* Base Styles */
+        html, body {
+            background-color: var(--light-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.5rem;
+            height: 50px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-text-container {
+            position: absolute;
+            top: 50%;
+            right: 3%;
+            transform: translateY(-50%);
+            width: auto;
+            text-align: center;
+            z-index: 1001;
+        }
+
+        .logo-text {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            line-height: 1.2;
+            display: inline-block;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: var(--light-color);
+            border: 2px solid var(--light-color);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+.logo-text {
+    text-decoration: none; /* Bỏ gạch chân */
+
+    cursor: pointer;
+}
+
+.logo-text:hover {
+    opacity: 0.8; /* Hiệu ứng khi hover */
+}
+ 
+    /* Styles mới cho logo */
+    .logo-container {
+        background: var(--light-color);
+        padding: 2px 8px;
+        border-radius: 6px;
+        transition: var(--transition);
+    }
+
+    .logo-container:hover {
+        opacity: 0.8;
+    }
+
+    .logo-container a {
+        text-decoration: none;
+        display: block;
+    }
+
+    .logo-svg {
+        height: 35px;
+        width: auto;
+        display: block;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .logo-svg {
+            height: 30px;
+        }
+        
+        .search-input {
+            width: 120px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .search-input {
+            width: 100px;
+        }
+        
+        .logo-svg {
+            height: 25px;
+        }
+    }
+
+        .menu-icon {
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Search Bar Styles */
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--light-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 0 10px;
+            height: 31px;
+            transition: var(--transition);
+            margin-right: auto;
+            margin-left: 30px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 0.9rem;
+            padding: 5px;
+            color: var(--dark-color);
+            background: transparent;
+        }
+
+        .search-button {
+            background: var(--primary-color);
+            border: none;
+            color: var(--light-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0rem;
+        }
+
+        /* Article Styles */
+        .article {
+            background: var(--light-color);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px 10px;
+        }
+
+
+        .article h1 {
+            color: var(--dark-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-content {
+            color: var(--dark-color);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+
+
+        /* Ảnh bài viết Styles */
+
+.image-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.article-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto; /* Để chiều cao tự động theo tỷ lệ ảnh */
+    max-height: 800px; /* Giới hạn chiều cao tối đa */
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+figcaption {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    padding: 0 10px;
+    line-height: 1.5;
+}
+
+/* Responsive cho mobile */
+@media screen and (max-width: 850px) {
+    .image-container {
+        padding: 5px;
+    }
+    
+    .article-image {
+        max-height: 500px; /* Giới hạn chiều cao trên mobile */
+    }
+}
+
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 1rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .social-icons a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+
+
+
+/* Navigation Menu Styles */
+.nav-menu {
+    position: fixed;
+    top: 50px; /* Để menu nằm dưới header */
+    left: -300px; /* Ẩn menu ban đầu */
+    width: 300px;
+    height: calc(100vh - 50px);
+    background-color: #333;
+    transition: 0.3s;
+    z-index: 999;
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+.nav-menu.active {
+    left: 0;
+}
+
+.nav-overlay {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 998;
+}
+
+.nav-overlay.active {
+    display: block;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    padding: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-menu a {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.nav-menu a:hover {
+    background-color: var(--primary-color);
+    padding-left: 30px;
+}
+
+.nav-menu i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Submenu styles */
+.submenu {
+    background-color: rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.submenu.active {
+    display: block;
+}
+
+.nav-menu li.has-submenu > a::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: 0.3s;
+}
+
+.nav-menu li.has-submenu.active > a::after {
+    transform: rotate(180deg);
+}
+
+.submenu a {
+    padding-left: 50px;
+}
+
+.submenu a:hover {
+    padding-left: 55px;
+}
+
+/* User info section */
+.user-info {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.user-info img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.user-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        width: 260px;
+    }
+}
+
+
+
+
+/* News Container */
+
+.news-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.news-item {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: inherit;
+}
+
+.news-item:hover {
+    background-color: #f8f8f8;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 4px;
+    flex-shrink: 0; /* Thêm thuộc tính này để ngăn ảnh bị co */
+}
+
+.news-title {
+    font-size: 20px;
+    color: #333;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    line-height: 1.4;
+}
+
+/* CSS cho mobile */
+@media screen and (max-width: 768px) {
+    .news-item {
+        padding: 12px;
+    }
+    
+    .news-image {
+        width: 120px;    /* Kích thước cố định cho mobile */
+        height: 80px;    /* Tỷ lệ 3:2 */
+        flex-shrink: 0;  /* Ngăn ảnh bị co */
+    }
+    
+    .news-title {
+        font-size: 18px;
+        line-height: 1.4;
+    }
+}
+
+/* CSS cho màn hình rất nhỏ */
+@media screen and (max-width: 480px) {
+    .news-item {
+        padding: 10px;
+    }
+    
+    .news-image {
+        width: 100px;   /* Kích thước nhỏ hơn cho điện thoại màn hình nhỏ */
+        height: 67px;   /* Vẫn giữ tỷ lệ 3:2 */
+    }
+    
+    .news-title {
+        font-size: 16px;
+    }
+}
+
+   </style>
+</head>
+<body>
+    <header>
+        <div class="menu-icon">☰</div>
+        <div class="search-container">
+            <input type="text" placeholder="Tìm kiếm..." class="search-input">
+            <button class="search-button"><i class="fas fa-search"></i></button>
+        </div>
+    <div class="logo-container">
+        <a href="https://nofaw.com">
+            <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+                <text x="20" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">N</text>
+                <text x="65" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">O</text>
+                <text x="115" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">F</text>
+                <text x="155" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">A</text>
+                <text x="205" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">W</text>
+            </svg>
+        </a>
+    </div>
+        </div>
+    </header>
+
+
+
+
+<div class="nav-overlay"></div>
+<nav class="nav-menu">
+    <!-- User Info Section -->
+    <div class="user-info">
+        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733566394/IMG_0083_gcivuv.jpg" alt="User Avatar">
+        <h3>NOFAW</h3>
+        <p>Network of Forex and Wealth</p>
+    </div>
+    
+    <!-- Navigation Links -->
+    <ul>
+        <li>
+            <a href="https://nofaw.com">
+                <i class="fas fa-home"></i>
+                Trang chủ
+            </a>
+        </li>
+        <li>
+            <a href="https://nofaw.com/about-us">
+                <i class="fas fa-info-circle"></i>
+                Về chúng tôi
+            </a>
+        </li>
+        <li class="has-submenu">
+            <a href="https://nofaw.com/about-us">
+                <i class="fas fa-chart-line"></i>
+                Dịch vụ
+            </a>
+            <ul class="submenu">
+                <li><a href="https://nofaw.com">Phân tích thị trường</a></li>
+                <li><a href="https://nofaw.com">Ứng dụng giao dịch</a></li>
+                <li><a href="https://nofaw.com">Mở tài khoản giao dịch</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="https://nofaw.com/news">
+                <i class="fas fa-newspaper"></i>
+                Tin tức
+            </a>
+        </li>
+        <li>
+            <a href="https://nofaw.com/">
+                <i class="fas fa-envelope"></i>
+                Liên hệ
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+
+
+
+    <main class="main-content">
+        <article class="article">
+<h2>Khám Phá Thị Trường Ngoại Hối: Giao Dịch Xuyên Biên Giới</h2>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> Ngày đăng: 12/12/2024</span>
+                <span><i class="far fa-user"></i> Tác giả: Nofaw Trading</span>
+            </div>
+            <div class="article-content">
+                <!-- Nội dung bài viết sẽ được thêm vào đây -->
+
+
+    <figure class="image-container">
+        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733937505/IMG_0168_xzwneg.jpg" alt="Hình ảnh minh họa" class="article-image">
+        <figcaption>Forex là thị trường tài chính lớn nhất thế giới.</figcaption>
+    </figure>
+
+
+<p>Thị trường ngoại hối (Forex) không chỉ là một sân chơi dành cho các tổ chức tài chính lớn mà còn mở rộng cơ hội cho mọi nhà đầu tư cá nhân. Nhờ vào sự phát triển của công nghệ mà giờ đây với một chiếc điện thoại thông minh, bạn có thể dễ dàng giao dịch xuyên biên giới và tiếp cận nhiều loại tài sản giá trị như vàng, cổ phiếu nổi tiếng, tiền tệ và hàng hóa quốc tế. Trong bài viết này, chúng ta sẽ cùng tìm hiểu chi tiết hơn về thị trường đầy hấp dẫn này.</p>
+
+<h3>1. Thị Trường Ngoại Hối Là Gì?</h3>
+<p>Thị trường ngoại hối hay còn được biết đến với tên gọi Forex là nơi diễn ra các hoạt động mua bán, trao đổi tiền tệ, hàng hóa và nhiều loại tài sản khác. Điểm nổi bật của thị trường này là:</p>
+<p>- <strong>Quy mô lớn:</strong> Là thị trường tài chính lớn nhất thế giới với khối lượng giao dịch hàng ngày đạt hơn 6.6 nghìn tỷ USD.<br>- <strong>Hoạt động 24/5:</strong> Bạn có thể giao dịch bất kỳ thời gian nào từ thứ Hai đến thứ Sáu, phù hợp với mọi lịch trình cá nhân.<br>- <strong>Tính thanh khoản cao:</strong> Dễ dàng mở hoặc đóng lệnh với khối lượng lớn.</p>
+
+<h3>2. Những Hạng Mục Có Thể Giao Dịch Trên Thị Trường Ngoại Hối</h3>
+<p>Trên thị trường ngoại hối, bạn có thể tiếp cận nhiều hạng mục giao dịch, bao gồm:</p>
+<p>- <strong>Vàng quốc tế (XAU/USD):</strong> Giao dịch vàng là một trong những lựa chọn phổ biến nhất nhờ vào sự ổn định và tiềm năng sinh lời cao.<br>- <strong>Các cặp tiền tệ:</strong> Bao gồm các cặp chính như EUR/USD, GBP/USD, USD/JPY và các cặp ngoại lai khác.<br>- <strong>Cổ phiếu nổi tiếng:</strong> Các mã cổ phiếu từ những công ty hàng đầu thế giới như Apple (AAPL), Tesla (TSLA), Amazon (AMZN), Microsoft (MSFT)...<br>- <strong>Chỉ số chứng khoán:</strong> S&P 500, Nasdaq, Dow Jones.<br>- <strong>Năng lượng:</strong> Dầu thô (Brent, WTI), khí tự nhiên.<br>- <strong>Hàng hóa khác:</strong> Bạc, đồng, bạch kim, cà phê.</p>
+    <figure class="image-container">
+        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733937878/IMG_0169_ktokgz.jpg" alt="Hình ảnh minh họa" class="article-image">
+        <figcaption>Đa dạng các hạng mục đầu tư cho nhà giao dịch lựa chọn.</figcaption>
+    </figure>
+
+
+<h3>3. Thời Gian Giao Dịch Theo Giờ Việt Nam</h3>
+<p>Thị trường ngoại hối hoạt động theo múi giờ toàn cầu, bạn có thể giao dịch theo lịch sau:</p>
+<p>- <strong>Phiên Sydney:</strong> 4:00 AM - 2:00 PM.<br>- <strong>Phiên Tokyo:</strong> 6:00 AM - 3:00 PM.<br>- <strong>Phiên London:</strong> 2:00 PM - 11:00 PM.<br>- <strong>Phiên New York:</strong> 7:00 PM - 4:00 AM.</p>
+<p>Thời gian giao dịch vàng quốc tế (XAU/USD) từ thứ 2 đến thứ 6 mỗi ngày thị trường sẽ ngừng giao dịch trong 60 phút để nâng cấp hệ thống (Thường rơi vào khung giờ 5-6h sáng giờ VN).</p>
+
+<h3>4. Các Broker Uy Tín Mà Người Việt Nam Có Thể Mở Tài Khoản</h3>
+<p>Nhiều broker quốc tế uy tín hiện nay hỗ trợ người Việt Nam mở tài khoản và giao dịch dễ dàng. Một số broker nổi bật bao gồm:</p>
+<p>- <strong>Exness:</strong> Thành lập năm 2008. Hỗ trợ nạp/rút nhanh không mất phí (hỗ trợ nạp rút qua Binance Pay thường chỉ mất 1 phút cho việc nạp rút), dịch vụ khách hàng 24/7, hoàn phí giao dịch backcom tự động mỗi ngày, top 1 broker uy tín được nhiều nhà đầu tư lựa chọn nhất hiện tại. <br>  
+<a href="https://nofaw.com/assets/exness">
+    <button style="
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    ">
+        Xem thêm: Hướng dẫn mở tài khoản Exness
+    </button>
+</a>
+
+<br>- <strong>IC Markets:</strong> Nền tảng giao dịch ổn định, spread thấp, phù hợp cho giao dịch scalping.<br>
+
+<a href="https://nofaw.com/assets/icmarkets">
+    <button style="
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    ">
+        Xem thêm: Hướng dẫn mở tài khoản  IC Markets
+    </button>
+</a>
+<br>
+- <strong>XTB:</strong> Không phí hoa hồng cho nhiều loại tài sản, giao diện thân thiện.<br>
+
+
+- <strong>XM:</strong> Đòn bẩy cao, nhiều chương trình khuyến mãi cho người mới bắt đầu.<br>- <strong>FxPro:</strong> Hỗ trợ nhiều phương thức thanh toán, uy tín lâu năm.</p> 
+
+<h3>5. Thời Gian Nạp Rút Nhanh Chóng</h3>
+<p>Một trong những yếu tố quan trọng khi chọn broker là thời gian xử lý nạp/rút tiền. Các broker uy tín thường hỗ trợ:</p>
+<p>- <strong>Rút tiền tự động:</strong> Tiền về tài khoản trong vòng 5-10 phút thông qua các ví điện tử như Skrill, Neteller hoặc Internet Banking.<br>- <strong>Hỗ trợ nạp/rút không phí:</strong> Nhiều sàn miễn phí cho các giao dịch nạp rút, tiết kiệm chi phí cho nhà đầu tư.<br>- <strong>Đa dạng phương thức thanh toán:</strong> Bao gồm thẻ Visa/Mastercard, USDT, chuyển khoản ngân hàng nội địa và ví điện tử quốc tế.</p>
+    <figure class="image-container">
+        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733938297/IMG_0170_sfg711.jpg" alt="Hình ảnh minh họa" class="article-image">
+        <figcaption>Nạp rút nhanh chóng trong vài phút với các sàn giao dịch uy tín.</figcaption>
+    </figure>
+
+<h3>6. Giao Dịch Xuyên Biên Giới Chỉ Với Một Chiếc Điện Thoại</h3>
+<p>Công nghệ di động đã biến thị trường ngoại hối trở thành một sân chơi toàn cầu mà ai cũng có thể tham gia. Với ứng dụng giao dịch, bạn có thể:</p>
+<p>- <strong>Mở tài khoản:</strong> Quy trình nhanh chóng, chỉ mất vài phút.<br>- <strong>Quản lý giao dịch:</strong> Theo dõi biểu đồ, đặt lệnh mua/bán, điều chỉnh khối lượng giao dịch.<br>- <strong>Phân tích thị trường:</strong> Sử dụng các công cụ chỉ báo kỹ thuật ngay trên ứng dụng.<br>- <strong>Kết nối mọi lúc mọi nơi:</strong> Không bị giới hạn bởi địa lý, dễ dàng giao dịch ngay cả khi đang di chuyển.</p>
+<h3>7. Giao Dịch Ngoại Hối (Forex) có vi phạm pháp luật không?</h3>
+<p>Giao dịch ngoại hối Forex hoàn toàn không vi phạm pháp luật, nhưng hãy tham khảo về thuế thu nhập và đóng thuế thu nhập đầy đủ theo quy định của pháp luật. </p>
+
+
+<h3>Lời Kết</h3>
+<p>Thị trường ngoại hối mang đến cơ hội lớn cho các nhà đầu tư cá nhân nhờ vào tính thanh khoản cao và sự đa dạng của các loại tài sản giao dịch. Với các broker uy tín và sự hỗ trợ từ công nghệ, bạn hoàn toàn có thể giao dịch xuyên biên giới chỉ với một chiếc điện thoại thông minh. Nếu bạn đang tìm kiếm một cơ hội để mở rộng đầu tư, hãy bắt đầu khám phá thị trường Forex ngay hôm nay!</p>
+
+
+
+            </div>
+        </article>
+    </main>
+
+
+
+<!-- NEWS -->
+<h2 style="padding-left: 10px;"> TIN TỨC TÀI CHÍNH <i class="fas fa-envelope"></i> </h2>
+</div>
+
+    <div class="news-container">
+        <a href="https://nofaw.com/assets/" class="news-item">
+            <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">KIẾN THỨC ĐẦU TƯ: Tổng hợp toàn bộ kiến thức về thị trường ngoại hối</h2>
+        </a>
+        <a href="https://nofaw.com/events/" class="news-item">
+            <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Tin tức 2" class="news-image">
+            <h2 class="news-title">SỰ KIỆN KINH TẾ: Tìm hiểu về cách vận hành của thị trường</h2>
+        </a>
+        <a href="https://nofaw.com/news/" class="news-item">
+            <img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Tin tức 3" class="news-image">
+            <h2 class="news-title">TIN TỨC TÀI CHÍNH: Tổng hợp những thông tin về thị trường tài chính</h2>
+        </a>
+    </div>
+
+
+    <footer>
+        <p>© 2024 NOFAW. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://facebook.com/nofawstore" target="_blank" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/nofawtrading" target="_blank" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://tiktok.com/nofawtrading" target="_blank" title="Tiktok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://t.me/nofawtrading" target="_blank" title="Telegram">
+                <i class="fab fa-telegram"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+
+
+// Toggle Menu
+const menuIcon = document.querySelector('.menu-icon');
+const navMenu = document.querySelector('.nav-menu');
+const overlay = document.querySelector('.nav-overlay');
+
+menuIcon.addEventListener('click', toggleMenu);
+overlay.addEventListener('click', toggleMenu);
+
+function toggleMenu() {
+    navMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    menuIcon.textContent = navMenu.classList.contains('active') ? '×' : '☰';
+}
+
+// Submenu functionality
+const submenuItems = document.querySelectorAll('.has-submenu');
+
+submenuItems.forEach(item => {
+    item.addEventListener('click', function(e) {
+        const submenu = this.querySelector('.submenu');
+        if (submenu) {
+            e.preventDefault();
+            this.classList.toggle('active');
+            submenu.classList.toggle('active');
+        }
+    });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+    if (!navMenu.contains(e.target) && !menuIcon.contains(e.target)) {
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        menuIcon.textContent = '☰';
+    }
+});
+
+// Close menu when pressing Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        menuIcon.textContent = '☰';
+    }
+});
+
+
+
+
+
+        // Search functionality
+        const searchButton = document.querySelector('.search-button');
+        const searchInput = document.querySelector('.search-input');
+
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            const contentElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
+            
+            if (!query) {
+                alert('Vui lòng nhập từ khóa tìm kiếm');
+                return;
+            }
+
+            let matchCount = 0;
+            let firstMatch = null;
+
+            contentElements.forEach(element => {
+                element.style.backgroundColor = '';
+                if (element.textContent.toLowerCase().includes(query)) {
+                    element.style.backgroundColor = 'yellow';
+                    matchCount++;
+                    if (!firstMatch) firstMatch = element;
+                }
+            });
+
+            if (matchCount > 0) {
+                alert(`Tìm thấy ${matchCount} kết quả`);
+                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                alert('Không tìm thấy kết quả nào');
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>
