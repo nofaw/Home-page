@@ -113,23 +113,25 @@ header {
     border-radius: 20px;
     margin: 0 10px;
     width: 200px;
+    height: 32px; /* Thêm chiều cao cố định */
     overflow: hidden;
     border: 1px solid var(--primary-color);
+    position: relative; /* Thêm position relative */
 }
 
 .search-input {
     border: none;
-    outline: none; /* Loại bỏ outline mặc định */
+    outline: none;
     padding: 5px 10px;
     width: 160px;
     font-size: 0.9rem;
     background: transparent;
-    -webkit-appearance: none; /* Loại bỏ style mặc định trên iOS */
+    -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    height: 100%; /* Đảm bảo chiều cao 100% */
 }
 
-/* Loại bỏ highlight màu xanh khi focus trên mobile */
 .search-input:focus {
     outline: none;
     box-shadow: none;
@@ -138,7 +140,8 @@ header {
 
 .search-button {
     width: 40px;
-    height: 30px;
+    height: 100%; /* Đảm bảo chiều cao 100% */
+    min-height: 30px;
     border: none;
     background: var(--primary-color);
     color: var(--light-color);
@@ -146,7 +149,11 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    -webkit-tap-highlight-color: transparent; /* Loại bỏ highlight khi tap trên mobile */
+    -webkit-tap-highlight-color: transparent;
+    position: absolute; /* Định vị tuyệt đối */
+    right: 0; /* Đặt nút ở bên phải */
+    top: 0; /* Đặt nút ở trên cùng */
+    border-radius: 0 20px 20px 0; /* Bo góc bên phải */
 }
 
 
