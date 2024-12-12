@@ -149,14 +149,6 @@ header {
     -webkit-tap-highlight-color: transparent; /* Loại bỏ highlight khi tap trên mobile */
 }
 
-/* Đảm bảo header được căn chỉnh đúng */
-header {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    height: 50px;
-    background: var(--dark-color);
-}
 
 
 /* Navigation Menu Styles */
