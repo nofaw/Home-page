@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhật Ký Giao Dịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/apple-touch-icon_fpnc8i.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-192x192_v5akgc.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-512x512_b8bzja.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/favicon-32x32_pn3fl5.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032892/favicon-16x16_kfbdd3.png">
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+    background: linear-gradient(180deg, 
+        #F4E7F8 0%,
+        #F2DDDC 20%,
+        #F6BCBA 40%,
+        #E3AADD 60%,
+        #C8A8E9 80%,
+        #C3C7F4 100%
+    );
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh; /* Thêm dòng này để đảm bảo gradient cover toàn bộ trang */
+}
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h1 i {
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: red;
+        }
+
+        #addTransaction {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            background-color: white;
+            padding: 12px 15px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 25px;
+            top: 45px;
+            color: #666;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"], input[type="date"] {
+            padding: 8px 8px 8px 30px;
+            width: calc(100% - 40px);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        button i {
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #successMessage {
+            color: #4CAF50;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+            background-color: #e8f5e9;
+        }
+
+        #summary {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        #summary i {
+            margin-right: 5px;
+            color: #4CAF50;
+        }
+
+        #summary .highlight {
+            color: #2196F3;
+            font-size: 20px;
+        }
+
+        .positive {
+            color: green;
+            font-weight: bold;
+        }
+
+        .negative {
+            color: red;
+            font-weight: bold;
+        }
+
+        .delete-btn {
+            background-color: #ff4444;
+            padding: 5px 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* Mobile Optimization */
+.input-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.half-width {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.half-width .form-group {
+    width: 100%;
+}
+
+.half-width input[type="number"] {
+    width: calc(100% - 45px);
+}
+
+.half-width i {
+    top: 45px;
+    left: 25px;
+}
+
+/* Điều chỉnh lại vị trí icon cho cân đối */
+.form-group i {
+    position: absolute;
+    left: 12px;
+    top: 50px;
+    color: #666;
+    transform: translateY(-50%);
+}
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .form-group {
+                padding: 10px;
+            }
+
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+
+            #summary {
+                font-size: 16px;
+                padding: 15px;
+            }
+
+            input[type="text"], input[type="number"], input[type="date"] {
+                font-size: 16px; /* Better touch target size */
+                padding: 8px 8px 8px 30px;
+            }
+        }
+.reset-button {
+    background-color: #F04770;
+}
+.reset-button:hover {
+    background-color: #ff4444;
+}
+
+
+/* Thêm vào phần style */
+.capital-mismatch {
+    color: #F78C6A !important;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+<h1 style="background: linear-gradient(45deg, #FF0000, #00FF00);
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
+    <i class="fas fa-chart-line" style="margin-right: 10px;"></i>
+    Nhật Ký Giao Dịch
+</h1>
+
+<div id="transactionForm">
+    <div class="form-group">
+        <label for="date">Thêm ngày giao dịch:</label>
+        <i class="far fa-calendar"></i>
+        <input type="date" id="date">
+    </div>
+    <div class="input-row">
+        <div class="form-group half-width">
+            <label for="initialCapital">Vốn ban đầu:</label>
+            <i class="fas fa-dollar-sign"></i>
+            <input type="number" id="initialCapital" step="0.01">
+        </div>
+        <div class="form-group half-width">
+            <label for="finalBalance">Số dư cuối:</label>
+            <i class="fas fa-coins"></i>
+            <input type="number" id="finalBalance" step="0.01" oninput="calculateProfitLoss()">
+        </div>
+    </div>
+    <button onclick="addTransaction()"><i class="fas fa-plus"></i>THÊM GIAO DỊCH</button>
+<button onclick="resetData()" class="reset-button"><i class="fas fa-trash-alt"></i>Reset dữ liệu</button>
+    </div>
+
+    <div id="successMessage"><i class="fas fa-check-circle"></i> Thêm giao dịch thành công!</div>
+
+    <table id="transactionTable">
+        <thead>
+            <tr>
+                <th><i class="far fa-calendar-alt"></i> Date</th>
+                <th><i class="fas fa-dollar-sign"></i> Vốn</th>
+                <th><i class="fas fa-chart-bar"></i> PNL</th>
+                <th><i class="fas fa-percentage"></i></th>
+                <th><i class="fas fa-coins"></i> Số dư</th>
+                <th><i class="fas fa-trash"></i></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div id="summary">
+        <p><i class="fas fa-calendar-check"></i>Tổng số ngày giao dịch: <span id="totalDays">0</span> Ngày</p>
+        <p><i class="fas fa-percentage"></i>Tổng phần trăm Lời/Lỗ: <span id="totalPercentage" class="highlight">0.00</span> %</p>
+        <p><i class="fas fa-chart-line"></i>Tổng PNL: <span id="totalProfitLoss">0.00</span> $</p>
+        <p><i class="fas fa-wallet"></i>Số dư cuối: <span id="finalBalanceSummary" class="highlight">0.00 $</span></p>
+    </div>
+
+<p><i class="far fa-times-circle"></i> Dữ liệu được lưu trên trình duyệt web, bạn sẽ mất dữ liệu nếu đổi trình duyệt hoặc xóa cache web! </p>
+
+<center><a href="https://nofaw.com/apps/">
+    <button style="
+        padding: 10px 15px;
+        background-color: #F04770;
+        color: yellow;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+    ">
+        Tìm hiểu thêm <i class="fas fa-arrow-down"></i>
+    </button>
+</a></center>
+
+
+
+    <script>
+        // JavaScript code remains unchanged
+        const transactionTable = document.getElementById('transactionTable').getElementsByTagName('tbody')[0];
+        const successMessage = document.getElementById('successMessage');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTransactions();
+        });
+
+        function calculateProfitLoss() {
+            const initialCapital = parseFloat(document.getElementById('initialCapital').value);
+            const finalBalance = parseFloat(document.getElementById('finalBalance').value);
+
+            if (!isNaN(initialCapital) && !isNaN(finalBalance)) {
+                const profitLoss = finalBalance - initialCapital;
+                const profitPercentage = (profitLoss / initialCapital) * 100;
+
+                return { profitLoss: profitLoss.toFixed(2), profitPercentage: profitPercentage.toFixed(2) };
+            } else {
+                return { profitLoss: '', profitPercentage: '' };
+            }
+        }
+
+        function addTransaction() {
+            const date = document.getElementById('date').value;
+            const initialCapitalInput = document.getElementById('initialCapital');
+            const finalBalance = parseFloat(document.getElementById('finalBalance').value);
+
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            if (transactions.length > 0 && !initialCapitalInput.value) {
+                const lastTransaction = transactions[transactions.length - 1];
+                initialCapitalInput.value = lastTransaction.finalBalance.toFixed(2);
+            }
+
+            const initialCapital = parseFloat(initialCapitalInput.value);
+
+            if (date && !isNaN(initialCapital) && !isNaN(finalBalance)) {
+                const { profitLoss, profitPercentage } = calculateProfitLoss();
+                const transaction = { date, initialCapital, finalBalance, profitLoss, profitPercentage };
+                saveTransaction(transaction);
+                clearForm();
+                showSuccessMessage();
+            } else {
+                alert('Vui lòng nhập đầy đủ thông tin.');
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('date').value = '';
+            document.getElementById('initialCapital').value = '';
+            document.getElementById('finalBalance').value = '';
+        }
+
+function appendTransactionToTable(transaction, index) {
+    const row = document.createElement('tr');
+    const profitClass = parseFloat(transaction.profitLoss) >= 0 ? 'positive' : 'negative';
+    
+    // Lấy tất cả giao dịch
+    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    
+    // Kiểm tra nếu có sự khác biệt giữa vốn và số dư của giao dịch trước
+    let mismatchClass = '';
+    if (index > 0) {
+        const previousBalance = transactions[index - 1].finalBalance;
+        if (Math.abs(previousBalance - transaction.initialCapital) > 0.01) {
+            mismatchClass = 'capital-mismatch';
+        }
+    }
+
+    row.innerHTML = `
+        <td>${transaction.date}</td>
+        <td contenteditable="true" onblur="updateTransactionData(${index}, 'initialCapital', this.textContent)" 
+            class="${mismatchClass}">${transaction.initialCapital.toFixed(2)}</td>
+        <td class="${mismatchClass} ${profitClass}">${transaction.profitLoss}</td>
+        <td class="${mismatchClass} ${profitClass}">${transaction.profitPercentage}</td>
+        <td contenteditable="true" onblur="updateTransactionData(${index}, 'finalBalance', this.textContent)"
+            class="${mismatchClass}">${transaction.finalBalance.toFixed(2)}</td>
+        <td><button class="delete-btn" onclick="confirmDeleteTransaction(${index})"><i class="fas fa-trash"></i></button></td>
+    `;
+
+    transactionTable.appendChild(row);
+}
+
+        function resetData() {
+            if (confirm("Bạn có muốn xoá toàn bộ dữ liệu?")) {
+                localStorage.removeItem('transactions');
+                loadTransactions();
+            }
+        }
+
+        function saveTransaction(transaction) {
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            transactions.push(transaction);
+            transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            loadTransactions();
+        }
+
+        function loadTransactions() {
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            transactionTable.innerHTML = '';
+            transactions.forEach((transaction, index) => {
+                appendTransactionToTable(transaction, index);
+            });
+            updateSummary();
+        }
+
+        function confirmDeleteTransaction(index) {
+            if (confirm("Bạn có chắc chắn muốn xoá giao dịch này?")) {
+                deleteTransaction(index);
+            }
+        }
+
+        function deleteTransaction(index) {
+            let transactions = JSON.parse(localStorage.getItem('transactions'));
+            transactions.splice(index, 1);
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            loadTransactions();
+        }
+
+        function updateTransactionData(index, field, value) {
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            if (field === 'initialCapital' || field === 'finalBalance') {
+                transactions[index][field] = parseFloat(value);
+                const { profitLoss, profitPercentage } = calculateProfitLossFromValues(
+                    transactions[index].initialCapital,
+                    transactions[index].finalBalance
+                );
+                transactions[index].profitLoss = profitLoss;
+                transactions[index].profitPercentage = profitPercentage;
+            }
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            loadTransactions();
+        }
+
+        function calculateProfitLossFromValues(initialCapital, finalBalance) {
+            const profitLoss = finalBalance - initialCapital;
+            const profitPercentage = (profitLoss / initialCapital) * 100;
+            return { profitLoss: profitLoss.toFixed(2), profitPercentage: profitPercentage.toFixed(2) };
+        }
+
+        function showSuccessMessage() {
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 2000);
+        }
+
+        function updateSummary() {
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            let totalDays = transactions.length;
+            let totalProfitLoss = 0;
+            let totalPercentage = 0;
+            let finalBalance = 0;
+
+            transactions.forEach(transaction => {
+                totalProfitLoss += parseFloat(transaction.profitLoss);
+                totalPercentage += parseFloat(transaction.profitPercentage);
+                finalBalance = transaction.finalBalance;
+            });
+
+            document.getElementById('totalDays').textContent = totalDays;
+            document.getElementById('totalPercentage').textContent = totalPercentage.toFixed(2);
+            document.getElementById('totalProfitLoss').textContent = totalProfitLoss.toFixed(2);
+            document.getElementById('finalBalanceSummary').textContent = `${finalBalance.toFixed(2)} $`;
+        }
+    </script></antArtifact>
