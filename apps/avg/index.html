@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Average Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/apple-touch-icon_fpnc8i.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-192x192_v5akgc.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-512x512_b8bzja.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/favicon-32x32_pn3fl5.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032892/favicon-16x16_kfbdd3.png">
+
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(180deg, 
+                #F04770 0%,
+                #F78C6A 20%,
+                #FFD167 40%,
+                #06D7A0 60%,
+                #108AB1 80%,
+                #073A4B 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #073A4B;
+            margin-bottom: 25px;
+            font-weight: 600;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            color: #108AB1;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #06D7A0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            appearance: none;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #F04770;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #F04770, #F78C6A);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: rgba(6, 215, 160, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .result p {
+            color: #073A4B;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .result p:last-child {
+            margin-bottom: 0;
+        }
+
+        .entry-list {
+            margin-top: 20px;
+        }
+
+        .entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(16, 138, 177, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .entry span {
+            flex-grow: 1;
+            color: #073A4B;
+        }
+
+        .entry button {
+            background: linear-gradient(45deg, #F04770, #F78C6A);
+            color: #fff;
+            padding: 6px 12px;
+            width: auto;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input[type="number"], button {
+                font-size: 14px;
+            }
+        }
+
+        /* Disable zoom on iOS */
+        @supports (-webkit-touch-callout: none) {
+            input[type="number"] {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Average Calculator</h1>
+    <div class="form-group">
+        <label for="entryPrice">Entry Price</label>
+        <input type="number" id="entryPrice" placeholder="Enter price..." step="0.01" min="0">
+    </div>
+    <div class="form-group">
+        <label for="volume">Volume (Lot)</label>
+        <input type="number" id="volume" placeholder="Enter volume..." step="0.01" min="0">
+    </div>
+    <button id="addTradeBtn">Add Trade</button>
+    <div class="result">
+        <p id="avgPrice">Average Price: </p>
+        <p id="totalVolume">Total Volume (Lot): </p>
+    </div>
+    <div class="entry-list" id="entryList"></div>
+</div>
+
+<script>
+    let trades = [];
+    const STORAGE_KEY = 'calculatorTrades';
+
+    // Khởi tạo các elements
+    const entryPriceInput = document.getElementById("entryPrice");
+    const volumeInput = document.getElementById("volume");
+    const addTradeBtn = document.getElementById("addTradeBtn");
+    const avgPriceElement = document.getElementById("avgPrice");
+    const totalVolumeElement = document.getElementById("totalVolume");
+    const entryListElement = document.getElementById("entryList");
+
+    // Load dữ liệu khi khởi động
+    document.addEventListener('DOMContentLoaded', () => {
+        loadTrades();
+        renderUI();
+    });
+
+    // Lưu dữ liệu khi thoát
+    window.addEventListener('beforeunload', () => {
+        saveTrades();
+    });
+
+    // Thêm sự kiện click cho nút Add Trade
+    addTradeBtn.addEventListener('click', () => {
+        try {
+            addTrade();
+        } catch (error) {
+            console.error('Error adding trade:', error);
+            alert('Error adding trade. Please check your inputs.');
+        }
+    });
+
+    // Hàm load dữ liệu từ localStorage
+    function loadTrades() {
+        try {
+            const savedTrades = localStorage.getItem(STORAGE_KEY);
+            if (savedTrades) {
+                trades = JSON.parse(savedTrades);
+            }
+        } catch (error) {
+            console.error('Error loading trades:', error);
+            trades = [];
+        }
+    }
+
+    // Hàm lưu dữ liệu vào localStorage
+    function saveTrades() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(trades));
+        } catch (error) {
+            console.error('Error saving trades:', error);
+        }
+    }
+
+    // Hàm thêm trade mới
+    function addTrade() {
+        const entryPrice = parseFloat(entryPriceInput.value);
+        const volume = parseFloat(volumeInput.value);
+        
+        // Validate inputs
+        if (!entryPrice || !volume || entryPrice <= 0 || volume <= 0) {
+            alert("Please enter valid price and volume values.");
+            return;
+        }
+
+        trades.push({
+            entryPrice: entryPrice,
+            volume: volume
+        });
+
+        // Clear inputs
+        entryPriceInput.value = '';
+        volumeInput.value = '';
+        
+        // Update UI
+        renderUI();
+    }
+
+    // Hàm tính giá trung bình
+    function calculateAveragePrice() {
+        if (trades.length === 0) return 0;
+
+        const totalValue = trades.reduce((sum, trade) => sum + (trade.entryPrice * trade.volume), 0);
+        const totalVolume = trades.reduce((sum, trade) => sum + trade.volume, 0);
+        
+        return totalValue / totalVolume;
+    }
+
+    // Hàm tính tổng volume
+    function calculateTotalVolume() {
+        return trades.reduce((sum, trade) => sum + trade.volume, 0);
+    }
+
+    // Hàm xóa trade
+    function removeTrade(index) {
+        trades.splice(index, 1);
+        renderUI();
+    }
+
+    // Hàm render UI
+    function renderUI() {
+        // Update average price
+        const avgPrice = calculateAveragePrice();
+        avgPriceElement.textContent = trades.length > 0 
+            ? `Average Price: ${avgPrice.toFixed(2)}`
+            : 'Average Price: ';
+
+        // Update total volume
+        const totalVolume = calculateTotalVolume();
+        totalVolumeElement.textContent = trades.length > 0
+            ? `Total Volume (Lot): ${totalVolume.toFixed(2)}`
+            : 'Total Volume (Lot): ';
+
+        // Update trade list
+        entryListElement.innerHTML = '';
+        trades.forEach((trade, index) => {
+            const tradeEntry = document.createElement('div');
+            tradeEntry.className = 'entry';
+            tradeEntry.innerHTML = `
+                <span>Price: ${trade.entryPrice.toFixed(2)} (Lot: ${trade.volume.toFixed(2)})</span>
+                <button onclick="removeTrade(${index})">X</button>
+            `;
+            entryListElement.appendChild(tradeEntry);
+        });
+
+        // Save after any change
+        saveTrades();
+    }
+
+</script>
+</body>
+</html>
