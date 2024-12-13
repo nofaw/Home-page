@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Trading World Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/apple-touch-icon_fpnc8i.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-192x192_v5akgc.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-512x512_b8bzja.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/favicon-32x32_pn3fl5.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032892/favicon-16x16_kfbdd3.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #1e3c72, #2a5298);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .clock-container {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .time {
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .date {
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+            min-height: 60vh;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .land {
+            fill: #3498db;
+            stroke: #2980b9;
+            stroke-width: 0.3;
+            transition: fill 0.3s ease;
+        }
+
+        .land.active {
+            fill: #f1c40f;
+        }
+
+        .animation {
+            fill: #ffffff;
+            opacity: 1;
+        }
+
+        .sessions-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+
+        .session {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .session.active {
+            background: rgba(52, 152, 219, 1);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(241, 196, 15, 0.2);
+        }
+
+        .major-city {
+            fill: #fff;
+            opacity: 1;
+        }
+
+        .major-city.active {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+
+        .city-label {
+            fill: #fff;
+            font-size: 12px;
+            text-anchor: middle;
+            opacity: 0.8;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(2.5);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .time { font-size: 2rem; }
+            .date { font-size: 0.9rem; }
+            .session { min-width: 150px; }
+            .map-container { min-height: 50vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="clock-container">
+            <div class="time" id="time"></div>
+            <div class="date" id="date"></div>
+        </div>
+        
+        <div class="map-container" id="map-container"></div>
+
+        <div class="sessions-container">
+            <div class="session" id="sydney">Sydney<br> (05:00 -13:00)</div>
+            <div class="session" id="tokyo">Tokyo<br> (07:00 - 15:00)</div>
+            <div class="session" id="london">London<br> (14:00 - 22:00)</div>
+            <div class="session" id="newyork">New York<br> (19:00 - 03:00)</div>
+        </div>
+    </div>
+
+    <script>
+        // Map initialization
+        const container = document.getElementById('map-container');
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+
+        const svg = d3.select("#map-container")
+            .append("svg")
+            .attr("viewBox", `0 0 ${width} ${height}`)
+            .attr("preserveAspectRatio", "xMidYMid meet");
+
+        const projection = d3.geoMercator()
+            .scale(Math.min(width, height) * 0.17)
+            .translate([width / 2, height / 1.8]);
+
+        const path = d3.geoPath().projection(projection);
+
+        // Major trading cities coordinates
+        const cities = {
+            sydney: [151.2093, -33.8688, "Sydney"],
+            tokyo: [139.6917, 35.6895, "Tokyo"],
+            london: [-0.1276, 51.5074, "London"],
+            newyork: [-74.0059, 40.7128, "New York"]
+        };
+
+        // Load and render the world map
+        d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+            .then(data => {
+                // Draw land
+                svg.selectAll(".land")
+                    .data(data.features)
+                    .enter()
+                    .append("path")
+                    .attr("class", "land")
+                    .attr("d", path);
+
+                // Add major cities and labels
+                Object.entries(cities).forEach(([city, [lon, lat, name]]) => {
+                    const [x, y] = projection([lon, lat]);
+                    
+                    // City point
+                    svg.append("circle")
+                        .attr("class", `major-city ${city}-point`)
+                        .attr("cx", x)
+                        .attr("cy", y)
+                        .attr("r", 4);
+
+                    // City label
+                    svg.append("text")
+                        .attr("class", "city-label")
+                        .attr("x", x)
+                        .attr("y", y - 10)
+                        .text(name);
+                });
+
+                // Add random animations for active cities
+                setInterval(() => {
+                    document.querySelectorAll('.session.active').forEach(session => {
+                        const cityName = session.id;
+                        const cityCoords = cities[cityName];
+                        const [x, y] = projection([cityCoords[0], cityCoords[1]]);
+
+                        svg.append("circle")
+                            .attr("cx", x)
+                            .attr("cy", y)
+                            .attr("r", 0)
+                            .attr("class", "animation")
+                            .transition()
+                            .duration(2000)
+                            .attr("r", 50)
+                            .style("opacity", 0)
+                            .remove();
+                    });
+                }, 1000);
+            });
+
+function updateClock() {
+    const now = new Date();
+    
+    // Update clock display
+    const timeElement = document.getElementById('time');
+    const dateElement = document.getElementById('date');
+    
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+    
+    const days = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+    const day = days[now.getDay()];
+    const date = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+    dateElement.textContent = `${day}, ${date}/${month}/${year}`;
+
+    // Reset active states
+    document.querySelectorAll('.session').forEach(session => {
+        session.classList.remove('active');
+    });
+
+    const hour = now.getHours();
+
+    // Update active sessions with corrected time ranges
+    // Sydney (05:00 - 13:00)
+    if (hour >= 5 && hour < 13) {
+        document.getElementById('sydney').classList.add('active');
+    }
+    
+    // Tokyo (07:00 - 15:00)
+    if (hour >= 7 && hour < 15) {
+        document.getElementById('tokyo').classList.add('active');
+    }
+    
+    // London (14:00 - 22:00)
+    if (hour >= 14 && hour < 22) {
+        document.getElementById('london').classList.add('active');
+    }
+    
+    // New York (19:00 - 03:00)
+    if (hour >= 19 || hour < 3) {
+        document.getElementById('newyork').classList.add('active');
+    }
+}
+        // Update clock every second
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('map-container');
+            const svg = d3.select("#map-container svg");
+            
+            svg.attr("viewBox", `0 0 ${container.clientWidth} ${container.clientHeight}`);
+            
+            projection
+                .scale(Math.min(container.clientWidth, container.clientHeight) * 0.17)
+                .translate([container.clientWidth / 2, container.clientHeight / 1.8]);
+            
+            svg.selectAll("path").attr("d", path);
+        });
+    </script>
+</body>
+</html>
