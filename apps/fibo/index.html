@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fibonacci Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/apple-touch-icon_fpnc8i.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-192x192_v5akgc.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-512x512_b8bzja.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/favicon-32x32_pn3fl5.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032892/favicon-16x16_kfbdd3.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, 
+                #F4E7F8 0%,
+                #F2DDDC 20%,
+                #F6BCBA 40%,
+                #E3AADD 60%,
+                #C8A8E9 80%,
+                #C3C7F4 100%
+            );
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus {
+            border-color: #C8A8E9;
+            box-shadow: 0 0 0 2px rgba(200, 168, 233, 0.2);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+            position: absolute;
+            bottom: -18px;
+            left: 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #C8A8E9, #C3C7F4);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(200, 168, 233, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            margin-top: 25px;
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .fibonacci-level {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            align-items: center;
+        }
+
+        .fibonacci-level:last-child {
+            border-bottom: none;
+        }
+
+        .level-name {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .level-value {
+            color: #C8A8E9;
+            font-weight: 600;
+        }
+
+        .trend-indicator {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        .trend-up {
+            background: linear-gradient(135deg, #e8f6e8, #d1f2d1);
+            color: #27ae60;
+        }
+
+        .trend-down {
+            background: linear-gradient(135deg, #fde8e8, #fcd5d5);
+            color: #e74c3c;
+        }
+
+        .price-analysis {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(200, 168, 233, 0.1);
+            font-size: 14px;
+            color: #2c3e50;
+            line-height: 1.5;
+            border: 1px solid rgba(200, 168, 233, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fibonacci Calculator</h1>
+        
+        <div class="input-group">
+            <label for="trend">Trend</label>
+            <select id="trend">
+                <option value="up">Bullish</option>
+                <option value="down">Bearish</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="highPrice">Highest Price</label>
+            <input type="number" id="highPrice" step="0.1" placeholder="Enter highest price">
+            <div id="highPriceError" class="error-message"></div>
+        </div>
+
+        <div class="input-group">
+            <label for="lowPrice">Lowest Price</label>
+            <input type="number" id="lowPrice" step="0.1" placeholder="Enter lowest price">
+            <div id="lowPriceError" class="error-message"></div>
+        </div>
+
+        <div class="input-group">
+            <label for="currentPrice">Current Price</label>
+            <input type="number" id="currentPrice" step="0.1" placeholder="Enter current price">
+            <div id="currentPriceError" class="error-message"></div>
+        </div>
+
+        <button onclick="calculateFibonacci()">Calculate</button>
+
+        <div class="results" id="results">
+            <div class="trend-indicator" id="trendIndicator"></div>
+            <div class="fibonacci-level">
+                <span class="level-name">Level 0%</span>
+                <span class="level-value" id="level0"></span>
+            </div>
+            <div class="fibonacci-level">
+                <span class="level-name">Level 23.6%</span>
+                <span class="level-value" id="level236"></span>
+            </div>
+            <div class="fibonacci-level">
+                <span class="level-name">Level 38.2%</span>
+                <span class="level-value" id="level382"></span>
+            </div>
+            <div class="fibonacci-level">
+                <span class="level-name">Level 50%</span>
+                <span class="level-value" id="level50"></span>
+            </div>
+            <div class="fibonacci-level">
+                <span class="level-name">Level 61.8%</span>
+                <span class="level-value" id="level618"></span>
+            </div>
+            <div class="fibonacci-level">
+                <span class="level-name">Level 78.6%</span>
+                <span class="level-value" id="level786"></span>
+            </div>
+            <div class="fibonacci-level">
+                <span class="level-name">Level 100%</span>
+                <span class="level-value" id="level100"></span>
+            </div>
+            <div class="price-analysis" id="priceAnalysis"></div>
+        </div>
+    </div>
+
+    <script>
+        function validateInputs(highPrice, lowPrice, currentPrice) {
+            let isValid = true;
+            const errors = {
+                high: '',
+                low: '',
+                current: ''
+            };
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+            // Validate high price
+            if (!highPrice || highPrice <= 0) {
+                errors.high = 'Please enter a valid high price';
+                isValid = false;
+            }
+
+            // Validate low price
+            if (!lowPrice || lowPrice <= 0) {
+                errors.low = 'Please enter a valid low price';
+                isValid = false;
+            }
+
+            // Validate current price
+            if (!currentPrice || currentPrice <= 0) {
+                errors.current = 'Please enter a valid current price';
+                isValid = false;
+            }
+
+            // Validate price relationships
+            if (highPrice <= lowPrice) {
+                errors.high = 'High price must be greater than low price';
+                isValid = false;
+            }
+
+            // Display error messages
+            if (errors.high) {
+                document.getElementById('highPriceError').textContent = errors.high;
+                document.getElementById('highPriceError').style.display = 'block';
+            }
+            if (errors.low) {
+                document.getElementById('lowPriceError').textContent = errors.low;
+                document.getElementById('lowPriceError').style.display = 'block';
+            }
+            if (errors.current) {
+                document.getElementById('currentPriceError').textContent = errors.current;
+                document.getElementById('currentPriceError').style.display = 'block';
+            }
+
+            return isValid;
+        }
+
+        function calculateFibonacciLevels(highPrice, lowPrice, trend) {
+            const difference = highPrice - lowPrice;
+            const levels = {
+                0: trend === 'up' ? lowPrice : highPrice,
+                236: trend === 'up' ? 
+                    lowPrice + difference * 0.236 : 
+                    highPrice - difference * 0.236,
+                382: trend === 'up' ? 
+                    lowPrice + difference * 0.382 : 
+                    highPrice - difference * 0.382,
+                50: trend === 'up' ? 
+                    lowPrice + difference * 0.5 : 
+                    highPrice - difference * 0.5,
+                618: trend === 'up' ? 
+                    lowPrice + difference * 0.618 : 
+                    highPrice - difference * 0.618,
+                786: trend === 'up' ? 
+                    lowPrice + difference * 0.786 : 
+                    highPrice - difference * 0.786,
+                100: trend === 'up' ? highPrice : lowPrice
+            };
+            
+            return levels;
+        }
+
+        function analyzePricePosition(currentPrice, levels, trend) {
+            if (trend === 'up') {
+                if (currentPrice > levels[786]) {
+                    return 'Price is in strong resistance zone (>78.6%). Consider taking profits.';
+                } else if (currentPrice > levels[618]) {
+                    return 'Price is testing golden ratio resistance (61.8%). Watch for reversal signals.';
+                } else if (currentPrice > levels[50]) {
+                    return 'Price is in equilibrium zone. Monitor price action for direction.';
+                } else if (currentPrice > levels[236]) {
+                    return 'Price is in support zone. Watch for bounce potential.';
+                } else {
+                    return 'Price is in strong support zone (<23.6%). Consider entry opportunities.';
+                }
+            } else {
+                if (currentPrice < levels[786]) {
+                    return 'Price is in strong support zone (<78.6%). Consider taking profits on shorts.';
+                } else if (currentPrice < levels[618]) {
+                    return 'Price is testing golden ratio support (61.8%). Watch for reversal signals.';
+                } else if (currentPrice < levels[50]) {
+                    return 'Price is in equilibrium zone. Monitor price action for direction.';
+                } else if (currentPrice < levels[236]) {
+                    return 'Price is in resistance zone. Watch for drop potential.';
+                } else {
+                    return 'Price is in strong resistance zone (>23.6%). Consider short entry opportunities.';
+                }
+            }
+        }
+
+        function calculateFibonacci() {
+            const trend = document.getElementById('trend').value;
+            const highPrice = parseFloat(document.getElementById('highPrice').value);
+            const lowPrice = parseFloat(document.getElementById('lowPrice').value);
+            const currentPrice = parseFloat(document.getElementById('currentPrice').value);
+
+            // Validate inputs
+            if (!validateInputs(highPrice, lowPrice, currentPrice)) {
+                return;
+            }
+
+            // Calculate Fibonacci levels
+            const levels = calculateFibonacciLevels(highPrice, lowPrice, trend);
+
+            // Display results
+            document.getElementById('results').style.display = 'block';
+            
+            // Update trend indicator
+            const trendIndicator = document.getElementById('trendIndicator');
+            trendIndicator.textContent = trend === 'up' ? 'BULLISH TREND' : 'BEARISH TREND';
+            trendIndicator.className = 'trend-indicator ' + (trend === 'up' ? 'trend-up' : 'trend-down');
+
+            // Update Fibonacci levels
+            Object.keys(levels).forEach(level => {
+                document.getElementById(`level${level}`).textContent = 
+                    levels[level].toFixed(2);
+            });
+
+            // Update price analysis
+            const analysis = analyzePricePosition(currentPrice, levels, trend);
+            document.getElementById('priceAnalysis').textContent = analysis;
+        }
+    </script>
+</body>
+</html>
