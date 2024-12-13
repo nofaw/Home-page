@@ -13,15 +13,15 @@
     <link rel="shortcut icon" href="/favicon.ico">
     
     <!-- For iOS devices -->
-    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/apple-touch-icon_sa4iwc.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/apple-touch-icon_fpnc8i.png">
     
     <!-- For Android devices -->
-    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771935/android-chrome-192x192_madhgp.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/android-chrome-512x512_vxgb00.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-192x192_v5akgc.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-512x512_b8bzja.png">
     
     <!-- For các thiết bị khác -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-32x32_qmth0k.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1733771936/favicon-16x16_fzo41t.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/favicon-32x32_pn3fl5.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032892/favicon-16x16_kfbdd3.png">
 
     <style>
         /* Reset & Variables */
@@ -48,7 +48,7 @@
         body {
             background-color: var(--light-gray);
             line-height: 1.6;
-            height: 100%;
+            min-height: 100vh;
             width: 100%;
             overflow-x: hidden; /* Ngăn cuộn ngang */
             position: relative; /* Thêm position relative */
@@ -196,55 +196,55 @@
         }
 
         /* Search Bar Styles */
-        .search-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: var(--light-color);
-            border: 1px solid var(--primary-color);
-            border-radius: 20px;
-            padding: 0 10px;
-            height: 31px;
-            transition: var(--transition);
-            margin-right: auto;
-            margin-left: 30px;
-        }
+   .search-container {
+    display: flex;
+    align-items: center;
+    background: var(--light-color);
+    border-radius: 20px;
+    margin: 0 10px;
+    width: 200px;
+    height: 32px; /* Thêm chiều cao cố định */
+    overflow: hidden;
+    border: 1px solid var(--primary-color);
+    position: relative; /* Thêm position relative */
+}
 
-        .search-input {
-            border: none;
-            outline: none;
-            flex: 1;
-            font-size: 0.9rem;
-            padding: 5px;
-            color: var(--dark-color);
-            background: transparent;
-        }
+.search-input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    width: 160px;
+    font-size: 0.9rem;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 100%; /* Đảm bảo chiều cao 100% */
+}
 
-        .search-button {
-            background: var(--primary-color);
-            border: none;
-            color: var(--light-color);
-            padding: 5px 10px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
+.search-input:focus {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+}
 
-        .search-button i {
-            font-size: 1rem;
-        }
-
-        .search-button:hover {
-            background: var(--secondary-color);
-        }
-
-        .search-container:hover {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+.search-button {
+    width: 40px;
+    height: 100%; /* Đảm bảo chiều cao 100% */
+    min-height: 30px;
+    border: none;
+    background: var(--primary-color);
+    color: var(--light-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    position: absolute; /* Định vị tuyệt đối */
+    right: 0; /* Đặt nút ở bên phải */
+    top: 0; /* Đặt nút ở trên cùng */
+    border-radius: 0 20px 20px 0; /* Bo góc bên phải */
+}
 
         /* Navigation Menu Styles */
         .nav-menu {
@@ -342,6 +342,19 @@
         .submenu a:hover {
             padding-left: 55px;
         }
+
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.nav-menu {
+    -webkit-overflow-scrolling: touch; /* Cho phép scroll mượt trên iOS */
+}
+
+
 
         /* User info section */
         .user-info {
@@ -816,21 +829,21 @@
         <section class="section featured-section">
             <div class="container">
                 <div class="section-title">
-                    <h2><i class="fas fa-star"></i> KIẾN THỨC ĐẦU TƯ</h2>
-                    <p>Tổng hợp kiến thức về đầu tư, giao dịch ngoại hối, vàng, cổ phiếu quốc tế.</p>
+                    <h2><i class="fas fa-star"></i> ỨNG DỤNG HỖ TRỢ GIAO DỊCH</h2>
+                    <p>Cùng khám phá các công cụ hỗ trợ giao dịch miễn phí được phát triển bởi chúng tôi.</p>
                 </div>
 
                 <div class="carousel-container" id="carouselContainer">
                     <!-- Card 1 -->
                     <div class="carousel-card">
-                        <img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Chiến lược đầu tư">
+                        <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Chiến lược đầu tư">
                         <div class="card-content">
-                            <span class="card-category">Chiến lược🔥</span>
-                            <h3 class="card-title">Trang web đang được xây dựng 😝</h3>
+                            <span class="card-category">ỨNG DỤNG NHẬT KÝ 📝</span>
+                            <h3 class="card-title">LƯU LẠI HOẠT ĐỘNG GIAO DỊCH MỖI NGÀY</h3>
                             <div class="card-meta">
-                                <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-                                <a href="#" class="read-more">
-                                    Đọc thêm <i class="fas fa-arrow-right"></i>
+                                <span><i class="far fa-calendar-alt"></i> 12 tháng 12, 2024</span>
+                                <a href="https://nofaw.com/apps/nk/" class="read-more">
+                                    Khám phá <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -838,14 +851,14 @@
 
                     <!-- Card 2 -->
                     <div class="carousel-card">
-                        <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Mục tiêu phát triển">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734089348/IMG_0233_hatloa.jpg" alt="Mục tiêu phát triển">
                         <div class="card-content">
-                            <span class="card-category">Mục tiêu🎯</span>
-                            <h3 class="card-title">Phát triển cộng đồng vững mạnh 🥰</h3>
+                            <span class="card-category">ỨNG DỤNG FIBONACCI 🎯</span>
+                            <h3 class="card-title">NHẬP GIÁ MỤC TIÊU ĐỂ TÍNH CÁC MỨC FIBONACCI</h3>
                             <div class="card-meta">
-                                <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-                                <a href="#" class="read-more">
-                                    Đọc thêm <i class="fas fa-arrow-right"></i>
+                                <span><i class="far fa-calendar-alt"></i> 12 tháng 12, 2024</span>
+                                <a href="https://nofaw.com/apps/fibo/" class="read-more">
+                                    Dùng thử <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
@@ -853,20 +866,103 @@
 
                     <!-- Card 3 -->
                     <div class="carousel-card">
-                        <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Đích đến">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733937878/IMG_0169_ktokgz.jpg" alt="Mục tiêu phát triển">
                         <div class="card-content">
-                            <span class="card-category">Đích đến✅</span>
-                            <h3 class="card-title">Cùng nhau làm giàu💵</h3>
+                            <span class="card-category">ỨNG DỤNG Average  🧩</span>
+                            <h3 class="card-title">TÍNH GIÁ TRUNG BÌNH TẤT CẢ CÁC VỊ THẾ ĐANG MỞ</h3>
                             <div class="card-meta">
-                                <span><i class="far fa-calendar-alt"></i> 6 tháng 12, 2024</span>
-                                <a href="#" class="read-more">
-                                    Đọc thêm <i class="fas fa-arrow-right"></i>
+                                <span><i class="far fa-calendar-alt"></i> 12 tháng 12, 2024</span>
+                                <a href="https://nofaw.com/apps/avg/" class="read-more">
+                                    Sử dụng <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="carousel-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734088464/IMG_0229_mxbvar.jpg" alt="Đích đến">
+                        <div class="card-content">
+                            <span class="card-category">ỨNG DỤNG PHIÊN GIAO DỊCH ⏳</span>
+                            <h3 class="card-title">CẬP NHẬT REALTIME CÁC PHIÊN FOREX</h3>
+                            <div class="card-meta">
+                                <span><i class="far fa-calendar-alt"></i> 12 tháng 12, 2024</span>
+                                <a href="https://nofaw.com/apps/time/" class="read-more">
+                                    Truy cập <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+        </section>
+
+
+        <!-- NEWS Section -->
+        <section class="section news-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2> TỔNG HỢP KIẾN THỨC VỀ FOREX <i class="fas fa-bookmark"></i></h2>
+                </div>
+    <div class="news-container">
+        <a href="https://nofaw.com/assets/forex/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733937505/IMG_0168_xzwneg.jpg" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">Khám Phá Thị Trường Ngoại Hối: Giao Dịch Xuyên Biên Giới</h2>
+
+        </a>
+
+        <a href="https://nofaw.com/assets/meta/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734082597/IMG_0225.png" alt="Tin tức 3" class="news-image">
+            <h2 class="news-title">Giới Thiệu Về Nền Tảng Giao Dịch MT4 (MetaTrader 4) Và MT5 (MetaTrader 5)</h2>
+        </a>
+
+        <a href="https://nofaw.com/assets/support/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734026922/IMG_0205_ojdmhx.png" alt="Tin tức 3" class="news-image">
+            <h2 class="news-title">Kháng Cự Và Hỗ Trợ Trong Giao Dịch</h2>
+        </a>
+
+        <a href="https://nofaw.com/assets/trend/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734029017/IMG_0210_evpps2.webp" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">Xu Hướng Trong Giao Dịch: Chìa Khóa Thành Công Trên Thị Trường</h2>
+        </a>
+        <a href="https://nofaw.com/assets/ema/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734073572/IMG_0216_uv3cxo.jpg" alt="Tin tức 2" class="news-image">
+            <h2 class="news-title">Đường Trung Bình Động (Moving Average - MA): Công Cụ Cơ Bản Nhưng Hiệu Quả Trong Giao Dịch</h2>
+        </a>
+        <a href="https://nofaw.com/assets/indicators/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734076285/IMG_0220_yrct2g.jpg" alt="Tin tức 3" class="news-image">
+            <h2 class="news-title">Các Chỉ Báo Kỹ Thuật (Indicators): Công Cụ Hỗ Trợ Đắc Lực Trong Giao Dịch</h2>
+        </a>
+
+        <a href="https://nofaw.com/assets/risk/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1734078324/IMG_0223_qvah9a.jpg" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">Quản Lý Vốn (Risk Management): Bí Quyết Thành Công Trong Giao Dịch</h2>
+        </a>
+
+ 
+        <a style="display: none;">
+href="https://nofaw.com/assets/exness/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733941007/IMG_0183_gelmc2.png" alt="Tin tức 2" class="news-image">
+            <h2 class="news-title">Hướng Dẫn Mở Tài Khoản Sàn Giao Dịch Exness</h2>
+        </a> <br>
+
+
+<center><a href="https://nofaw.com/assets/">
+    <button style="
+        padding: 10px 15px;
+        background-color: #F04770;
+        color: yellow;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+    ">
+        Xem thêm <i class="fas fa-arrow-down"></i>
+    </button>
+</a></center>
+
+                </div>
             </div>
         </section>
 
@@ -879,53 +975,77 @@
                 </div>
 
                 <div class="royal-carousel-container" id="royalCarouselContainer">
-                    <!-- Royal Card 1 -->
+
+
+           <!-- Royal Card 1 -->
                     <div class="royal-card">
-                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733576809/IMG_0084_ydumrl.jpg" alt="Nonfarm Payrolls (NFP)">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581588/IMG_0088_wk81qd.jpg" alt="Nonfarm Payrolls (NFP)">
+                        <div class="card-content">
+                            <h3 class="card-title">Cục Dự trữ Liên bang Hoa Kỳ (FED)</h3>
+                            <p class="card-text">(Federal Reserve System)</p>
+                            <a href="https://nofaw.com/events/fed/" class="discover-btn">Xem thêm</a>
+                        </div>
+                    </div>
+
+            <!-- Royal Card 2 -->
+                    <div class="royal-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733576809/IMG_0084_ydumrl.jpg" alt="CPI">
                         <div class="card-content">
                             <h3 class="card-title">Nonfarm Payrolls (NFP)</h3>
-                            <p class="card-text">Thứ Sáu đầu tiên mỗi tháng.</p>
-                            <a href="#" class="discover-btn">Xem thêm</a>
+                            <p class="card-text">Được công bố vào thứ Sáu đầu tiên mỗi tháng</p>
+                            <a href="https://nofaw.com/events/nonfarm/" class="discover-btn">Xem thêm</a>
                         </div>
                     </div>
 
-                    <!-- Royal Card 2 -->
+             <!-- Royal Card 3 -->
                     <div class="royal-card">
-                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733577284/IMG_0085_urpq2h.jpg" alt="CPI">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733910099/IMG_0145_lfsdmx.jpg" alt="GDP">
                         <div class="card-content">
-                            <h3 class="card-title">CPI</h3>
-                            <p class="card-text">Chỉ số giá tiêu dùng</p>
-                            <a href="#" class="discover-btn">Xem thêm</a>
+                            <h3 class="card-title">FOMC Meeting</h3>
+                            <p class="card-text">(Federal Open Market Committee)</p>
+                            <a href="https://nofaw.com/events/fomc/" class="discover-btn">Xem thêm</a>
                         </div>
                     </div>
 
-                    <!-- Royal Card 3 -->
+             <!-- Royal Card 4 -->
                     <div class="royal-card">
-                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733582026/IMG_0090_an4ee1.jpg" alt="GDP">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733931619/IMG_0163_frowkn.jpg" alt="FOMC Meetings">
                         <div class="card-content">
-                            <h3 class="card-title">GPD</h3>
-                            <p class="card-text">Tổng sản phẩm quốc nội</p>
-                            <a href="#" class="discover-btn">Xem thêm</a>
+                            <h3 class="card-title">Chỉ số CPI</h3>
+                            <p class="card-text">(Consumer Price Index)</p>
+                            <a href="https://nofaw.com/events/cpi/" class="discover-btn">Xem thêm</a>
                         </div>
                     </div>
 
-                    <!-- Royal Card 4 -->
+
+            <!-- Royal Card 5 -->
                     <div class="royal-card">
-                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581445/IMG_0087_pu1cgz.jpg" alt="FOMC Meetings">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733919013/IMG_0157_nkxchb.jpg" alt="FOMC Meetings">
                         <div class="card-content">
-                            <h3 class="card-title">FOMC Meetings</h3>
-                            <p class="card-text">Chính sách lãi suất và tiền tệ.</p>
-                            <a href="#" class="discover-btn">Xem thêm</a>
+                            <h3 class="card-title">ISM Manufacturing và Services PMI</h3>
+                            <p class="card-text">Công bố hằng tháng</p>
+                            <a href="https://nofaw.com/events/ism/" class="discover-btn">Xem thêm</a>
                         </div>
                     </div>
 
-                    <!-- Royal Card 5 -->
+
+             <!-- Royal Card 6 -->
                     <div class="royal-card">
-                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581588/IMG_0088_wk81qd.png" alt="ISM Manufacturing PMI">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733919639/IMG_0158_o24mlw.webp" alt="FOMC Meetings">
                         <div class="card-content">
-                            <h3 class="card-title">ISM Manufacturing PMI</h3>
-                            <p class="card-text">Chỉ số sản xuất ISM</p>
-                            <a href="#" class="discover-btn">Xem thêm</a>
+                            <h3 class="card-title">Chỉ Số PPI</h3>
+                            <p class="card-text">(Producer Price Index)</p>
+                            <a href="https://nofaw.com/events/ppi/" class="discover-btn">Xem thêm</a>
+                        </div>
+                    </div>
+
+            <!-- Royal Card 7 -->
+                    <div class="royal-card">
+                        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733915936/IMG_0152_vy1ewr.jpg" alt="ISM Manufacturing PMI">
+                        <div class="card-content">
+                            <h3 class="card-title">Chỉ Số GDP</h3>
+                            <p class="card-text">(Gross Domestic Product)</p>
+                            <a href="https://nofaw.com/events/gdp/" class="discover-btn">Xem thêm</a>
                         </div>
                     </div>
                 </div>
@@ -937,21 +1057,42 @@
         <section class="section news-section">
             <div class="container">
                 <div class="section-title">
-                    <h2> TIN TỨC TÀI CHÍNH <i class="fas fa-envelope"></i></h2>
+                    <h2> CÁC SỰ KIỆN CHÍNH <i class="fas fa-book"></i></h2>
                 </div>
-                <div class="news-container">
-                    <a href="#" class="news-item">
-                        <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Tin tức 1" class="news-image">
-                        <h3 class="news-title">Nhiều nhà đầu tư mất trắng sau khi Bitcoin điều chỉnh mạnh về giá 92000$</h3>
-                    </a>
-                    <a href="#" class="news-item">
-                        <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Tin tức 2" class="news-image">
-                        <h3 class="news-title">Chính sách thuế quan 2.0 của Donal Trump liệu có ổn?</h3>
-                    </a>
-                    <a href="#" class="news-item">
-                        <img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Tin tức 3" class="news-image">
-                        <h3 class="news-title">Thị trường vàng quốc tế vẫn giữ sideway dài hạn trong tuần</h3>
-                    </a>
+    <div class="news-container">
+        <a href="https://nofaw.com/events/fed/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733581588/IMG_0088_wk81qd.jpg" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">Tìm Hiểu Về Cục Dự Trữ Liên Bang Hoa Kỳ (FED)</h2>  </a>
+
+        
+        <a href="https://nofaw.com/events/nonfarm/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733576809/IMG_0084_ydumrl.jpg" alt="Tin tức 2" class="news-image">
+            <h2 class="news-title">Nonfarm Payrolls (NFP) và Tác Động Đến Thị Trường Tài Chính</h2>
+        </a>
+        <a href="https://nofaw.com/events/fomc/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733840154/IMG_0137_un23kc.jpg" alt="Tin tức 3" class="news-image">
+            <h2 class="news-title">FOMC Meeting - Cuộc họp định kỳ của Ủy ban Thị trường Mở Liên bang Mỹ</h2>
+        </a>
+
+        <a href="https://nofaw.com/events/cpi/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733912931/IMG_0147_ehfchn.png" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">CPI (Consumer Price Index) Chỉ số đo lường lạm phát</h2>
+        </a>
+
+        <a href="https://nofaw.com/events/gdp/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733916142/IMG_0153_ganbdu.jpg" alt="Tin tức 2" class="news-image">
+            <h2 class="news-title">GDP ảnh hưởng gián tiếp đến giá vàng thông qua đồng USD và kỳ vọng lãi suất</h2>
+        </a>
+
+        <a href="https://nofaw.com/events/ism/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733919013/IMG_0157_nkxchb.jpg" alt="Tin tức 3" class="news-image">
+            <h2 class="news-title">Chỉ Số ISM Manufacturing và Services PMI</h2>
+        </a>
+
+        <a href="https://nofaw.com/events/ppi/" class="news-item">
+            <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733919639/IMG_0158_o24mlw.webp" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">PPI (Producer Price Index) Chỉ số dự đoán lạm phát tương lai</h2>
+        </a>
                 </div>
             </div>
         </section>
@@ -976,7 +1117,7 @@
         <div class="user-info">
             <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733566394/IMG_0083_gcivuv.jpg" alt="User Avatar">
             <h3>NOFAW</h3>
-            <p>Navigate Options, Flourish and Win!</p>
+            <p>Network of Forex and Wealth</p>
         </div>
 
         <ul>
@@ -992,25 +1133,20 @@
                     Về chúng tôi
                 </a>
             </li>
-            <li class="has-submenu">
-                <a href="#">
-                    <i class="fas fa-chart-line"></i>
-                    Dịch vụ
+            <li>
+                <a href="https://nofaw.com/assets/exness">
+                    <i class="far fa-chart-bar"></i>
+                    Mở tài khoản giao dịch
                 </a>
-                <ul class="submenu">
-                    <li><a href="https://nofaw.com">Phân tích thị trường</a></li>
-                    <li><a href="https://nofaw.com">Tín hiệu giao dịch</a></li>
-                    <li><a href="https://nofaw.com">Đào tạo</a></li>
-                </ul>
             </li>
             <li>
-                <a href="https://nofaw.com">
+                <a href="https://nofaw.com/news">
                     <i class="fas fa-newspaper"></i>
                     Tin tức
                 </a>
             </li>
             <li>
-                <a href="https://nofaw.com">
+                <a href="https://nofaw.com/contact">
                     <i class="fas fa-envelope"></i>
                     Liên hệ
                 </a>
@@ -1021,20 +1157,21 @@
     <footer>
         <p>© 2024 NOFAW. All rights reserved.</p>
         <div class="social-icons">
-            <a href="https://facebook.com/nofaw" target="_blank" title="Facebook">
+            <a href="https://facebook.com/nofawstore" target="_blank" title="Facebook">
                 <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="https://twitter.com/nofaw" target="_blank" title="Twitter">
+            <a href="https://twitter.com/nofawtrading" target="_blank" title="Twitter">
                 <i class="fab fa-twitter"></i>
             </a>
-            <a href="https://tiktok.com/nofaw" target="_blank" title="Tiktok">
+            <a href="https://tiktok.com/nofawtrading" target="_blank" title="Tiktok">
                 <i class="fab fa-tiktok"></i>
             </a>
-            <a href="https://telegram.org/nofaw" target="_blank" title="Telegram">
+            <a href="https://t.me/nofawtrading" target="_blank" title="Telegram">
                 <i class="fab fa-telegram"></i>
             </a>
         </div>
     </footer>
+
 
 <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -1157,14 +1294,14 @@
             });
 
             // Auto slide for Featured Carousel
-            let carouselAutoSlideInterval = setInterval(nextCarouselCard, 3000);
+            let carouselAutoSlideInterval = setInterval(nextCarouselCard, 5000);
 
             carouselContainer.addEventListener('mouseenter', () => {
                 clearInterval(carouselAutoSlideInterval);
             });
 
             carouselContainer.addEventListener('mouseleave', () => {
-                carouselAutoSlideInterval = setInterval(nextCarouselCard, 3000);
+                carouselAutoSlideInterval = setInterval(nextCarouselCard, 5000);
             });
 
             // Initialize Featured Carousel
@@ -1289,14 +1426,14 @@
             });
 
             // Auto slide for Royal Carousel
-            let royalAutoSlideInterval = setInterval(nextRoyalCard, 3000);
+            let royalAutoSlideInterval = setInterval(nextRoyalCard, 5000);
 
             royalContainer.addEventListener('mouseenter', () => {
                 clearInterval(royalAutoSlideInterval);
             });
 
             royalContainer.addEventListener('mouseleave', () => {
-                royalAutoSlideInterval = setInterval(nextRoyalCard, 3000);
+                royalAutoSlideInterval = setInterval(nextRoyalCard, 5000);
             });
 
             // Initialize Royal Carousel
@@ -1354,33 +1491,56 @@
             script.async = true;
             document.body.appendChild(script);
 
-            // Toggle Menu
-            const menuIcon = document.querySelector('.menu-icon');
-            const navMenu = document.querySelector('.nav-menu');
-            const overlay = document.querySelector('.nav-overlay');
+// Toggle Menu
+const menuIcon = document.querySelector('.menu-icon');
+const navMenu = document.querySelector('.nav-menu');
+const overlay = document.querySelector('.nav-overlay');
+const body = document.body;
 
-            function toggleMenu() {
-                navMenu.classList.toggle('active');
-                overlay.classList.toggle('active');
-                menuIcon.textContent = navMenu.classList.contains('active') ? '×' : '☰';
-            }
+// Lưu vị trí scroll
+let scrollPosition = 0;
 
-            menuIcon.addEventListener('click', toggleMenu);
-            overlay.addEventListener('click', toggleMenu);
+function toggleMenu() {
+    navMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    menuIcon.textContent = navMenu.classList.contains('active') ? '×' : '☰';
+    
+    // Xử lý scroll
+    if (navMenu.classList.contains('active')) {
+        // Lưu vị trí scroll hiện tại
+        scrollPosition = window.pageYOffset;
+        // Thêm class để khóa scroll
+        body.classList.add('menu-open');
+        // Fix position của body tại vị trí scroll hiện tại
+        body.style.top = `-${scrollPosition}px`;
+    } else {
+        // Xóa class khóa scroll
+        body.classList.remove('menu-open');
+        // Khôi phục vị trí scroll
+        body.style.top = '';
+        window.scrollTo(0, scrollPosition);
+    }
+}
 
-            // Submenu Functionality
-            const submenuItems = document.querySelectorAll('.has-submenu');
+menuIcon.addEventListener('click', toggleMenu);
+overlay.addEventListener('click', toggleMenu);
 
-            submenuItems.forEach(item => {
-                item.addEventListener('click', function (e) {
-                    const submenu = this.querySelector('.submenu');
-                    if (submenu) {
-                        e.preventDefault();
-                        this.classList.toggle('active');
-                        submenu.classList.toggle('active');
-                    }
-                });
-            });
+// Đóng menu khi click outside
+document.addEventListener('click', function(e) {
+    if (!navMenu.contains(e.target) && !menuIcon.contains(e.target) && navMenu.classList.contains('active')) {
+        toggleMenu();
+    }
+});
+
+// Đóng menu khi nhấn phím Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        toggleMenu();
+    }
+});
+
+
+
 
             // Close menu when clicking outside or pressing Escape key
             document.addEventListener('click', (e) => {
