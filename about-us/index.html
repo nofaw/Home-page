@@ -747,24 +747,26 @@ body.menu-open {
     <header>
         <div class="menu-icon">☰</div>
 
-        <div class="search-container">
-            <input type="text" placeholder="Tìm kiếm..." class="search-input">
-            <button class="search-button"><i class="fas fa-search"></i></button>
+    <div class="search-container">
+        <input type="text" placeholder="Tìm kiếm..." class="search-input">
+        <button class="search-button"><i class="fas fa-search"></i></button>
 
-            <div class="search-results-container">
-                <div class="search-results-panel">
-                    <button class="close-search">&times;</button>
-                    <div class="search-stats"></div>
-                    <div class="loading-indicator">
-                        <div class="loading-spinner">
-                            <i class="fas fa-spinner fa-spin"></i>
-                            <span>Đang tìm kiếm...</span>
-                        </div>
-                    </div>
-                    <div class="search-results-content"></div>
-                </div>
+        <!-- Đưa loading-indicator ra đây -->
+        <div class="loading-indicator">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Đang tìm kiếm... </span>
             </div>
         </div>
+
+        <div class="search-results-container">
+            <div class="search-results-panel">
+                <button class="close-search">&times;</button>
+                <div class="search-stats"></div>
+                <div class="search-results-content"></div>
+            </div>
+        </div>
+    </div>
 
 
 
