@@ -105,8 +105,8 @@ header {
     z-index: 1001;
 }
 
-/* Search Bar Styles */ 
-.search-container {
+    /* Search Bar Styles */
+        .search-container {
     display: flex;
     align-items: center;
     background: var(--light-color);
@@ -279,15 +279,40 @@ header {
 }
 
 .loading-indicator {
-    text-align: center;
-    padding: 20px;
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
 }
 
-.loading-indicator i {
-    font-size: 24px;
-    color: var(--primary-color);
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px 30px;
+    border-radius: 35px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
+
+.loading-spinner i {
+    font-size: 24px;
+    color: #34C759;
+    margin-right: 10px;
+}
+
+.loading-spinner span {
+    color: #333;
+    font-size: 16px;
+}
+
 
 
 /* Navigation Menu Styles */
