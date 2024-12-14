@@ -86,62 +86,275 @@ function initializeMenu() {
 }
 
 // Search functionality
-function initializeSearch() {
-    const searchButton = document.querySelector('.search-button');
-    const searchInput = document.querySelector('.search-input');
+        const siteStructure = {
+    'home': {
+        url: '/',
+        title: 'Trang chủ',
+        content: null
+    },
 
-    function performSearch() {
-        const query = searchInput.value.toLowerCase().trim();
-        const contentElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6');
+    'assets': {
+        url: '/assets',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'exness': {
+        url: '/assets/exness',
+        title: 'Mở tài khoản giao dịch',
+        content: null
+    },
+
+    'news': {
+        url: '/news',
+        title: 'Tin tức',
+        content: null
+    },
+
+    'apps': {
+        url: '/apps',
+        title: 'Ứng dụng giao dịch',
+        content: null
+    },
+
+    'events': {
+        url: '/events',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'ema': {
+        url: '/assets/ema',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'forex': {
+        url: '/assets/forex',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'indicators': {
+        url: '/assets/indicators',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'meta': {
+        url: '/assets/meta',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+ 
+    'risk': {
+        url: '/assets/risk',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'support': {
+        url: '/assets/support',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'trend': {
+        url: '/assets/trend',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'cpi': {
+        url: '/events/cpi',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'fed': {
+        url: '/events/fed',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'fomc': {
+        url: '/events/fomc',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'gdp': {
+        url: '/events/gdp',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'ism': {
+        url: '/events/ism',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'ppi': {
+        url: '/events/ppi',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'nonfarm': {
+        url: '/events/nonfarm',
+        title: 'Sự kiện kinh tế',
+        content: null
+    }
+
+};
+
+// Lưu trữ cache
+const pageCache = new Map();
+
+// Hàm tải nội dung trang
+async function fetchPageContent(url) {
+    if (pageCache.has(url)) {
+        return pageCache.get(url);
+    }
+    
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
         
+        // Lấy nội dung chính
+        const content = doc.querySelector('.main-content')?.textContent || '';
+        const title = doc.querySelector('title')?.textContent || '';
+        const description = doc.querySelector('meta[name="description"]')?.content || '';
+        
+        const pageData = {
+            title,
+            description,
+            content: content.toLowerCase(),
+            url
+        };
+        
+        pageCache.set(url, pageData);
+        return pageData;
+    } catch (error) {
+        console.error(`Error fetching ${url}:`, error);
+        return null;
+    }
+}
+
+// Hàm tìm kiếm
+async function searchContent(query) {
+    query = query.toLowerCase();
+    const results = [];
+    const loadingIndicator = document.querySelector('.loading-indicator');
+    
+    loadingIndicator.style.display = 'block';
+    
+    // Tìm kiếm trong tất cả các trang
+    for (const page of Object.values(siteStructure)) {
+        const pageData = await fetchPageContent(page.url);
+        if (pageData && (
+            pageData.title.toLowerCase().includes(query) ||
+            pageData.description.toLowerCase().includes(query) ||
+            pageData.content.includes(query)
+        )) {
+            results.push({
+                title: pageData.title,
+                url: page.url,
+                snippet: generateSnippet(pageData.content, query)
+            });
+        }
+    }
+    
+    loadingIndicator.style.display = 'none';
+    return results;
+}
+
+// Tạo đoạn trích cho kết quả tìm kiếm
+function generateSnippet(content, query) {
+    const snippetLength = 150;
+    const index = content.indexOf(query);
+    if (index === -1) return '';
+    
+    const start = Math.max(0, index - snippetLength / 2);
+    const end = Math.min(content.length, index + query.length + snippetLength / 2);
+    let snippet = content.substring(start, end);
+    
+    if (start > 0) snippet = '...' + snippet;
+    if (end < content.length) snippet = snippet + '...';
+    
+    return snippet.replace(
+        new RegExp(query, 'gi'),
+        match => `<span class="search-highlight">${match}</span>`
+    );
+}
+
+// Hiển thị kết quả tìm kiếm
+function displaySearchResults(results, query) {
+    const container = document.querySelector('.search-results-container');
+    const content = document.querySelector('.search-results-content');
+    const stats = document.querySelector('.search-stats');
+    
+    content.innerHTML = '';
+    stats.textContent = `Tìm thấy ${results.length} kết quả cho "${query}"`;
+    
+    results.forEach(result => {
+        const resultElement = document.createElement('div');
+        resultElement.className = 'search-result-item';
+        resultElement.innerHTML = `
+            <a href="${result.url}" class="search-result-title">${result.title}</a>
+            <div class="search-result-snippet">${result.snippet}</div>
+            <div class="search-result-url">${window.location.origin}${result.url}</div>
+        `;
+        content.appendChild(resultElement);
+    });
+    
+    container.style.display = 'block';
+}
+
+// Khởi tạo tìm kiếm
+function initializeSearch() {
+    const searchInput = document.querySelector('.search-input');
+    const searchButton = document.querySelector('.search-button');
+    const closeButton = document.querySelector('.close-search');
+    const searchContainer = document.querySelector('.search-results-container');
+    
+    async function performSearch() {
+        const query = searchInput.value.trim();
         if (!query) {
             alert('Vui lòng nhập từ khóa tìm kiếm');
             return;
         }
-
-        let matchCount = 0;
-        let firstMatch = null;
-
-        contentElements.forEach(element => {
-            element.style.backgroundColor = '';
-            if (element.textContent.toLowerCase().includes(query)) {
-                element.style.backgroundColor = 'yellow';
-                matchCount++;
-                if (!firstMatch) firstMatch = element;
-            }
-        });
-
-        if (matchCount > 0) {
-            alert(`Tìm thấy ${matchCount} kết quả`);
-            firstMatch.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-            });
-        } else {
-            alert('Không tìm thấy kết quả nào');
-        }
+        
+        const results = await searchContent(query);
+        displaySearchResults(results, query);
     }
-
-    // Search button click
-    searchButton?.addEventListener('click', performSearch);
-
-    // Search on Enter key
-    searchInput?.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            performSearch();
+    
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') performSearch();
+    });
+    
+    closeButton.addEventListener('click', () => {
+        searchContainer.style.display = 'none';
+    });
+    
+    // Đóng khi click outside
+    searchContainer.addEventListener('click', e => {
+        if (e.target === searchContainer) {
+            searchContainer.style.display = 'none';
+        }
+    });
+    
+    // Đóng khi nhấn ESC
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && searchContainer.style.display === 'block') {
+            searchContainer.style.display = 'none';
         }
     });
 }
 
-// Handle loading errors
-window.onerror = function(msg, url, lineNo, columnNo, error) {
-    console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
-    return false;
-};
-
-// Prevent zooming on mobile devices
-document.addEventListener('touchmove', function(event) {
-    if (event.scale !== 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
+// Khởi tạo khi trang load xong
+document.addEventListener('DOMContentLoaded', initializeSearch);
