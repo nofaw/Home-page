@@ -195,7 +195,11 @@
             margin: 0 auto;
         }
 
-        /* Search Bar Styles */
+
+
+
+
+    /* Search Bar Styles */
         .search-container {
     display: flex;
     align-items: center;
@@ -369,17 +373,39 @@
 }
 
 .loading-indicator {
-    text-align: center;
-    padding: 20px;
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
 }
 
-.loading-indicator i {
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px 30px;
+    border-radius: 35px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.loading-spinner i {
     font-size: 24px;
-    color: var(--primary-color);
+    color: #34C759;
+    margin-right: 10px;
 }
 
-
+.loading-spinner span {
+    color: #333;
+    font-size: 16px;
+}
 
 
 
@@ -945,21 +971,28 @@ body.menu-open {
 <body>
     <header>
         <div class="menu-icon">☰</div>
-        <div class="search-container">
-            <input type="text" placeholder="Tìm kiếm..." class="search-input">
-            <button class="search-button"><i class="fas fa-search"></i></button>
 
 
-<div class="search-results-container">
-    <div class="search-results-panel">
-        <button class="close-search">&times;</button>
-        <div class="search-stats"></div>
+    <div class="search-container">
+        <input type="text" placeholder="Tìm kiếm..." class="search-input">
+        <button class="search-button"><i class="fas fa-search"></i></button>
+
+        <!-- Đưa loading-indicator ra đây -->
         <div class="loading-indicator">
-            <i class="fas fa-spinner fa-spin"></i>
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Đang tìm kiếm... </span>
+            </div>
         </div>
-        <div class="search-results-content"></div>
+
+        <div class="search-results-container">
+            <div class="search-results-panel">
+                <button class="close-search">&times;</button>
+                <div class="search-stats"></div>
+                <div class="search-results-content"></div>
+            </div>
+        </div>
     </div>
-</div>
 
 
 
@@ -1698,7 +1731,7 @@ document.addEventListener('keydown', function(e) {
         content: null
     },
 
-    'assets': {
+    'exness': {
         url: '/assets/exness',
         title: 'Mở tài khoản giao dịch',
         content: null
@@ -1722,7 +1755,7 @@ document.addEventListener('keydown', function(e) {
         content: null
     },
 
-      'ema': {
+    'ema': {
         url: '/assets/ema',
         title: 'Dữ liệu kiến thức',
         content: null
@@ -1764,7 +1797,7 @@ document.addEventListener('keydown', function(e) {
         content: null
     },
 
-        'cpi': {
+    'cpi': {
         url: '/events/cpi',
         title: 'Sự kiện kinh tế',
         content: null
@@ -1848,8 +1881,16 @@ async function searchContent(query) {
     query = query.toLowerCase();
     const results = [];
     const loadingIndicator = document.querySelector('.loading-indicator');
+    const searchStats = document.querySelector('.search-stats');
+    const searchResultsContent = document.querySelector('.search-results-content');
     
+    // Hiện loading, ẩn stats và content
     loadingIndicator.style.display = 'block';
+    searchStats.style.display = 'none';
+    searchResultsContent.style.display = 'none';
+    
+    // Thêm độ trễ tối thiểu 1 giây
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Tìm kiếm trong tất cả các trang
     for (const page of Object.values(siteStructure)) {
@@ -1867,7 +1908,11 @@ async function searchContent(query) {
         }
     }
     
+    // Ẩn loading, hiện stats và content
     loadingIndicator.style.display = 'none';
+    searchStats.style.display = 'block';
+    searchResultsContent.style.display = 'block';
+    
     return results;
 }
 
