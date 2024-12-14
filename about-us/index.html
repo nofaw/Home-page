@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="NOFAW - Nền tảng chia sẻ kiến thức và xu hướng thị trường ngoại hối, kinh nghiệm giao dịch Forex">
+    <meta name="keywords" content="kinh doanh, chiến lược, xu hướng, đầu tư, giá vàng, exness, forex">
+    <title>NOFAW - Blog Chia Sẻ Kinh Nghiệm Đầu Tư</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/apple-touch-icon_fpnc8i.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-192x192_v5akgc.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/android-chrome-512x512_b8bzja.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032893/favicon-32x32_pn3fl5.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://res.cloudinary.com/dvouakaon/image/upload/v1734032892/favicon-16x16_kfbdd3.png">
+
+    
+    <style>
+        /* Reset & Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        :root {
+            --primary-color: #34C759;
+            --dark-color: #333;
+            --light-color: #ffffff;
+            --gray-color: #666;
+            --light-gray: #f5f5f5;
+            --transition: all 0.3s ease;
+
+        }
+
+
+        /* Base Styles */
+        html, body {
+            background-color: var(--light-gray);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.5rem;
+            height: 50px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-text-container {
+            position: absolute;
+            top: 50%;
+            right: 3%;
+            transform: translateY(-50%);
+            width: auto;
+            text-align: center;
+            z-index: 1001;
+        }
+
+        .logo-text {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            line-height: 1.2;
+            display: inline-block;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: var(--light-color);
+            border: 2px solid var(--light-color);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+.logo-text {
+    text-decoration: none; /* Bỏ gạch chân */
+
+    cursor: pointer;
+}
+
+.logo-text:hover {
+    opacity: 0.8; /* Hiệu ứng khi hover */
+}
+ 
+    /* Styles mới cho logo */
+    .logo-container {
+        background: var(--light-color);
+        padding: 2px 8px;
+        border-radius: 6px;
+        transition: var(--transition);
+    }
+
+    .logo-container:hover {
+        opacity: 0.8;
+    }
+
+    .logo-container a {
+        text-decoration: none;
+        display: block;
+    }
+
+    .logo-svg {
+        height: 35px;
+        width: auto;
+        display: block;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .logo-svg {
+            height: 30px;
+        }
+        
+        .search-input {
+            width: 120px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .search-input {
+            width: 100px;
+        }
+        
+        .logo-svg {
+            height: 25px;
+        }
+    }
+
+        .menu-icon {
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+
+
+
+
+/* Search Bar Styles */
+        .search-container {
+    display: flex;
+    align-items: center;
+    background: var(--light-color);
+    border-radius: 20px;
+    margin: 0 10px;
+    width: 200px;
+    height: 32px; /* Thêm chiều cao cố định */
+    overflow: hidden;
+    border: 1px solid var(--primary-color);
+    position: relative; /* Thêm position relative */
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    width: 160px;
+    font-size: 0.9rem;
+    background: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 100%; /* Đảm bảo chiều cao 100% */
+}
+
+.search-input:focus {
+    outline: none;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.search-button {
+    width: 40px;
+    height: 100%; /* Đảm bảo chiều cao 100% */
+    min-height: 30px;
+    border: none;
+    background: var(--primary-color);
+    color: var(--light-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    position: absolute; /* Định vị tuyệt đối */
+    right: 0; /* Đặt nút ở bên phải */
+    top: 0; /* Đặt nút ở trên cùng */
+    border-radius: 0 20px 20px 0; /* Bo góc bên phải */
+}
+
+.notification {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 80px; /* Điều chỉnh giá trị này tùy theo chiều cao của header */
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: none;
+    text-align: center;
+    min-width: 200px;
+}
+
+.notification.success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.notification.error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Thêm animation cho thông báo */
+@keyframes slideDown {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+    to {
+        top: 80px;
+        opacity: 1;
+    }
+}
+
+.notification {
+    animation: slideDown 0.3s ease-out;
+}
+
+
+/* Search Results Styling */
+.search-results-container {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: none;
+    overflow-y: auto;
+}
+
+.search-results-panel {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    position: relative;
+}
+
+.close-search {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.search-result-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-title {
+    color: #1a0dab;
+    font-size: 18px;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+.search-result-title:hover {
+    text-decoration: underline;
+}
+
+.search-result-snippet {
+    color: #4d5156;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.search-result-url {
+    color: #006621;
+    font-size: 12px;
+}
+
+.search-highlight {
+    background-color: yellow;
+    padding: 2px;
+}
+
+.search-stats {
+    color: #666;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.loading-indicator {
+    text-align: center;
+    padding: 20px;
+    display: none;
+}
+
+.loading-indicator i {
+    font-size: 24px;
+    color: var(--primary-color);
+}
+
+
+.loading-indicator {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-indicator i {
+    font-size: 24px; 
+    color: var(--primary-color);
+    margin-right: 8px;
+}
+
+.loading-indicator span {
+    font-size: 16px;
+    color: var(--dark-color);
+}
+
+
+/* CSS cho loading */
+.loading-indicator {
+    display: none; /* Mặc định ẩn */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.loading-spinner i {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+.loading-spinner span {
+    color: var(--dark-color);
+    font-size: 16px;
+}
+
+
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0rem;
+        }
+
+        /* Article Styles */
+    .article {
+        background: linear-gradient(
+                to bottom,
+                #F4E7F8,
+                #F2DDDC,
+                #F4E7F8,
+                #F2DDDC,
+                #F4E7F8,
+                #F2DDDC
+            ) fixed;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 20px 10px;
+    }
+
+    .article h1 {
+        color: var(--dark-color);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .article-meta {
+        color: var(--gray-color);
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .article-content {
+        color: var(--dark-color);
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+
+
+
+        /* Ảnh bài viết Styles */
+
+.image-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.article-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto; /* Để chiều cao tự động theo tỷ lệ ảnh */
+    max-height: 800px; /* Giới hạn chiều cao tối đa */
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+figcaption {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    padding: 0 10px;
+    line-height: 1.5;
+}
+
+/* Responsive cho mobile */
+@media screen and (max-width: 850px) {
+    .image-container {
+        padding: 5px;
+    }
+    
+    .article-image {
+        max-height: 500px; /* Giới hạn chiều cao trên mobile */
+    }
+}
+
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 1rem;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .social-icons a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+
+
+
+/* Navigation Menu Styles */
+.nav-menu {
+    position: fixed;
+    top: 50px; /* Để menu nằm dưới header */
+    left: -300px; /* Ẩn menu ban đầu */
+    width: 300px;
+    height: calc(100vh - 50px);
+    background-color: #333;
+    transition: 0.3s;
+    z-index: 999;
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+.nav-menu.active {
+    left: 0;
+}
+
+.nav-overlay {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 998;
+}
+
+.nav-overlay.active {
+    display: block;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li {
+    padding: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-menu a {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+.nav-menu a:hover {
+    background-color: var(--primary-color);
+    padding-left: 30px;
+}
+
+.nav-menu i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Submenu styles */
+.submenu {
+    background-color: rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.submenu.active {
+    display: block;
+}
+
+.nav-menu li.has-submenu > a::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: 0.3s;
+}
+
+.nav-menu li.has-submenu.active > a::after {
+    transform: rotate(180deg);
+}
+
+.submenu a {
+    padding-left: 50px;
+}
+
+.submenu a:hover {
+    padding-left: 55px;
+}
+
+
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.nav-menu {
+    -webkit-overflow-scrolling: touch; /* Cho phép scroll mượt trên iOS */
+}
+
+
+/* User info section */
+.user-info {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.user-info img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.user-info p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        width: 260px;
+    }
+}
+
+
+
+
+/* News Container */
+
+.news-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.news-item {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: inherit;
+}
+
+.news-item:hover {
+    background-color: #f8f8f8;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+    border-radius: 4px;
+    flex-shrink: 0; /* Thêm thuộc tính này để ngăn ảnh bị co */
+}
+
+.news-title {
+    font-size: 20px;
+    color: #333;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    line-height: 1.4;
+}
+
+/* CSS cho mobile */
+@media screen and (max-width: 768px) {
+    .news-item {
+        padding: 12px;
+    }
+    
+    .news-image {
+        width: 120px;    /* Kích thước cố định cho mobile */
+        height: 80px;    /* Tỷ lệ 3:2 */
+        flex-shrink: 0;  /* Ngăn ảnh bị co */
+    }
+    
+    .news-title {
+        font-size: 18px;
+        line-height: 1.4;
+    }
+}
+
+/* CSS cho màn hình rất nhỏ */
+@media screen and (max-width: 480px) {
+    .news-item {
+        padding: 10px;
+    }
+    
+    .news-image {
+        width: 100px;   /* Kích thước nhỏ hơn cho điện thoại màn hình nhỏ */
+        height: 67px;   /* Vẫn giữ tỷ lệ 3:2 */
+    }
+    
+    .news-title {
+        font-size: 16px;
+    }
+}
+
+   </style>
+</head>
+<body>
+    <header>
+        <div class="menu-icon">☰</div>
+
+        <div class="search-container">
+            <input type="text" placeholder="Tìm kiếm..." class="search-input">
+            <button class="search-button"><i class="fas fa-search"></i></button>
+
+            <div class="search-results-container">
+                <div class="search-results-panel">
+                    <button class="close-search">&times;</button>
+                    <div class="search-stats"></div>
+                    <div class="loading-indicator">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Đang tìm kiếm...</span>
+                        </div>
+                    </div>
+                    <div class="search-results-content"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    <div class="logo-container">
+        <a href="https://nofaw.com">
+            <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100">
+                <text x="20" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">N</text>
+                <text x="65" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#FF0000">O</text>
+                <text x="115" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">F</text>
+                <text x="155" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">A</text>
+                <text x="205" y="70" font-family="Arial" font-size="60" font-weight="bold" fill="#000000">W</text>
+            </svg>
+        </a>
+    </div>
+        </div>
+    </header>
+
+
+
+
+<div class="nav-overlay"></div>
+<nav class="nav-menu">
+    <!-- User Info Section -->
+    <div class="user-info">
+        <img src="https://res.cloudinary.com/dvouakaon/image/upload/v1733566394/IMG_0083_gcivuv.jpg" alt="User Avatar">
+        <h3>NOFAW</h3>
+        <p>Network of Forex and Wealth</p>
+    </div>
+    
+    <!-- Navigation Links -->
+        <ul>
+            <li>
+                <a href="https://nofaw.com">
+                    <i class="fas fa-home"></i>
+                    Trang chủ
+                </a>
+            </li>
+            <li>
+                <a href="https://nofaw.com/about-us">
+                    <i class="fas fa-info-circle"></i>
+                    Về chúng tôi
+                </a>
+            </li>
+            <li>
+                <a href="https://nofaw.com/assets/exness">
+                    <i class="far fa-chart-bar"></i>
+                    Mở tài khoản giao dịch
+                </a>
+            </li>
+            <li>
+                <a href="https://nofaw.com/news">
+                    <i class="fas fa-newspaper"></i>
+                    Tin tức
+                </a>
+            </li>
+            <li>
+                <a href="https://nofaw.com/contact">
+                    <i class="fas fa-envelope"></i>
+                    Liên hệ
+                </a>
+            </li>
+        </ul>
+</nav>
+
+
+
+
+
+    <main class="main-content">
+        <article class="article">
+<h2>CHÀO MỪNG ĐẾN VỚI WEBSITE CỦA CHÚNG TÔI</h2>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> Ngày đăng: 10/12/2024</span>
+                <span><i class="far fa-user"></i> Tác giả: Nofaw Trading</span>
+            </div>
+            <div class="article-content">
+                <!-- Nội dung bài viết sẽ được thêm vào đây -->
+<p>NOFAW (Network of Forex and Wealth) là nền tảng chuyên biệt dành cho cộng đồng nhà đầu tư đam mê thị trường ngoại hối (Forex). Được thành lập với sứ mệnh hỗ trợ nhà đầu tư đạt được thành công bền vững, chúng tôi không ngừng nỗ lực xây dựng một môi trường thân thiện, giàu kiến thức và đáng tin cậy.</p>
+<h3>Tầm Nhìn và Sứ Mệnh</h3>
+<p>•	Tầm nhìn: Trở thành nguồn tài nguyên số 1 về ngoại hối cho mọi nhà đầu tư, từ người mới bắt đầu đến chuyên gia.<br>	•	Sứ mệnh: Chia sẻ kiến thức, kinh nghiệm, cập nhật thông tin thị trường nhanh chóng, và cung cấp các công cụ giao dịch hiệu quả, giúp nhà đầu tư đưa ra quyết định sáng suốt.</p>
+<h3>Chúng Tôi Mang Đến Điều Gì?</h3>
+
+  <li> Chia sẻ kinh nghiệm đầu tư
+NOFAW là nơi tập hợp những bài viết chuyên sâu, bài học từ thực tiễn, và các chiến lược giao dịch hiệu quả từ những nhà đầu tư dày dặn kinh nghiệm.<br>
+	•	Cập nhật tin tức thị trường
+Với tiêu chí “Nhanh - Chính xác - Đầy đủ,” chúng tôi luôn cung cấp những thông tin nóng hổi về biến động thị trường, chính sách kinh tế, và các yếu tố tác động đến thị trường ngoại hối.<br>
+	•	Công cụ hỗ trợ giao dịch:
+NOFAW phát triển và cung cấp các công cụ giao dịch hữu ích, từ phân tích kỹ thuật, ứng dụng nhật ký giao dịch, biểu đồ Fibonacci, đến công cụ quản lý rủi ro và lợi nhuận, giúp bạn giao dịch hiệu quả hơn.</li>
+
+<h3>Tập Trung Vào Thị Trường Ngoại Hối</h3>
+<p>Forex là thị trường tài chính lớn nhất thế giới với cơ hội không giới hạn. Hiểu được những thách thức mà các nhà đầu tư phải đối mặt, NOFAW hướng đến việc đồng hành và trở thành người bạn đáng tin cậy trong hành trình của bạn.</p>
+<p>Tại Sao Chọn NOFAW?</p>
+<p>•	Đội ngũ chuyên gia: Chúng tôi tự hào sở hữu đội ngũ giàu kinh nghiệm và đam mê với thị trường ngoại hối.<br>	•	Cộng đồng gắn kết: NOFAW xây dựng một không gian để các nhà đầu tư cùng trao đổi, học hỏi và phát triển.<br>	•	Phát triển không ngừng: Cam kết đổi mới, tối ưu hóa và mang đến giá trị thiết thực nhất cho nhà đầu tư.</p>
+<p>Hãy để NOFAW đồng hành cùng bạn trên con đường chinh phục thị trường ngoại hối!</p>
+
+            </div>
+        </article>
+    </main>
+
+
+
+<!-- NEWS -->
+<h2 style="padding-left: 10px;"> TIN TỨC TÀI CHÍNH <i class="fas fa-envelope"></i> </h2>
+</div>
+
+    <div class="news-container">
+        <a href="https://nofaw.com/assets/" class="news-item">
+            <img src="https://nofawfund.sirv.com/Forex/IMG_0079.jpeg" alt="Tin tức 1" class="news-image">
+            <h2 class="news-title">KIẾN THỨC ĐẦU TƯ: Tổng hợp toàn bộ kiến thức về thị trường ngoại hối</h2>
+        </a>
+        <a href="https://nofaw.com/events/" class="news-item">
+            <img src="https://nofawfund.sirv.com/Forex/IMG_0081.jpeg" alt="Tin tức 2" class="news-image">
+            <h2 class="news-title">SỰ KIỆN KINH TẾ: Tìm hiểu về cách vận hành của thị trường</h2>
+        </a>
+        <a href="https://nofaw.com/news/" class="news-item">
+            <img src="https://nofawfund.sirv.com/Forex/IMG_0078.jpeg" alt="Tin tức 3" class="news-image">
+            <h2 class="news-title">TIN TỨC TÀI CHÍNH: Tổng hợp những thông tin về thị trường tài chính</h2>
+        </a>
+    </div>
+
+    <footer>
+        <p>© 2024 NOFAW. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://facebook.com/nofawstore" target="_blank" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/nofawtrading" target="_blank" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://tiktok.com/nofawtrading" target="_blank" title="Tiktok">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://t.me/nofawtrading" target="_blank" title="Telegram">
+                <i class="fab fa-telegram"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+
+
+// Toggle Menu
+const menuIcon = document.querySelector('.menu-icon');
+const navMenu = document.querySelector('.nav-menu');
+const overlay = document.querySelector('.nav-overlay');
+const body = document.body;
+
+// Lưu vị trí scroll
+let scrollPosition = 0;
+
+function toggleMenu() {
+    navMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+    menuIcon.textContent = navMenu.classList.contains('active') ? '×' : '☰';
+    
+    // Xử lý scroll
+    if (navMenu.classList.contains('active')) {
+        // Lưu vị trí scroll hiện tại
+        scrollPosition = window.pageYOffset;
+        // Thêm class để khóa scroll
+        body.classList.add('menu-open');
+        // Fix position của body tại vị trí scroll hiện tại
+        body.style.top = `-${scrollPosition}px`;
+    } else {
+        // Xóa class khóa scroll
+        body.classList.remove('menu-open');
+        // Khôi phục vị trí scroll
+        body.style.top = '';
+        window.scrollTo(0, scrollPosition);
+    }
+}
+
+menuIcon.addEventListener('click', toggleMenu);
+overlay.addEventListener('click', toggleMenu);
+
+// Đóng menu khi click outside
+document.addEventListener('click', function(e) {
+    if (!navMenu.contains(e.target) && !menuIcon.contains(e.target) && navMenu.classList.contains('active')) {
+        toggleMenu();
+    }
+});
+
+// Đóng menu khi nhấn phím Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        toggleMenu();
+    }
+});
+
+
+
+
+// Search Functionality
+const siteStructure = {
+    'home': {
+        url: '/',
+        title: 'Trang chủ',
+        content: null
+    },
+
+    'assets': {
+        url: '/assets',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'exness': {
+        url: '/assets/exness',
+        title: 'Mở tài khoản giao dịch',
+        content: null
+    },
+
+    'news': {
+        url: '/news',
+        title: 'Tin tức',
+        content: null
+    },
+
+    'apps': {
+        url: '/apps',
+        title: 'Ứng dụng giao dịch',
+        content: null
+    },
+
+    'events': {
+        url: '/events',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'ema': {
+        url: '/assets/ema',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'forex': {
+        url: '/assets/forex',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'indicators': {
+        url: '/assets/indicators',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'meta': {
+        url: '/assets/meta',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+ 
+    'risk': {
+        url: '/assets/risk',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'support': {
+        url: '/assets/support',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'trend': {
+        url: '/assets/trend',
+        title: 'Dữ liệu kiến thức',
+        content: null
+    },
+
+    'cpi': {
+        url: '/events/cpi',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'fed': {
+        url: '/events/fed',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'fomc': {
+        url: '/events/fomc',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'gdp': {
+        url: '/events/gdp',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'ism': {
+        url: '/events/ism',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'ppi': {
+        url: '/events/ppi',
+        title: 'Sự kiện kinh tế',
+        content: null
+    },
+
+    'nonfarm': {
+        url: '/events/nonfarm',
+        title: 'Sự kiện kinh tế',
+        content: null
+    }
+};
+
+// Lưu trữ cache
+const pageCache = new Map();
+
+// Hàm tải nội dung trang
+async function fetchPageContent(url) {
+    if (pageCache.has(url)) {
+        return pageCache.get(url);
+    }
+    
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        
+        // Lấy nội dung chính
+        const content = doc.querySelector('.main-content')?.textContent || '';
+        const title = doc.querySelector('title')?.textContent || '';
+        const description = doc.querySelector('meta[name="description"]')?.content || '';
+        
+        const pageData = {
+            title,
+            description,
+            content: content.toLowerCase(),
+            url
+        };
+        
+        pageCache.set(url, pageData);
+        return pageData;
+    } catch (error) {
+        console.error(`Error fetching ${url}:`, error);
+        return null;
+    }
+}
+
+// Hàm tìm kiếm
+async function searchContent(query) {
+    query = query.toLowerCase();
+    const results = [];
+    const loadingIndicator = document.querySelector('.loading-indicator');
+    const searchStats = document.querySelector('.search-stats');
+    const searchResultsContent = document.querySelector('.search-results-content');
+    
+    // Hiện loading, ẩn stats và content
+    loadingIndicator.style.display = 'block';
+    searchStats.style.display = 'none';
+    searchResultsContent.style.display = 'none';
+    
+    // Tìm kiếm trong tất cả các trang
+    for (const page of Object.values(siteStructure)) {
+        const pageData = await fetchPageContent(page.url);
+        if (pageData && (
+            pageData.title.toLowerCase().includes(query) ||
+            pageData.description.toLowerCase().includes(query) ||
+            pageData.content.includes(query)
+        )) {
+            results.push({
+                title: pageData.title,
+                url: page.url,
+                snippet: generateSnippet(pageData.content, query)
+            });
+        }
+    }
+    
+    // Ẩn loading, hiện stats và content
+    loadingIndicator.style.display = 'none';
+    searchStats.style.display = 'block';
+    searchResultsContent.style.display = 'block';
+    
+    return results;
+}
+
+// Tạo đoạn trích cho kết quả tìm kiếm
+function generateSnippet(content, query) {
+    const snippetLength = 150;
+    const index = content.indexOf(query);
+    if (index === -1) return '';
+    
+    const start = Math.max(0, index - snippetLength / 2);
+    const end = Math.min(content.length, index + query.length + snippetLength / 2);
+    let snippet = content.substring(start, end);
+    
+    if (start > 0) snippet = '...' + snippet;
+    if (end < content.length) snippet = snippet + '...';
+    
+    return snippet.replace(
+        new RegExp(query, 'gi'),
+        match => `<span class="search-highlight">${match}</span>`
+    );
+}
+
+// Hiển thị kết quả tìm kiếm
+function displaySearchResults(results, query) {
+    const container = document.querySelector('.search-results-container');
+    const content = document.querySelector('.search-results-content');
+    const stats = document.querySelector('.search-stats');
+    
+    content.innerHTML = '';
+    stats.textContent = `Tìm thấy ${results.length} kết quả cho "${query}"`;
+    
+    results.forEach(result => {
+        const resultElement = document.createElement('div');
+        resultElement.className = 'search-result-item';
+        resultElement.innerHTML = `
+            <a href="${result.url}" class="search-result-title">${result.title}</a>
+            <div class="search-result-snippet">${result.snippet}</div>
+            <div class="search-result-url">${window.location.origin}${result.url}</div>
+        `;
+        content.appendChild(resultElement);
+    });
+    
+    container.style.display = 'block';
+}
+
+// Khởi tạo tìm kiếm
+function initializeSearch() {
+    const searchInput = document.querySelector('.search-input');
+    const searchButton = document.querySelector('.search-button');
+    const closeButton = document.querySelector('.close-search');
+    const searchContainer = document.querySelector('.search-results-container');
+    
+    async function performSearch() {
+        const query = searchInput.value.trim();
+        if (!query) {
+            alert('Vui lòng nhập từ khóa tìm kiếm');
+            return;
+        }
+        
+        const results = await searchContent(query);
+        displaySearchResults(results, query);
+    }
+    
+    searchButton.addEventListener('click', performSearch);
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') performSearch();
+    });
+    
+    closeButton.addEventListener('click', () => {
+        searchContainer.style.display = 'none';
+    });
+    
+    // Đóng khi click outside
+    searchContainer.addEventListener('click', e => {
+        if (e.target === searchContainer) {
+            searchContainer.style.display = 'none';
+        }
+    });
+    
+    // Đóng khi nhấn ESC
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && searchContainer.style.display === 'block') {
+            searchContainer.style.display = 'none';
+        }
+    });
+}
+
+// Khởi tạo khi trang load xong
+document.addEventListener('DOMContentLoaded', initializeSearch);
+
+    </script>
+</body>
+</html>
