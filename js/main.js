@@ -85,8 +85,8 @@ function initializeMenu() {
     });
 }
 
-// Search functionality
-        const siteStructure = {
+            // Search Functionality
+            const siteStructure = {
     'home': {
         url: '/',
         title: 'Trang chủ',
@@ -249,8 +249,16 @@ async function searchContent(query) {
     query = query.toLowerCase();
     const results = [];
     const loadingIndicator = document.querySelector('.loading-indicator');
+    const searchStats = document.querySelector('.search-stats');
+    const searchResultsContent = document.querySelector('.search-results-content');
     
+    // Hiện loading, ẩn stats và content
     loadingIndicator.style.display = 'block';
+    searchStats.style.display = 'none';
+    searchResultsContent.style.display = 'none';
+    
+    // Thêm độ trễ tối thiểu 1 giây
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Tìm kiếm trong tất cả các trang
     for (const page of Object.values(siteStructure)) {
@@ -268,7 +276,11 @@ async function searchContent(query) {
         }
     }
     
+    // Ẩn loading, hiện stats và content
     loadingIndicator.style.display = 'none';
+    searchStats.style.display = 'block';
+    searchResultsContent.style.display = 'block';
+    
     return results;
 }
 
