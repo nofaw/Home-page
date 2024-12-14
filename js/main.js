@@ -163,48 +163,6 @@ function initializeMenu() {
         url: '/assets/trend',
         title: 'Dữ liệu kiến thức',
         content: null
-    },
-
-    'cpi': {
-        url: '/events/cpi',
-        title: 'Sự kiện kinh tế',
-        content: null
-    },
-
-    'fed': {
-        url: '/events/fed',
-        title: 'Sự kiện kinh tế',
-        content: null
-    },
-
-    'fomc': {
-        url: '/events/fomc',
-        title: 'Sự kiện kinh tế',
-        content: null
-    },
-
-    'gdp': {
-        url: '/events/gdp',
-        title: 'Sự kiện kinh tế',
-        content: null
-    },
-
-    'ism': {
-        url: '/events/ism',
-        title: 'Sự kiện kinh tế',
-        content: null
-    },
-
-    'ppi': {
-        url: '/events/ppi',
-        title: 'Sự kiện kinh tế',
-        content: null
-    },
-
-    'nonfarm': {
-        url: '/events/nonfarm',
-        title: 'Sự kiện kinh tế',
-        content: null
     }
 
 };
