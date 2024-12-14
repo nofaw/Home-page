@@ -3,18 +3,23 @@
     <div class="search-container">
         <input type="text" placeholder="Tìm kiếm..." class="search-input">
         <button class="search-button"><i class="fas fa-search"></i></button>
-    </div>
 
-<div class="search-results-container">
-    <div class="search-results-panel">
-        <button class="close-search">&times;</button>
-        <div class="search-stats"></div>
+        <!-- Đưa loading-indicator ra đây -->
         <div class="loading-indicator">
-            <i class="fas fa-spinner fa-spin"></i>
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Đang tìm kiếm... </span>
+            </div>
         </div>
-        <div class="search-results-content"></div>
+
+        <div class="search-results-container">
+            <div class="search-results-panel">
+                <button class="close-search">&times;</button>
+                <div class="search-stats"></div>
+                <div class="search-results-content"></div>
+            </div>
+        </div>
     </div>
-</div>
 
 
     <div class="logo-container">
