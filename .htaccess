@@ -1,5 +1,0 @@
-apache
-<Files "sitemap.xml">
-    AddType application/xml .xml
-    Header set Content-Type application/xml
-</Files>
