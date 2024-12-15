@@ -1,7 +1,0 @@
-yaml
-defaults:
-  - scope:
-      path: "sitemap.xml"
-    values:
-      layout: null
-      content_type: "application/xml"
