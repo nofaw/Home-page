@@ -13,4 +13,4 @@ User-agent: BLEXBot
 Disallow: /
 
 
-Sitemap: https://nofaw.com/sitemap.xml
+Sitemap: https://nofaw.com/sitemap.txt
