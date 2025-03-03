@@ -484,22 +484,24 @@ function appendTransactionToTable(transaction, index) {
             }, 2000);
         }
 
-        function updateSummary() {
-            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-            let totalDays = transactions.length;
-            let totalProfitLoss = 0;
-            let totalPercentage = 0;
-            let finalBalance = 0;
+function updateSummary() {
+    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    let totalDays = transactions.length;
+    let totalProfitLoss = 0;
+    let totalInitialCapital = 0;  // Thêm biến này
+    let finalBalance = 0;
 
-            transactions.forEach(transaction => {
-                totalProfitLoss += parseFloat(transaction.profitLoss);
-                totalPercentage += parseFloat(transaction.profitPercentage);
-                finalBalance = transaction.finalBalance;
-            });
+    transactions.forEach(transaction => {
+        totalProfitLoss += parseFloat(transaction.profitLoss);
+        totalInitialCapital += parseFloat(transaction.initialCapital); // Cộng vốn ban đầu
+        finalBalance = transaction.finalBalance;
+    });
 
-            document.getElementById('totalDays').textContent = totalDays;
-            document.getElementById('totalPercentage').textContent = totalPercentage.toFixed(2);
-            document.getElementById('totalProfitLoss').textContent = totalProfitLoss.toFixed(2);
-            document.getElementById('finalBalanceSummary').textContent = `${finalBalance.toFixed(2)} $`;
-        }
+    let totalPercentage = (totalProfitLoss / totalInitialCapital) * 100; // Tính phần trăm chính xác
+
+    document.getElementById('totalDays').textContent = totalDays;
+    document.getElementById('totalPercentage').textContent = totalPercentage.toFixed(2);
+    document.getElementById('totalProfitLoss').textContent = totalProfitLoss.toFixed(2);
+    document.getElementById('finalBalanceSummary').textContent = `${finalBalance.toFixed(2)} $`;
+}
     </script></antArtifact>
