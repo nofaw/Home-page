@@ -488,14 +488,14 @@ function appendTransactionToTable(transaction, index) {
 
 function updateSummary() {
     let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-    let totalDays = transactions.length;
     let totalProfitLoss = 0;
     let totalInitialCapital = 0;
     let finalBalance = 0;
     let totalDeposits = 0;
     let totalWithdrawals = 0;
+    const uniqueDates = new Set(); // Tạo một Set để lưu các ngày duy nhất
 
-    let previousBalance = 0;  // Thêm biến này để theo dõi số dư cuối của giao dịch trước
+    let previousBalance = 0;
 
     transactions.forEach((transaction, index) => {
         totalProfitLoss += parseFloat(transaction.profitLoss);
@@ -515,9 +515,12 @@ function updateSummary() {
         totalDeposits += deposit;
         totalWithdrawals += withdrawal;
 
-        previousBalance = transaction.finalBalance;  // Cập nhật số dư cuối cho giao dịch tiếp theo
+        uniqueDates.add(transaction.date); // Thêm ngày vào Set
+
+        previousBalance = transaction.finalBalance;
     });
 
+    let totalDays = uniqueDates.size; // Lấy kích thước của Set
     let totalPercentage = (totalProfitLoss / totalInitialCapital) * 100;
 
     document.getElementById('totalDays').textContent = totalDays;
