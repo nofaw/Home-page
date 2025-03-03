@@ -295,9 +295,6 @@
     </div>
     <button onclick="addTransaction()"><i class="fas fa-plus"></i>THÊM GIAO DỊCH</button>
     <button onclick="resetData()" class="reset-button"><i class="fas fa-trash-alt"></i>Reset dữ liệu</button>
-    <button onclick="exportToExcelByMonth()">Xuất Excel</button>
-    <input type="file" id="importFile" accept=".xlsx, .xls">
-    <button onclick="importFromExcel()">Nhập Excel</button>
 
     <div class="form-group">
         <label for="exportMonth">Chọn tháng để xuất:</label>
@@ -316,8 +313,7 @@
             <option value="10">Tháng 11</option>
             <option value="11">Tháng 12</option>
         </select>
-        <input type="number" id="exportYear" placeholder="Năm" value = "2024">
-        <button onclick="exportToExcelByMonth()">Xuất Excel theo tháng</button>
+        <input type="number" id="exportYear" placeholder="Năm" value="2024">
     </div>
 </div>
 
@@ -325,14 +321,14 @@
 
 <table id="transactionTable">
     <thead>
-        <tr>
-            <th><i class="far fa-calendar-alt"></i> Date</th>
-            <th><i class="fas fa-dollar-sign"></i> Vốn</th>
-            <th><i class="fas fa-chart-bar"></i> PNL</th>
-            <th><i class="fas fa-percentage"></i></th>
-            <th><i class="fas fa-coins"></i> Số dư</th>
-            <th><i class="fas fa-trash"></i></th>
-        </tr>
+    <tr>
+        <th><i class="far fa-calendar-alt"></i> Date</th>
+        <th><i class="fas fa-dollar-sign"></i> Vốn</th>
+        <th><i class="fas fa-chart-bar"></i> PNL</th>
+        <th><i class="fas fa-percentage"></i></th>
+        <th><i class="fas fa-coins"></i> Số dư</th>
+        <th><i class="fas fa-trash"></i></th>
+    </tr>
     </thead>
     <tbody></tbody>
 </table>
@@ -344,6 +340,9 @@
     <p><i class="fas fa-wallet"></i>Số dư cuối: <span id="finalBalanceSummary" class="highlight">0.00 $</span></p>
     <p><i class="fas fa-arrow-up"></i> Tổng số tiền đã nạp: <span id="totalDeposits">0.00</span> $</p>
     <p><i class="fas fa-arrow-down"></i> Tổng số tiền đã rút: <span id="totalWithdrawals">0.00</span> $</p>
+    <button onclick="exportToExcelByMonth()">Xuất Excel</button>
+    <input type="file" id="importFile" accept=".xlsx, .xls">
+    <button onclick="importFromExcel()">Nhập Excel</button>
 </div>
 
 <p><i class="far fa-times-circle"></i> Dữ liệu được lưu trên trình duyệt web, bạn sẽ mất dữ liệu nếu đổi trình duyệt hoặc xóa cache web! </p>
@@ -378,7 +377,7 @@
             const profitLoss = finalBalance - initialCapital;
             const profitPercentage = (profitLoss / initialCapital) * 100;
 
-            return { profitLoss: profitLoss.toFixed(2), profitPercentage: profitPercentage.toFixed(2) };
+            return {profitLoss: profitLoss.toFixed(2), profitPercentage: profitPercentage.toFixed(2)};
         } else {
             return { profitLoss: '', profitPercentage: '' };
         }
@@ -398,7 +397,7 @@
         const initialCapital = parseFloat(initialCapitalInput.value);
 
         if (date && !isNaN(initialCapital) && !isNaN(finalBalance)) {
-            const { profitLoss, profitPercentage } = calculateProfitLoss();
+            const {profitLoss, profitPercentage} = calculateProfitLoss();
             const transaction = {date, initialCapital, finalBalance, profitLoss, profitPercentage};
             saveTransaction(transaction);
             clearForm();
@@ -554,124 +553,125 @@
         document.getElementById('totalWithdrawals').textContent = totalWithdrawals.toFixed(2) + " $";
     }
 
-function exportToExcelByMonth() {
-    const selectedMonth = document.getElementById("exportMonth").value;
-    const selectedYear = document.getElementById("exportYear").value;
-    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-
-    // Nếu chọn tháng, lọc dữ liệu
-    if (selectedMonth !== "") {
-        transactions = transactions.filter(transaction => {
-            const transactionDate = new Date(transaction.date);
-            return transactionDate.getMonth() == selectedMonth && transactionDate.getFullYear() == selectedYear;
-        });
-    }
-
-    if (!transactions || transactions.length === 0) {
-        console.warn("Không có giao dịch nào để xuất.");
-        alert("Không có giao dịch nào để xuất.");
-        return;
-    }
-
-    // Chuyển đổi dữ liệu sang định dạng phù hợp với xlsx
-    const data = [
-        ["Date", "Vốn ban đầu", "PNL", "%", "Số dư cuối"],
-        ...transactions.map(transaction => [
-            transaction.date,
-            transaction.initialCapital,
-            transaction.profitLoss,
-            transaction.profitPercentage,
-            transaction.finalBalance
-        ])
-    ];
-
-    // Tạo workbook và worksheet
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet(data);
-    XLSX.utils.book_append_sheet(wb, ws, "Transactions");
-
-    // Tạo file Excel dưới dạng Blob
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    const blob = new Blob([new Uint8Array(wbout)], { type: 'application/octet-stream' });
-
-    // Tạo một link (a) ảo để tải file xuống
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = selectedMonth !== "" ? `transactions_${selectedMonth}_${selectedYear}.xlsx` : "transactions.xlsx"; // Tên file
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-}
-
-function importFromExcel() {
-    const fileInput = document.getElementById('importFile');
-    const file = fileInput.files[0];
-
-    if (!file) {
-        alert("Vui lòng chọn một file Excel.");
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, {type: 'array'});
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const excelData = XLSX.utils.sheet_to_json(worksheet);
-
-        // Xử lý dữ liệu từ Excel
+    function exportToExcelByMonth() {
+        const selectedMonth = document.getElementById("exportMonth").value;
+        const selectedYear = document.getElementById("exportYear").value;
         let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-        excelData.forEach(row => {
-            const date = row.Date;
-            const initialCapital = row["Vốn ban đầu"];
-            const finalBalance = row["Số dư cuối"];
+        // Nếu chọn tháng, lọc dữ liệu
+        if (selectedMonth !== "") {
+            transactions = transactions.filter(transaction => {
+                const transactionDate = new Date(transaction.date);
+                return transactionDate.getMonth() == selectedMonth && transactionDate.getFullYear() == selectedYear;
+            });
+        }
 
-            // Kiểm tra xem ngày đã tồn tại chưa
-            const existingTransactionIndex = transactions.findIndex(t => t.date === date);
+        if (!transactions || transactions.length === 0) {
+            console.warn("Không có giao dịch nào để xuất.");
+            alert("Không có giao dịch nào để xuất.");
+            return;
+        }
 
-            if (existingTransactionIndex !== -1) {
-                // Ngày đã tồn tại, hỏi người dùng
-                const choice = confirm(`Ngày ${date} đã tồn tại. Bạn muốn Ghi đè (OK) hay Bỏ qua (Cancel)?`);
+        // Chuyển đổi dữ liệu sang định dạng phù hợp với xlsx
+        const data = [
+            ["Date", "Vốn ban đầu", "PNL", "%", "Số dư cuối"],
+            ...transactions.map(transaction => [
+                transaction.date,
+                transaction.initialCapital,
+                transaction.profitLoss,
+                transaction.profitPercentage,
+                transaction.finalBalance
+            ])
+        ];
 
-                if (choice) {
-                    // Ghi đè giao dịch cũ
+        // Tạo workbook và worksheet
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, "Transactions");
+
+        // Tạo file Excel dưới dạng Blob
+        const wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'array'});
+        const blob = new Blob([new Uint8Array(wbout)], {type: 'application/octet-stream'});
+
+        // Tạo một link (a) ảo để tải file xuống
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = selectedMonth !== "" ? `transactions_${selectedMonth}_${selectedYear}.xlsx` : "transactions.xlsx"; // Tên file
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function importFromExcel() {
+        const fileInput = document.getElementById('importFile');
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert("Vui lòng chọn một file Excel.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, {type: 'array'});
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const excelData = XLSX.utils.sheet_to_json(worksheet);
+
+            // Xử lý dữ liệu từ Excel
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            let updatedTransactions = [...transactions]; // Tạo bản sao của mảng
+
+            excelData.forEach(row => {
+                const date = row.Date;
+                const initialCapital = row["Vốn ban đầu"];
+                const finalBalance = row["Số dư cuối"];
+
+                // Kiểm tra xem ngày đã tồn tại chưa
+                const existingTransactionIndex = updatedTransactions.findIndex(t => t.date === date);
+
+                if (existingTransactionIndex !== -1) {
+                    // Ngày đã tồn tại, hỏi người dùng
+                    const choice = confirm(`Ngày ${date} đã tồn tại. Bạn muốn Ghi đè (OK) hay Bỏ qua (Cancel)?`);
+
+                    if (choice) {
+                        // Ghi đè giao dịch cũ
+                        const profitLoss = finalBalance - initialCapital;
+                        const profitPercentage = (profitLoss / initialCapital) * 100;
+                        updatedTransactions[existingTransactionIndex] = {
+                            date,
+                            initialCapital,
+                            finalBalance,
+                            profitLoss: profitLoss.toFixed(2),
+                            profitPercentage: profitPercentage.toFixed(2)
+                        };
+                    } else {
+                        // Bỏ qua giao dịch này
+                        console.log(`Đã bỏ qua giao dịch ngày ${date}.`);
+                    }
+                } else {
+                    // Ngày chưa tồn tại, tạo giao dịch mới
                     const profitLoss = finalBalance - initialCapital;
                     const profitPercentage = (profitLoss / initialCapital) * 100;
-                    transactions[existingTransactionIndex] = {
+                    const newTransaction = {
                         date,
                         initialCapital,
                         finalBalance,
                         profitLoss: profitLoss.toFixed(2),
                         profitPercentage: profitPercentage.toFixed(2)
                     };
-                } else {
-                    // Bỏ qua giao dịch này
-                    console.log(`Đã bỏ qua giao dịch ngày ${date}.`);
+                    updatedTransactions.push(newTransaction);
                 }
-            } else {
-                // Ngày chưa tồn tại, tạo giao dịch mới
-                const profitLoss = finalBalance - initialCapital;
-                const profitPercentage = (profitLoss / initialCapital) * 100;
-                const newTransaction = {
-                    date,
-                    initialCapital,
-                    finalBalance,
-                    profitLoss: profitLoss.toFixed(2),
-                    profitPercentage: profitPercentage.toFixed(2)
-                };
-                transactions.push(newTransaction);
-            }
-        });
+            });
 
-        localStorage.setItem('transactions', JSON.stringify(transactions));
-        loadTransactions(); // Tải lại bảng
-    };
-    reader.readAsArrayBuffer(file);
-}
+            localStorage.setItem('transactions', JSON.stringify(updatedTransactions)); // Cập nhật localStorage
+            loadTransactions(); // Tải lại bảng
+        };
+        reader.readAsArrayBuffer(file);
+    }
 </script>
 </body>
 </html>
