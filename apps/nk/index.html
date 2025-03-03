@@ -316,6 +316,8 @@
         <p><i class="fas fa-percentage"></i>Tổng phần trăm Lời/Lỗ: <span id="totalPercentage" class="highlight">0.00</span> %</p>
         <p><i class="fas fa-chart-line"></i>Tổng PNL: <span id="totalProfitLoss">0.00</span> $</p>
         <p><i class="fas fa-wallet"></i>Số dư cuối: <span id="finalBalanceSummary" class="highlight">0.00 $</span></p>
+        <p><i class="fas fa-arrow-up"></i> Tổng số tiền đã nạp: <span id="totalDeposits">0.00</span> $</p>
+        <p><i class="fas fa-arrow-down"></i> Tổng số tiền đã rút: <span id="totalWithdrawals">0.00</span> $</p>
     </div>
 
 <p><i class="far fa-times-circle"></i> Dữ liệu được lưu trên trình duyệt web, bạn sẽ mất dữ liệu nếu đổi trình duyệt hoặc xóa cache web! </p>
@@ -488,20 +490,43 @@ function updateSummary() {
     let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
     let totalDays = transactions.length;
     let totalProfitLoss = 0;
-    let totalInitialCapital = 0;  // Thêm biến này
+    let totalInitialCapital = 0;
     let finalBalance = 0;
+    let totalDeposits = 0;
+    let totalWithdrawals = 0;
 
-    transactions.forEach(transaction => {
+    let previousBalance = 0;  // Thêm biến này để theo dõi số dư cuối của giao dịch trước
+
+    transactions.forEach((transaction, index) => {
         totalProfitLoss += parseFloat(transaction.profitLoss);
-        totalInitialCapital += parseFloat(transaction.initialCapital); // Cộng vốn ban đầu
+        totalInitialCapital += parseFloat(transaction.initialCapital);
         finalBalance = transaction.finalBalance;
+
+        let deposit = 0;
+        let withdrawal = 0;
+
+        if (index > 0) {
+            deposit = Math.max(0, transaction.initialCapital - previousBalance);
+            withdrawal = Math.max(0, previousBalance - transaction.initialCapital);
+        } else {
+            deposit = parseFloat(transaction.initialCapital); // Giao dịch đầu tiên coi như nạp
+        }
+
+        totalDeposits += deposit;
+        totalWithdrawals += withdrawal;
+
+        previousBalance = transaction.finalBalance;  // Cập nhật số dư cuối cho giao dịch tiếp theo
     });
 
-    let totalPercentage = (totalProfitLoss / totalInitialCapital) * 100; // Tính phần trăm chính xác
+    let totalPercentage = (totalProfitLoss / totalInitialCapital) * 100;
 
     document.getElementById('totalDays').textContent = totalDays;
     document.getElementById('totalPercentage').textContent = totalPercentage.toFixed(2);
     document.getElementById('totalProfitLoss').textContent = totalProfitLoss.toFixed(2);
     document.getElementById('finalBalanceSummary').textContent = `${finalBalance.toFixed(2)} $`;
+    document.getElementById('totalDeposits').textContent = totalDeposits.toFixed(2) + " $";
+    document.getElementById('totalWithdrawals').textContent = totalWithdrawals.toFixed(2) + " $";
 }
-    </script></antArtifact>
+    </script>
+</body>
+</html>
