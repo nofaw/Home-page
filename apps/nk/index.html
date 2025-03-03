@@ -615,7 +615,7 @@ function importFromExcel() {
     }
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, {type: 'array'});
         const sheetName = workbook.SheetNames[0];
@@ -628,16 +628,41 @@ function importFromExcel() {
         excelData.forEach(row => {
             const date = row.Date;
             const initialCapital = row["Vốn ban đầu"];
-            const finalBalance = row["Số dư cuối"]; // Sửa lại tên cột cho đúng
+            const finalBalance = row["Số dư cuối"];
 
             // Kiểm tra xem ngày đã tồn tại chưa
-            const existingTransaction = transactions.find(t => t.date === date);
+            const existingTransactionIndex = transactions.findIndex(t => t.date === date);
 
-            if (!existingTransaction) {
+            if (existingTransactionIndex !== -1) {
+                // Ngày đã tồn tại, hỏi người dùng
+                const choice = confirm(`Ngày ${date} đã tồn tại. Bạn muốn Ghi đè (OK) hay Bỏ qua (Cancel)?`);
+
+                if (choice) {
+                    // Ghi đè giao dịch cũ
+                    const profitLoss = finalBalance - initialCapital;
+                    const profitPercentage = (profitLoss / initialCapital) * 100;
+                    transactions[existingTransactionIndex] = {
+                        date,
+                        initialCapital,
+                        finalBalance,
+                        profitLoss: profitLoss.toFixed(2),
+                        profitPercentage: profitPercentage.toFixed(2)
+                    };
+                } else {
+                    // Bỏ qua giao dịch này
+                    console.log(`Đã bỏ qua giao dịch ngày ${date}.`);
+                }
+            } else {
                 // Ngày chưa tồn tại, tạo giao dịch mới
                 const profitLoss = finalBalance - initialCapital;
                 const profitPercentage = (profitLoss / initialCapital) * 100;
-                const newTransaction = { date, initialCapital, finalBalance, profitLoss: profitLoss.toFixed(2), profitPercentage: profitPercentage.toFixed(2) };
+                const newTransaction = {
+                    date,
+                    initialCapital,
+                    finalBalance,
+                    profitLoss: profitLoss.toFixed(2),
+                    profitPercentage: profitPercentage.toFixed(2)
+                };
                 transactions.push(newTransaction);
             }
         });
