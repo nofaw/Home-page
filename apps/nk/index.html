@@ -275,11 +275,18 @@
             background-color: #ff4444;
         }
 
-        /* Thêm vào phần style */
-        .capital-mismatch {
-            color: #F78C6A !important;
+        /* --- CSS ĐÃ THAY ĐỔI --- */
+        /* Màu cho trường hợp rút tiền (vốn hôm nay < số dư hôm qua) */
+        .capital-withdrawal {
+            color: #F78C6A !important; /* Màu cam/đỏ nhạt */
             font-weight: bold;
         }
+        /* Màu cho trường hợp nạp tiền (vốn hôm nay > số dư hôm qua) */
+        .capital-deposit {
+            color: #8A2BE2 !important; /* Màu tím (BlueViolet) */
+            font-weight: bold;
+        }
+        /* --- KẾT THÚC CSS ĐÃ THAY ĐỔI --- */
     </style>
 </head>
 
@@ -322,7 +329,7 @@
             <th><i class="far fa-calendar-alt"></i> Date</th>
             <th><i class="fas fa-dollar-sign"></i> Vốn</th>
             <th><i class="fas fa-chart-bar"></i> PNL</th>
-            <th><i class="fas fa-percentage"></i></th>
+            <th><i class="fas fa-percentage"></i> %</th> <!-- Đã thêm dấu % -->
             <th><i class="fas fa-coins"></i> Số dư</th>
             <th><i class="fas fa-trash"></i></th>
         </tr>
@@ -391,8 +398,27 @@
         });
 
         function calculateProfitLoss() {
-            const initialCapital = parseFloat(document.getElementById('initialCapital').value);
-            const finalBalance = parseFloat(document.getElementById('finalBalance').value);
+            const initialCapitalInput = document.getElementById('initialCapital');
+            const finalBalanceInput = document.getElementById('finalBalance');
+            const initialCapital = parseFloat(initialCapitalInput.value);
+            const finalBalance = parseFloat(finalBalanceInput.value);
+
+            // Tự động điền vốn ban đầu nếu trống và có giao dịch trước đó
+            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            if (transactions.length > 0 && !initialCapitalInput.value && finalBalanceInput === document.activeElement) { // Chỉ tự động điền khi focus vào finalBalance và initialCapital trống
+                const lastTransaction = transactions[transactions.length - 1];
+                initialCapitalInput.value = lastTransaction.finalBalance.toFixed(2);
+                // Recalculate initialCapital after auto-filling
+                 const filledInitialCapital = parseFloat(initialCapitalInput.value);
+                 if (!isNaN(filledInitialCapital) && !isNaN(finalBalance)) {
+                     const profitLoss = finalBalance - filledInitialCapital;
+                     const profitPercentage = (profitLoss / filledInitialCapital) * 100;
+                     return {
+                         profitLoss: profitLoss.toFixed(2),
+                         profitPercentage: profitPercentage.toFixed(2)
+                     };
+                 }
+            }
 
             if (!isNaN(initialCapital) && !isNaN(finalBalance)) {
                 const profitLoss = finalBalance - initialCapital;
@@ -410,38 +436,43 @@
             }
         }
 
+
         function addTransaction() {
             const date = document.getElementById('date').value;
             const initialCapitalInput = document.getElementById('initialCapital');
             const finalBalance = parseFloat(document.getElementById('finalBalance').value);
 
-            let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-            if (transactions.length > 0 && !initialCapitalInput.value) {
-                const lastTransaction = transactions[transactions.length - 1];
-                initialCapitalInput.value = lastTransaction.finalBalance.toFixed(2);
+            // Nếu vốn ban đầu trống, thử tự động điền từ giao dịch trước
+            if (!initialCapitalInput.value) {
+                 let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                 if (transactions.length > 0) {
+                     const lastTransaction = transactions[transactions.length - 1];
+                     initialCapitalInput.value = lastTransaction.finalBalance.toFixed(2);
+                 }
             }
 
             const initialCapital = parseFloat(initialCapitalInput.value);
 
-            if (date && !isNaN(initialCapital) && !isNaN(finalBalance)) {
-                const {
-                    profitLoss,
-                    profitPercentage
-                } = calculateProfitLoss();
+            if (date && !isNaN(initialCapital) && initialCapital > 0 && !isNaN(finalBalance)) { // Thêm kiểm tra initialCapital > 0
+                // Tính lại PNL dựa trên giá trị vốn (có thể vừa được tự động điền)
+                const profitLoss = finalBalance - initialCapital;
+                const profitPercentage = (profitLoss / initialCapital) * 100;
+
                 const transaction = {
                     date,
                     initialCapital,
                     finalBalance,
-                    profitLoss,
-                    profitPercentage
+                    profitLoss: profitLoss.toFixed(2),
+                    profitPercentage: profitPercentage.toFixed(2) // Luôn là chuỗi 2 chữ số thập phân
                 };
                 saveTransaction(transaction);
                 clearForm();
                 showSuccessMessage();
             } else {
-                alert('Vui lòng nhập đầy đủ thông tin.');
+                alert('Vui lòng nhập đầy đủ thông tin hợp lệ (Ngày, Vốn ban đầu > 0, Số dư cuối).');
             }
         }
+
 
         function clearForm() {
             document.getElementById('date').value = '';
@@ -449,6 +480,7 @@
             document.getElementById('finalBalance').value = '';
         }
 
+        // --- HÀM ĐÃ THAY ĐỔI ---
         function appendTransactionToTable(transaction, index) {
             const row = document.createElement('tr');
             const profitClass = parseFloat(transaction.profitLoss) >= 0 ? 'positive' : 'negative';
@@ -456,52 +488,74 @@
             // Lấy tất cả giao dịch
             let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-            // Kiểm tra nếu có sự khác biệt giữa vốn và số dư của giao dịch trước
-            let mismatchClass = '';
+            // Kiểm tra sự khác biệt vốn và xác định class CSS phù hợp
+            let capitalChangeClass = ''; // Class mới để chỉ định màu
             if (index > 0) {
                 const previousBalance = transactions[index - 1].finalBalance;
-                if (Math.abs(previousBalance - transaction.initialCapital) > 0.01) {
-                    mismatchClass = 'capital-mismatch';
+                const currentInitialCapital = transaction.initialCapital;
+                const difference = currentInitialCapital - previousBalance; // Tính chênh lệch
+
+                // Sử dụng sai số nhỏ (0.01) để tránh lỗi làm tròn floating point
+                if (difference > 0.01) {
+                    // Vốn hôm nay > Số dư hôm qua -> Nạp tiền (màu tím)
+                    capitalChangeClass = 'capital-deposit';
+                } else if (difference < -0.01) {
+                    // Vốn hôm nay < Số dư hôm qua -> Rút tiền (màu cam/đỏ nhạt)
+                    capitalChangeClass = 'capital-withdrawal';
                 }
+                // Nếu chênh lệch rất nhỏ hoặc bằng 0, capitalChangeClass sẽ là '' (không có màu đặc biệt)
             }
 
+            // Áp dụng class vào các ô liên quan (Vốn, PNL, %)
+            // Lưu ý: parseFloat().toFixed(2) đảm bảo luôn có 2 chữ số thập phân
             row.innerHTML = `
-        <td>${transaction.date}</td>
-        <td contenteditable="true" onblur="updateTransactionData(${index}, 'initialCapital', this.textContent)" 
-            class="${mismatchClass}">${transaction.initialCapital.toFixed(2)}</td>
-        <td class="${mismatchClass} ${profitClass}">${transaction.profitLoss}</td>
-        <td class="${mismatchClass} ${profitClass}">${transaction.profitPercentage}</td>
-        <td contenteditable="true" onblur="updateTransactionData(${index}, 'finalBalance', this.textContent)"
-            class="${mismatchClass}">${transaction.finalBalance.toFixed(2)}</td>
-        <td><button class="delete-btn" onclick="confirmDeleteTransaction(${index})"><i class="fas fa-trash"></i></button></td>
-    `;
+                <td>${transaction.date}</td>
+                <td contenteditable="true" onblur="updateTransactionData(${index}, 'initialCapital', this.textContent)"
+                    class="${capitalChangeClass}">${parseFloat(transaction.initialCapital).toFixed(2)}</td>
+                <td class="${capitalChangeClass} ${profitClass}">${parseFloat(transaction.profitLoss).toFixed(2)}</td>
+                <td class="${capitalChangeClass} ${profitClass}">${parseFloat(transaction.profitPercentage).toFixed(2)}%</td>
+                <td contenteditable="true" onblur="updateTransactionData(${index}, 'finalBalance', this.textContent)">${parseFloat(transaction.finalBalance).toFixed(2)}</td>
+                <td><button class="delete-btn" onclick="confirmDeleteTransaction(${index})"><i class="fas fa-trash"></i></button></td>
+            `;
 
             transactionTable.appendChild(row);
         }
+        // --- KẾT THÚC HÀM ĐÃ THAY ĐỔI ---
 
         function resetData() {
             if (confirm("Bạn có muốn xoá toàn bộ dữ liệu?")) {
                 localStorage.removeItem('transactions');
-                loadTransactions();
+                loadTransactions(); // Tải lại để xóa bảng và cập nhật tóm tắt
             }
         }
 
         function saveTransaction(transaction) {
             let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
             transactions.push(transaction);
+            // Sắp xếp lại theo ngày sau khi thêm
             transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
             localStorage.setItem('transactions', JSON.stringify(transactions));
-            loadTransactions();
+            loadTransactions(); // Tải lại toàn bộ để đảm bảo thứ tự và cập nhật màu sắc
         }
 
         function loadTransactions() {
             let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-            transactionTable.innerHTML = '';
+             // Sắp xếp lại phòng trường hợp dữ liệu trong localStorage chưa được sắp xếp
+             transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+             localStorage.setItem('transactions', JSON.stringify(transactions)); // Lưu lại thứ tự đúng
+
+            transactionTable.innerHTML = ''; // Xóa bảng cũ
             transactions.forEach((transaction, index) => {
+                // Đảm bảo các giá trị số được lưu đúng định dạng trước khi hiển thị
+                 transaction.initialCapital = parseFloat(transaction.initialCapital) || 0;
+                 transaction.finalBalance = parseFloat(transaction.finalBalance) || 0;
+                 transaction.profitLoss = parseFloat(transaction.profitLoss) || 0;
+                 transaction.profitPercentage = parseFloat(transaction.profitPercentage) || 0;
                 appendTransactionToTable(transaction, index);
             });
-            updateSummary();
+            updateSummary(); // Cập nhật tóm tắt sau khi tải
         }
+
 
         function confirmDeleteTransaction(index) {
             if (confirm("Bạn có chắc chắn muốn xoá giao dịch này?")) {
@@ -511,35 +565,62 @@
 
         function deleteTransaction(index) {
             let transactions = JSON.parse(localStorage.getItem('transactions'));
-            transactions.splice(index, 1);
+            transactions.splice(index, 1); // Xóa phần tử tại index
             localStorage.setItem('transactions', JSON.stringify(transactions));
-            loadTransactions();
+            loadTransactions(); // Tải lại để cập nhật bảng và tóm tắt
         }
 
         function updateTransactionData(index, field, value) {
             let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-            if (field === 'initialCapital' || field === 'finalBalance') {
-                transactions[index][field] = parseFloat(value);
-                const {
-                    profitLoss,
-                    profitPercentage
-                } = calculateProfitLossFromValues(
-                    transactions[index].initialCapital,
-                    transactions[index].finalBalance
-                );
-                transactions[index].profitLoss = profitLoss;
-                transactions[index].profitPercentage = profitPercentage;
+            const editedValue = parseFloat(value);
+
+            // Kiểm tra nếu giá trị nhập vào không phải là số hợp lệ
+            if (isNaN(editedValue)) {
+                 alert('Vui lòng nhập một giá trị số hợp lệ.');
+                 loadTransactions(); // Tải lại để khôi phục giá trị cũ
+                 return;
             }
-            localStorage.setItem('transactions', JSON.stringify(transactions));
-            loadTransactions();
+
+            if (index >= 0 && index < transactions.length) {
+                if (field === 'initialCapital') {
+                     // Cập nhật vốn và tính lại PNL, %
+                     transactions[index].initialCapital = editedValue;
+                     const { profitLoss, profitPercentage } = calculateProfitLossFromValues(
+                         editedValue, // Vốn mới
+                         transactions[index].finalBalance // Số dư giữ nguyên
+                     );
+                     transactions[index].profitLoss = profitLoss;
+                     transactions[index].profitPercentage = profitPercentage;
+                 } else if (field === 'finalBalance') {
+                     // Cập nhật số dư và tính lại PNL, %
+                     transactions[index].finalBalance = editedValue;
+                     const { profitLoss, profitPercentage } = calculateProfitLossFromValues(
+                         transactions[index].initialCapital, // Vốn giữ nguyên
+                         editedValue // Số dư mới
+                     );
+                     transactions[index].profitLoss = profitLoss;
+                     transactions[index].profitPercentage = profitPercentage;
+                 }
+
+                 // Sắp xếp lại trước khi lưu (quan trọng nếu ngày bị thay đổi, mặc dù hiện tại không cho sửa ngày)
+                 transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+                 localStorage.setItem('transactions', JSON.stringify(transactions));
+                 loadTransactions(); // Tải lại để cập nhật hiển thị và màu sắc
+            }
         }
 
+
         function calculateProfitLossFromValues(initialCapital, finalBalance) {
+            // Đảm bảo đầu vào là số
+            initialCapital = parseFloat(initialCapital) || 0;
+            finalBalance = parseFloat(finalBalance) || 0;
+
             const profitLoss = finalBalance - initialCapital;
-            const profitPercentage = (profitLoss / initialCapital) * 100;
+            // Tránh chia cho 0
+            const profitPercentage = (initialCapital !== 0) ? (profitLoss / initialCapital) * 100 : 0;
             return {
                 profitLoss: profitLoss.toFixed(2),
-                profitPercentage: profitPercentage.toFixed(2)
+                profitPercentage: profitPercentage.toFixed(2) // Luôn là chuỗi 2 chữ số thập phân
             };
         }
 
@@ -547,47 +628,52 @@
             successMessage.style.display = 'block';
             setTimeout(() => {
                 successMessage.style.display = 'none';
-            }, 2000);
+            }, 2000); // Ẩn sau 2 giây
         }
 
         function updateSummary() {
             let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
             let totalProfitLoss = 0;
-            let totalInitialCapital = 0;
+            let firstInitialCapital = 0; // Vốn ban đầu của giao dịch đầu tiên
             let finalBalance = 0;
             let totalDeposits = 0;
             let totalWithdrawals = 0;
             const uniqueDates = new Set();
 
+            if (transactions.length > 0) {
+                firstInitialCapital = parseFloat(transactions[0].initialCapital) || 0;
+                finalBalance = parseFloat(transactions[transactions.length - 1].finalBalance) || 0;
+                totalDeposits = firstInitialCapital; // Coi vốn ban đầu tiên là khoản nạp đầu tiên
+            }
+
             let previousBalance = 0;
 
             transactions.forEach((transaction, index) => {
-                totalProfitLoss += parseFloat(transaction.profitLoss);
-                totalInitialCapital += parseFloat(transaction.initialCapital);
-                finalBalance = transaction.finalBalance;
+                 const currentInitialCapital = parseFloat(transaction.initialCapital) || 0;
+                 const currentFinalBalance = parseFloat(transaction.finalBalance) || 0;
+                 const currentProfitLoss = parseFloat(transaction.profitLoss) || 0;
 
-                let deposit = 0;
-                let withdrawal = 0;
-
-                if (index > 0) {
-                    deposit = Math.max(0, transaction.initialCapital - previousBalance);
-                    withdrawal = Math.max(0, previousBalance - transaction.initialCapital);
-                } else {
-                    deposit = parseFloat(transaction.initialCapital); // Giao dịch đầu tiên coi như nạp
-                }
-
-                totalDeposits += deposit;
-                totalWithdrawals += withdrawal;
-
+                totalProfitLoss += currentProfitLoss;
                 uniqueDates.add(transaction.date);
 
-                previousBalance = transaction.finalBalance;
+                if (index > 0) {
+                    const capitalDifference = currentInitialCapital - previousBalance;
+                    if (capitalDifference > 0.01) { // Nạp thêm
+                        totalDeposits += capitalDifference;
+                    } else if (capitalDifference < -0.01) { // Rút ra
+                        totalWithdrawals += Math.abs(capitalDifference); // Cộng giá trị tuyệt đối của số tiền rút
+                    }
+                }
+                previousBalance = currentFinalBalance; // Cập nhật số dư cuối của ngày hiện tại cho lần lặp sau
             });
 
             let totalDays = uniqueDates.size;
-            let totalPercentage = (totalProfitLoss / totalInitialCapital) * 100;
+            // Tính tổng % dựa trên tổng PNL và tổng vốn đã NẠP (hoặc vốn ban đầu tiên nếu muốn)
+            // Ở đây tính dựa trên tổng vốn đã nạp, bạn có thể thay đổi nếu muốn
+            let totalPercentage = (totalDeposits > 0) ? (totalProfitLoss / totalDeposits) * 100 : 0;
 
             document.getElementById('totalDays').textContent = totalDays;
+            // Hiển thị với 2 chữ số thập phân
             document.getElementById('totalPercentage').textContent = totalPercentage.toFixed(2);
             document.getElementById('totalProfitLoss').textContent = totalProfitLoss.toFixed(2);
             document.getElementById('finalBalanceSummary').textContent = `${finalBalance.toFixed(2)} $`;
@@ -595,62 +681,95 @@
             document.getElementById('totalWithdrawals').textContent = totalWithdrawals.toFixed(2) + " $";
         }
 
+
         function exportToExcelByMonth() {
             const selectedMonth = document.getElementById("exportMonth").value;
             const selectedYear = document.getElementById("exportYear").value;
             let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-            // Nếu chọn tháng, lọc dữ liệu
-            if (selectedMonth !== "") {
-                transactions = transactions.filter(transaction => {
-                    const transactionDate = new Date(transaction.date);
-                    return transactionDate.getMonth() == selectedMonth && transactionDate.getFullYear() ==
-                        selectedYear;
-                });
+            // Lọc theo tháng và năm nếu được chọn
+            if (selectedMonth !== "" && selectedYear) {
+                 transactions = transactions.filter(transaction => {
+                     // Chuyển đổi ngày từ chuỗi YYYY-MM-DD sang đối tượng Date
+                     // Cần xử lý timezone để tránh lỗi lệch ngày
+                     const parts = transaction.date.split('-');
+                     const transactionDate = new Date(parts[0], parts[1] - 1, parts[2]); // month is 0-indexed
+
+                     return transactionDate.getMonth() == selectedMonth && transactionDate.getFullYear() == selectedYear;
+                 });
+             } else if (selectedYear && selectedMonth === "") { // Lọc theo năm nếu chỉ nhập năm
+                  transactions = transactions.filter(transaction => {
+                      const parts = transaction.date.split('-');
+                      const transactionDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                      return transactionDate.getFullYear() == selectedYear;
+                  });
             }
 
+
             if (!transactions || transactions.length === 0) {
-                console.warn("Không có giao dịch nào để xuất.");
-                alert("Không có giao dịch nào để xuất.");
+                alert("Không có giao dịch nào phù hợp để xuất.");
                 return;
             }
 
+            // Sắp xếp lại trước khi xuất (đảm bảo)
+             transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+
             // Chuyển đổi dữ liệu sang định dạng phù hợp với xlsx
             const data = [
-                ["Date", "Vốn ban đầu", "PNL", "%", "Số dư cuối"],
+                ["Date", "Vốn ban đầu", "PNL", "%", "Số dư cuối"], // Header
                 ...transactions.map(transaction => [
                     transaction.date,
-                    transaction.initialCapital,
-                    transaction.profitLoss,
-                    transaction.profitPercentage,
-                    transaction.finalBalance
+                    parseFloat(transaction.initialCapital).toFixed(2), // Định dạng số
+                    parseFloat(transaction.profitLoss).toFixed(2),
+                    parseFloat(transaction.profitPercentage).toFixed(2),
+                    parseFloat(transaction.finalBalance).toFixed(2)
                 ])
             ];
 
             // Tạo workbook và worksheet
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.aoa_to_sheet(data);
+
+            // Định dạng cột số (tùy chọn, nhưng giúp Excel hiểu là số)
+            ws['!cols'] = [ { wch: 12 }, { wch: 15 }, { wch: 15 }, { wch: 10 }, { wch: 15 } ]; // Độ rộng cột
+             for (let R = 1; R < data.length; ++R) { // Bắt đầu từ hàng 1 (sau header)
+                 for (let C = 1; C <= 4; ++C) { // Cột 1 đến 4 (Vốn, PNL, %, Số dư)
+                     const cell_address = { c: C, r: R };
+                     const cell_ref = XLSX.utils.encode_cell(cell_address);
+                     if (ws[cell_ref]) {
+                         ws[cell_ref].t = 'n'; // Đặt type là number
+                         ws[cell_ref].z = '#,##0.00'; // Định dạng số với 2 chữ số thập phân
+                     }
+                 }
+             }
+
+
             XLSX.utils.book_append_sheet(wb, ws, "Transactions");
 
-            // Tạo file Excel dưới dạng Blob
-            const wbout = XLSX.write(wb, {
-                bookType: 'xlsx',
-                type: 'array'
-            });
-            const blob = new Blob([new Uint8Array(wbout)], {
-                type: 'application/octet-stream'
-            });
+            // Tạo tên file dựa trên lựa chọn
+             let fileName = "transactions_all.xlsx";
+             if (selectedMonth !== "" && selectedYear) {
+                 const monthNum = parseInt(selectedMonth) + 1; // Tháng từ 0-11 thành 1-12
+                 fileName = `transactions_${monthNum}_${selectedYear}.xlsx`;
+             } else if (selectedYear) {
+                 fileName = `transactions_${selectedYear}.xlsx`;
+             }
 
-            // Tạo một link (a) ảo để tải file xuống
+
+            // Xuất file
+             XLSX.writeFile(wb, fileName);
+
+            /* // Cách dùng Blob (thay thế cho XLSX.writeFile nếu muốn)
+            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+            const blob = new Blob([new Uint8Array(wbout)], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = selectedMonth !== "" ? `transactions_${selectedMonth}_${selectedYear}.xlsx` :
-                "transactions.xlsx"; // Tên file
+            a.download = fileName;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            URL.revokeObjectURL(url); */
         }
 
         function importFromExcel() {
@@ -664,80 +783,172 @@
 
             const reader = new FileReader();
             reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, {
-                    type: 'array'
-                });
-                const sheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[sheetName];
-                const excelData = XLSX.utils.sheet_to_json(worksheet);
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array', cellDates: true }); // Thêm cellDates: true để đọc ngày tháng
+                    const sheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[sheetName];
+                    // Sử dụng header: 1 để lấy dòng đầu tiên làm header, raw: false để xử lý giá trị
+                    const excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1, raw: false, dateNF: 'yyyy-mm-dd'});
 
-                // Xử lý dữ liệu từ Excel
-                let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-
-                // Tạo một Map để nhóm các giao dịch theo ngày
-                const transactionsByDate = new Map();
-                excelData.forEach(row => {
-                    const date = row.Date;
-                    if (!transactionsByDate.has(date)) {
-                        transactionsByDate.set(date, []);
+                    if (excelData.length < 2) { // Cần ít nhất 1 dòng header và 1 dòng dữ liệu
+                       alert("File Excel trống hoặc không có dữ liệu.");
+                       return;
                     }
-                    transactionsByDate.get(date).push(row);
-                });
 
-                // Duyệt qua từng ngày và xử lý các giao dịch
-                transactionsByDate.forEach((dailyTransactions, date) => {
-                    // Kiểm tra xem ngày đã tồn tại trong localStorage chưa
-                    const existingTransactionIndex = transactions.findIndex(t => t.date === date);
+                    // Xác định header thực tế từ dòng đầu tiên
+                    const header = excelData[0].map(h => h.toString().trim().toLowerCase());
+                    const dateIndex = header.indexOf("date");
+                    const initialCapitalIndex = header.indexOf("vốn ban đầu");
+                    const finalBalanceIndex = header.indexOf("số dư cuối");
 
-                    if (existingTransactionIndex !== -1) {
-                        // Ngày đã tồn tại, hỏi người dùng
-                        const choice = confirm(
-                            `Ngày ${date} đã tồn tại. Bạn muốn Ghi đè (OK) hay Bỏ qua (Cancel)?`);
+                    // Kiểm tra xem các cột cần thiết có tồn tại không
+                     if (dateIndex === -1 || initialCapitalIndex === -1 || finalBalanceIndex === -1) {
+                         alert("File Excel phải chứa các cột 'Date', 'Vốn ban đầu', và 'Số dư cuối'.");
+                         return;
+                     }
 
-                        if (choice) {
-                            // Ghi đè tất cả các giao dịch trong ngày đó
-                            transactions = transactions.filter(t => t.date !== date); // Xóa các giao dịch cũ
-                            dailyTransactions.forEach(row => {
-                                const initialCapital = parseFloat(row["Vốn ban đầu"]);
-                                const finalBalance = parseFloat(row["Số dư cuối"]);
-                                const profitLoss = finalBalance - initialCapital;
-                                const profitPercentage = (profitLoss / initialCapital) * 100;
-                                transactions.push({
-                                    date,
-                                    initialCapital,
-                                    finalBalance,
-                                    profitLoss: profitLoss.toFixed(2),
-                                    profitPercentage: profitPercentage.toFixed(2)
-                                });
-                            });
-                        } else {
-                            // Bỏ qua tất cả các giao dịch trong ngày đó
-                            console.log(`Đã bỏ qua giao dịch ngày ${date}.`);
-                        }
-                    } else {
-                        // Ngày chưa tồn tại, thêm tất cả các giao dịch trong ngày đó
-                        dailyTransactions.forEach(row => {
-                            const initialCapital = parseFloat(row["Vốn ban đầu"]);
-                            const finalBalance = parseFloat(row["Số dư cuối"]);
-                            const profitLoss = finalBalance - initialCapital;
-                            const profitPercentage = (profitLoss / initialCapital) * 100;
-                            transactions.push({
-                                date,
-                                initialCapital,
-                                finalBalance,
-                                profitLoss: profitLoss.toFixed(2),
-                                profitPercentage: profitPercentage.toFixed(2)
-                            });
+
+                    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                    let addedCount = 0;
+                    let updatedCount = 0;
+                    let skippedCount = 0;
+                    let newTransactions = []; // Lưu các giao dịch mới/cập nhật để xử lý sau
+
+                    // Duyệt qua các dòng dữ liệu (bỏ qua header)
+                    for (let i = 1; i < excelData.length; i++) {
+                        const row = excelData[i];
+                        let dateStr;
+
+                        // Xử lý ngày tháng (có thể là Date object hoặc chuỗi)
+                         if (row[dateIndex] instanceof Date) {
+                             // Định dạng lại thành YYYY-MM-DD
+                             const dt = row[dateIndex];
+                             const year = dt.getFullYear();
+                             const month = (dt.getMonth() + 1).toString().padStart(2, '0');
+                             const day = dt.getDate().toString().padStart(2, '0');
+                             dateStr = `${year}-${month}-${day}`;
+                         } else if (typeof row[dateIndex] === 'string') {
+                             // Nếu là chuỗi, cố gắng chuẩn hóa (giả sử có thể là MM/DD/YYYY hoặc dạng khác)
+                             // Đơn giản nhất là giữ nguyên nếu nó đã đúng dạng YYYY-MM-DD
+                              if (/^\d{4}-\d{2}-\d{2}$/.test(row[dateIndex])) {
+                                 dateStr = row[dateIndex];
+                             } else {
+                                 // Cố gắng parse bằng moment hoặc Date (cần cẩn thận)
+                                 try {
+                                      // Ví dụ parse 'DD/MM/YYYY' -> 'YYYY-MM-DD'
+                                     const mDate = moment(row[dateIndex], ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'], true); // strict parsing
+                                      if(mDate.isValid()){
+                                         dateStr = mDate.format('YYYY-MM-DD');
+                                     } else {
+                                         console.warn(`Không thể nhận dạng ngày tháng ở dòng ${i + 1}: ${row[dateIndex]}`);
+                                         skippedCount++;
+                                         continue; // Bỏ qua dòng này nếu ngày không hợp lệ
+                                     }
+                                 } catch (dateError) {
+                                     console.warn(`Lỗi xử lý ngày tháng ở dòng ${i + 1}: ${row[dateIndex]}`, dateError);
+                                     skippedCount++;
+                                     continue;
+                                 }
+
+                             }
+                         } else {
+                             console.warn(`Ngày không hợp lệ ở dòng ${i + 1}: ${row[dateIndex]}`);
+                             skippedCount++;
+                             continue; // Bỏ qua nếu không có ngày
+                         }
+
+
+                        // Lấy và kiểm tra giá trị số
+                        const initialCapital = parseFloat(row[initialCapitalIndex]);
+                        const finalBalance = parseFloat(row[finalBalanceIndex]);
+
+                         if (isNaN(initialCapital) || initialCapital <= 0 || isNaN(finalBalance)) {
+                             console.warn(`Dữ liệu không hợp lệ (Vốn > 0, Số dư) ở dòng ${i + 1}. Vốn: ${row[initialCapitalIndex]}, Số dư: ${row[finalBalanceIndex]}`);
+                             skippedCount++;
+                             continue; // Bỏ qua nếu số liệu không hợp lệ
+                         }
+
+                        // Tính PNL và %
+                        const { profitLoss, profitPercentage } = calculateProfitLossFromValues(initialCapital, finalBalance);
+
+                        const newTransactionData = {
+                            date: dateStr,
+                            initialCapital,
+                            finalBalance,
+                            profitLoss,
+                            profitPercentage
+                        };
+
+                        newTransactions.push(newTransactionData);
+                    }
+
+                    // Bây giờ xử lý việc hợp nhất newTransactions vào transactions hiện có
+                    if (newTransactions.length > 0) {
+                         // Nhóm các giao dịch mới theo ngày
+                        const newTransactionsByDate = new Map();
+                        newTransactions.forEach(nt => {
+                            if (!newTransactionsByDate.has(nt.date)) {
+                                newTransactionsByDate.set(nt.date, []);
+                            }
+                            newTransactionsByDate.get(nt.date).push(nt);
                         });
-                    }
-                });
 
-                localStorage.setItem('transactions', JSON.stringify(transactions));
-                loadTransactions(); // Tải lại bảng
+
+                        let finalTransactions = [...transactions]; // Tạo bản sao để thao tác
+
+                        newTransactionsByDate.forEach((dailyNewTransactions, date) => {
+                            const existingIndices = finalTransactions.map((t, idx) => t.date === date ? idx : -1).filter(idx => idx !== -1);
+
+                            if (existingIndices.length > 0) {
+                                // Ngày đã tồn tại, hỏi người dùng
+                                const choice = confirm(`Ngày ${date} đã có ${existingIndices.length} giao dịch. Bạn muốn Ghi đè (OK) hay Bỏ qua (Cancel) các giao dịch mới cho ngày này?`);
+                                if (choice) {
+                                    // Ghi đè: Xóa các giao dịch cũ của ngày này và thêm các giao dịch mới
+                                     // Xóa từ cuối lên đầu để tránh sai index
+                                     existingIndices.reverse().forEach(idx => finalTransactions.splice(idx, 1));
+                                     finalTransactions.push(...dailyNewTransactions); // Thêm tất cả giao dịch mới cho ngày đó
+                                    updatedCount += dailyNewTransactions.length; // Coi như cập nhật
+                                } else {
+                                    // Bỏ qua: Không làm gì cả
+                                    skippedCount += dailyNewTransactions.length;
+                                    console.log(`Đã bỏ qua ${dailyNewTransactions.length} giao dịch mới cho ngày ${date}.`);
+                                }
+                            } else {
+                                // Ngày chưa tồn tại, thêm tất cả giao dịch mới
+                                finalTransactions.push(...dailyNewTransactions);
+                                addedCount += dailyNewTransactions.length;
+                            }
+                        });
+
+
+                        // Sắp xếp lại toàn bộ giao dịch theo ngày
+                        finalTransactions.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+                        // Lưu lại vào localStorage và tải lại bảng
+                        localStorage.setItem('transactions', JSON.stringify(finalTransactions));
+                        loadTransactions();
+                        alert(`Nhập Excel hoàn tất!\n- Đã thêm: ${addedCount} giao dịch\n- Đã ghi đè/cập nhật: ${updatedCount} giao dịch\n- Đã bỏ qua: ${skippedCount} giao dịch`);
+
+                    } else if (skippedCount > 0) {
+                         alert(`Quá trình nhập hoàn tất nhưng có ${skippedCount} dòng bị bỏ qua do lỗi dữ liệu hoặc ngày không hợp lệ.`);
+                    }
+                     else {
+                        alert("Không tìm thấy dữ liệu giao dịch hợp lệ trong file Excel.");
+                    }
+
+
+                } catch (error) {
+                    console.error("Lỗi khi nhập file Excel:", error);
+                    alert("Đã xảy ra lỗi khi đọc hoặc xử lý file Excel. Vui lòng kiểm tra định dạng file và dữ liệu.");
+                } finally {
+                     // Reset input file để có thể chọn lại cùng file nếu cần
+                     fileInput.value = '';
+                }
             };
-            reader.readAsArrayBuffer(file);
+            reader.readAsArrayBuffer(file); // Đọc file dưới dạng ArrayBuffer
         }
+
     </script>
 </body>
 
