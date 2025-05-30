@@ -1,1 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Device Fingerprint Checker</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #121212; color: #00ff90; }
+    h1 { color: #00ffff; }
+    .section { margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Device Fingerprint Checker</h1>
+
+  <div class="section" id="ip">Fetching IP...</div>
+  <div class="section" id="info"></div>
+  <div class="section" id="webgl"></div>
+  <div class="section" id="touch"></div>
+  <div class="section" id="headless"></div>
+
+  <script>
+    // IP Detection
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('ip').innerText = `🌐 Public IP: ${data.ip}`;
+      });
+
+    // Basic Info
+    const info = `
+🧠 User-Agent: ${navigator.userAgent}
+📱 Platform: ${navigator.platform}
+🖥 Screen: ${screen.width}x${screen.height}
+🧭 Language: ${navigator.language}
+📡 Online: ${navigator.onLine}
+🔧 Hardware Concurrency: ${navigator.hardwareConcurrency || 'N/A'}
+⚙ Device Memory: ${navigator.deviceMemory || 'N/A'} GB
+📱 Max Touch Points: ${navigator.maxTouchPoints}
+`;
+
+    document.getElementById('info').innerText = info;
+
+    // WebGL Renderer
+    let glInfo = '';
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+      glInfo = `🎨 WebGL Vendor: ${vendor}\n🚀 Renderer: ${renderer}`;
+    } catch (e) {
+      glInfo = '❌ WebGL not supported or blocked';
+    }
+    document.getElementById('webgl').innerText = glInfo;
+
+    // Touch Support
+    document.getElementById('touch').innerText = `👆 Touch Supported: ${'ontouchstart' in window}`;
+
+    // Headless detection
+    const isHeadless = navigator.webdriver || false;
+    document.getElementById('headless').innerText = `🤖 WebDriver/Automation Detected: ${isHeadless}`;
+  </script>
+</body>
+</html>
 
