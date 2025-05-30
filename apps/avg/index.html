@@ -1,65 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Device Fingerprint Checker</title>
+  <meta charset="UTF-8">
+  <title>Device Fingerprint Full Checker</title>
   <style>
-    body { font-family: monospace; padding: 20px; background: #121212; color: #00ff90; }
-    h1 { color: #00ffff; }
-    .section { margin-bottom: 20px; }
+    body { font-family: monospace; background: #111; color: #0f0; padding: 20px; }
+    h1 { color: #0ff; }
+    span.warn { color: yellow; }
+    span.error { color: red; }
+    code { white-space: pre-wrap; }
   </style>
 </head>
 <body>
-  <h1>🔍 Device Fingerprint Checker</h1>
-
-  <div class="section" id="ip">Fetching IP...</div>
-  <div class="section" id="info"></div>
-  <div class="section" id="webgl"></div>
-  <div class="section" id="touch"></div>
-  <div class="section" id="headless"></div>
+  <h1>🔍 Device Fingerprint Full Checker</h1>
+  <code id="output">Loading...</code>
 
   <script>
-    // IP Detection
-    fetch('https://api.ipify.org?format=json')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('ip').innerText = `🌐 Public IP: ${data.ip}`;
-      });
+    async function getPublicIP() {
+      try {
+        const res = await fetch("https://api.ipify.org?format=json");
+        const data = await res.json();
+        return data.ip;
+      } catch {
+        return "Unable to fetch IP";
+      }
+    }
 
-    // Basic Info
-    const info = `
-🧠 User-Agent: ${navigator.userAgent}
+    function getWebGLInfo() {
+      let gl = document.createElement('canvas').getContext('webgl');
+      if (!gl) return { vendor: "N/A", renderer: "N/A" };
+      let dbgInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      return {
+        vendor: dbgInfo ? gl.getParameter(dbgInfo.UNMASKED_VENDOR_WEBGL) : "Unknown",
+        renderer: dbgInfo ? gl.getParameter(dbgInfo.UNMASKED_RENDERER_WEBGL) : "Unknown"
+      };
+    }
+
+    function detectAutomation() {
+      return navigator.webdriver || false;
+    }
+
+    function detectLanguage() {
+      return navigator.language || navigator.userLanguage;
+    }
+
+    function detectHardwareConcurrency() {
+      return navigator.hardwareConcurrency || "Unavailable";
+    }
+
+    function detectMemory() {
+      return navigator.deviceMemory ? navigator.deviceMemory + " GB" : "Unavailable";
+    }
+
+    function detectTouchSupport() {
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+
+    async function detectWebRTC_IPs() {
+      return new Promise(resolve => {
+        let ips = [];
+        let rtc = new RTCPeerConnection({iceServers:[]});
+        rtc.createDataChannel('');
+        rtc.createOffer().then(offer => rtc.setLocalDescription(offer));
+        rtc.onicecandidate = evt => {
+          if (evt && evt.candidate && evt.candidate.candidate) {
+            let parts = evt.candidate.candidate.split(' ');
+            let ip = parts[4];
+            if (ip && !ips.includes(ip)) ips.push(ip);
+          }
+          if (!evt.candidate) resolve(ips);
+        };
+      });
+    }
+
+    async function main() {
+      const output = document.getElementById('output');
+      const glInfo = getWebGLInfo();
+      const ip = await getPublicIP();
+      const rtcIps = await detectWebRTC_IPs();
+      const userAgent = navigator.userAgent;
+
+      const data = `
+🌐 Public IP: ${ip}
+🧠 User-Agent: ${userAgent}
 📱 Platform: ${navigator.platform}
-🖥 Screen: ${screen.width}x${screen.height}
-🧭 Language: ${navigator.language}
-📡 Online: ${navigator.onLine}
-🔧 Hardware Concurrency: ${navigator.hardwareConcurrency || 'N/A'}
-⚙ Device Memory: ${navigator.deviceMemory || 'N/A'} GB
-📱 Max Touch Points: ${navigator.maxTouchPoints}
+🧮 CPU Threads: ${detectHardwareConcurrency()}
+🧠 RAM: ${detectMemory()}
+🖥️ Screen: ${screen.width}x${screen.height}
+🖐️ Touch Support: ${detectTouchSupport()}
+🌎 Language: ${detectLanguage()}
+🎨 WebGL Vendor: ${glInfo.vendor}
+🎨 WebGL Renderer: ${glInfo.renderer}
+🛡️ WebDriver Detected: ${detectAutomation()}
+🌐 WebRTC IP(s): ${rtcIps.length ? rtcIps.join(', ') : 'Not available'}
+
+✅ If all data looks normal and no WebDriver is detected,
+you are likely not flagged as a bot or emulator.
 `;
 
-    document.getElementById('info').innerText = info;
-
-    // WebGL Renderer
-    let glInfo = '';
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-      const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-      const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-      glInfo = `🎨 WebGL Vendor: ${vendor}\n🚀 Renderer: ${renderer}`;
-    } catch (e) {
-      glInfo = '❌ WebGL not supported or blocked';
+      output.textContent = data;
     }
-    document.getElementById('webgl').innerText = glInfo;
 
-    // Touch Support
-    document.getElementById('touch').innerText = `👆 Touch Supported: ${'ontouchstart' in window}`;
-
-    // Headless detection
-    const isHeadless = navigator.webdriver || false;
-    document.getElementById('headless').innerText = `🤖 WebDriver/Automation Detected: ${isHeadless}`;
+    main();
   </script>
 </body>
 </html>
